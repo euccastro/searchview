@@ -1,0 +1,40 @@
+Implementar soporte de multitouch para SDL em Linux:
+    Ver que versom de XInput tenho aqui.
+    Pista: no código fonte, que faria bem em baixar, di que deveria ter que estar a usar XInput 2.1.
+        Lêr sobre XInput 2.1.
+            Lêr sobre X.
+            É ũa extensom recente.  Ver se já está em Ubuntu 11.11.  Suponho que si.
+        Parese que xinput só é ũa livraria para detectar cousas, pero nom maneja o input diretamente.
+        Hai um jeito nativo de fazer choiar isto em X?
+    Instalar código fonte, compilar.
+    Nom urgente, podo-o fazer na casa: amanhar o touchscreen em ubuntu.  Provar qualquer aplicaçom com multitouch para ver que vai.
+    
+    Plam de açom:
+        Instalar Ubuntu 12.04.
+        Fazer ũa pequena aplicaçom que faga input com só X/XInput.
+        Ver que API tém multitouch em SDL1.3.
+        Desenhar a grandes rasgos como convertemos ũa na outra.  Para ver o que é requerido, podemos empregar SDL_x11touch.c.  Disto nom aproveitamos a fonte, mais si o destino.
+        Estou vendo o SDL touch específico de X11. Ver a interfaz global.
+    É possível usar XInput 2.2 com SDL1.3?  Suponho que com #defines podera-se.
+        pero para começar podo ser agressivo e assumir o meu setup exacto.
+
+
+Como furrula XInput 2.2 multitouch:
+    Para que me mandem eventos tenho que chamar XSelectEvents (which see), passando os novos tipos de eventos.
+        Furrularia isto em SDL? 
+            A ver o que di grep.
+                grep di que XInput nom é usado em SDL at all.  Isto fai cada vez menos sentido.  É um pouco ũa loucura.  Podo empregar XInput alongside xlib event handling?
+
+Como furrula SDL multitouch.
+    Como se supom que furrula o hack actual.
+        Antes de máis, está SDL_INPUT_LINUXEV, o cal deve estar definido para que as partes relevantes sejam incluidas.
+        O hack este procura devices em /proc/bus/input/devices e reconhece-os por vendor IDs.  Se quero provar a minha cousa, deveria meter o meu vendor ID.
+        Das linhas apenas lê a I e a H, que som: id e handlers, respetivamente.  Da I só pegamos vendor e product.  Em H, parece que o último handler é o máis específico.  Nom, empregamos scanf para parsear event%d. *
+        Para cada device atopado, cria um SDL_Touch.  Um SDL_Touch deve de ser a estrutura que define um input device.
+        este touch tém ũa referença a um eventtouchdata, *que é ũa cousa específica de X11*.
+        Esse SDL_Touch é passado a SDL_AddTouch, que parece ũa funçom nom específica de X11?
+        este touch tém um elemento touch.driverdata que tém um ponteiro ao file descriptor do /dev/input/event%i
+
+        Ai venhem um lote de chamadas a ioctl para ler dados do input stream?  Si, lê 'metadata'. ioctl(fd*, input_descriptor, output_pointer). abs parece ser uhna descriçom do tamanho físico do device.  
+    Bingo!  O meat está en SDL_x11events.c!  Só resta ver se o que hai aí é device dependent ou nom.
+
