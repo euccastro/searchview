@@ -84,7 +84,7 @@ def wordchain(start, goal, dictionary=default_dictionary):
                     # If I had visited this word before I would have `continue`d
                     # in the first check above.
                     assert not other_contact
-                    other_contact.append(chain)
+                    other_contact.append(chain[:-1])
             for word in single_edits(last):
                 if word in dictionary and word not in search.visited:
                     heappush(search.frontier, 
@@ -121,10 +121,15 @@ def single_edits(word):
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) != 3:
-        print "Usage: %s <start_word> <goal_word>" % sys.argv[0]
+    if len(sys.argv) not in [3, 4]:
+        print "Usage: %s <start_word> <goal_word> [<times>=1]" % sys.argv[0]
         sys.exit(1)
-    words = wordchain(*sys.argv[1:])
+    if len(sys.argv) == 4:
+        times = int(sys.argv[3])
+    else:
+        times = 1
+    for i in xrange(times):
+        words = wordchain(*sys.argv[1:3])
     if words is None:
         print "No chain found."
     else:
