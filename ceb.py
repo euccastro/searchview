@@ -23,12 +23,12 @@ class edge:
         self.endpoints = endpoint1, endpoint2
 
 start = vec2(w.width // 3, w.height // 3)
-end = vec2((w.width * 2) // 3, (w.height * 2) // 3)
+goal = vec2((w.width * 2) // 3, (w.height * 2) // 3)
 
-vertices = [start, end]
+vertices = [start, goal]
 
 start_poly = [vec2(x, y) for x, y in (-6, -10), (12, 0), (-6, 10)]
-end_poly = [vec2(x, y) for x, y in (-6, -6), (6, -6), (6, 6), (-6, 6)]
+goal_poly = [vec2(x, y) for x, y in (-6, -6), (6, -6), (6, 6), (-6, 6)]
 
 edges = []
 
@@ -60,7 +60,7 @@ def on_key_press(k, *etc):
 def on_draw():
     glClear(GL_COLOR_BUFFER_BIT)
     glColor3f(*colors['cyan'])
-    for point, poly in (start, start_poly), (end, end_poly):
+    for point, poly in (start, start_poly), (goal, goal_poly):
         glBegin(GL_LINE_LOOP)
         for vertex in poly:
             glVertex2f(*point+vertex)
@@ -127,6 +127,15 @@ def run():
                         vcopy.remove(origin)
                         target = closest_vertex(newevt.pos, vcopy)
                 origin = target = None
+        elif evt.type == 'key':
+            if evt.key == key.DELETE:
+                if closest not in [start, goal, None]:
+                    vertices.remove(closest)
+                    for a, b in edges[:]:
+                        if a is closest or b is closest:
+                            edges.remove((a, b))
+                    closest = None
+
 
 def closest_vertex(p, vertices=vertices):
     return min(vertices, key=(lambda v: squaredist(v, p)))
