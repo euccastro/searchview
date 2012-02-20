@@ -10,9 +10,7 @@ raw_dict = file('/usr/share/dict/american-english').read()
 default_dictionary = set(raw_dict.split())
 
 
-missed = 0
-
-def memoized_symmetric(f):
+def memoized(f):
     """
     Wrap a function so it remembers the results of former calls to it, ignoring
     argument order.
@@ -20,14 +18,11 @@ def memoized_symmetric(f):
     d = {}
     def wrapper(w1, w2):
         if (w1, w2) not in d:
-            if (w2, w1) in d:
-                global missed
-                missed += 1
             d[w1, w2] = f(w1, w2)
         return d[w1, w2]
     return wrapper
 
-@memoized_symmetric
+@memoized
 def edit_distance(w1, w2):
     if not w1 or not w2:
         return max(len(w1), len(w2))
@@ -136,4 +131,3 @@ if __name__ == '__main__':
         for word in words:
             print word,
         print
-    print "Missed", missed, "opportunities to use reverse cache."
