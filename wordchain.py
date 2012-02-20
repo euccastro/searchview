@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+import gc
 from heapq import heappush, heappop
+import string
 
 
 raw_dict = file('/usr/share/dict/american-english').read()
@@ -8,17 +10,21 @@ raw_dict = file('/usr/share/dict/american-english').read()
 default_dictionary = set(raw_dict.split())
 
 
+missed = 0
+
 def memoized_symmetric(f):
     """
     Wrap a function so it remembers the results of former calls to it, ignoring
     argument order.
     """
     d = {}
-    def wrapper(*args):
-        key = tuple(sorted(args))
-        if key not in d:
-            d[key] = f(*args)
-        return d[key]
+    def wrapper(w1, w2):
+        if (w1, w2) not in d:
+            if (w2, w1) in d:
+                global missed
+                missed += 1
+            d[w1, w2] = f(w1, w2)
+        return d[w1, w2]
     return wrapper
 
 @memoized_symmetric
@@ -55,26 +61,68 @@ def edit_distance(w1, w2):
 
 
 def wordchain(start, goal, dictionary=default_dictionary):
-    # I'll do A* with edit_distance as the heuristic.
-    # Rather than maintain a visited set, I'll just remove visited entries 
-    # from the dictionary.
-    mydict = dictionary.copy()
-    # Total cost, cost so far, chain.
-    frontier = [(0, 0, [start])]
-    while frontier:
-        estimated_cost, cost_so_far, chain = heappop(frontier)
-        last = chain[-1]
-        if last == goal:
-            return chain
-        if last not in mydict:
-            # We have considered a chain that reaches this node earlier.
-            continue
-        mydict.remove(last)
-        for word in mydict:
-            if edit_distance(word, last) == 1:
-                heappush(frontier, (cost_so_far + edit_distance(word, goal), cost_so_far + 1, chain + [word]))
+
+    gc.disable()
+
+    # Bidirectional A* with edit_distance as the heuristic.
+    search_from_start = AStarSearchState(start, goal)
+    search_from_goal = AStarSearchState(goal, start)
+
+    permutations = [(search_from_start, search_from_goal),
+                    (search_from_goal, search_from_start)]
+
+    while search_from_start.frontier and search_from_goal.frontier:
+        for search, other in permutations:
+            estimated_cost, cost_so_far, chain, contact = heappop(search.frontier)
+            last = chain[-1]
+            if last in search.visited:
+                # We have considered a chain that reaches this node earlier.
+                continue
+            search.visited.add(last)
+            if contact:
+                solution = chain + list(reversed(contact[0]))
+                if search is search_from_goal:
+                    solution.reverse()
+                return solution
+            for ec, csf, other_chain, other_contact in other.frontier:
+                if other_chain[-1] == last:
+                    # If I had visited this word before I would have `continue`d
+                    # in the first check above.
+                    assert not other_contact
+                    other_contact.append(chain)
+            for word in single_edits(last):
+                if word in dictionary and word not in search.visited:
+                    heappush(search.frontier, 
+                             (cost_so_far + edit_distance(word, search.goal), 
+                              cost_so_far + 1, 
+                              chain + [word], 
+                              []))
     return None
 
+def endnodes(frontier):
+    for estimated_cost, cost_so_far, chain in frontier:
+        yield chain[-1]
+
+class AStarSearchState:
+    def __init__(self, start, goal):
+        self.visited = set()
+        # Estimated cost, cost so far, chain, contact.
+        #
+        # I pick a list for contact to make it mutable and easy to check 
+        # for (non)emptiness.
+        self.frontier = [(0, 0, [start], [])]
+        self.goal = goal
+
+def single_edits(word):
+    for letter in string.lowercase:
+        yield letter + word  # insert letter at beginning
+        if word:
+            yield letter + word[1:]  # substitute first letter
+    if word:
+        yield word[1:]  # remove first letter
+        for edit in single_edits(word[1:]):
+            # add all edits to subsequent letter positions
+            yield word[0] + edit
 
 if __name__ == '__main__':
     import sys
@@ -88,3 +136,4 @@ if __name__ == '__main__':
         for word in words:
             print word,
         print
+    print "Missed", missed, "opportunities to use reverse cache."
