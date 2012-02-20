@@ -1,4 +1,5 @@
 # First version: just add, remove and drag points and edges around.
+from __future__ import division
 
 import stackless
 
@@ -32,12 +33,15 @@ goal_poly = [vec2(x, y) for x, y in (-6, -6), (6, -6), (6, 6), (-6, 6)]
 
 edges = []
 
+mouse_pos = None
 closest = None
 origin = None
 target = None
 
 @w.event
 def on_mouse_motion(x, y, *etc):
+    global mouse_pos
+    mouse_pos = vec2(x, y)
     ch.send(obj(type='motion', pos=vec2(x,y)))
 
 @w.event
@@ -46,6 +50,8 @@ def on_mouse_press(x, y, button, *etc):
 
 @w.event
 def on_mouse_drag(x, y, *etc):
+    global mouse_pos
+    mouse_pos = vec2(x, y)
     ch.send(obj(type='motion', pos=vec2(x, y)))
 
 @w.event
@@ -135,6 +141,11 @@ def run():
                         if a is closest or b is closest:
                             edges.remove((a, b))
                     closest = None
+            elif evt.key == key.BACKSPACE:
+                if mouse_pos is not None:
+                    d = dict([((a+b)/2, (a, b)) for a, b in edges])
+                    closest_midpoint = closest_vertex(mouse_pos, d.keys())
+                    edges.remove(d[closest_midpoint])
 
 
 def closest_vertex(p, vertices=vertices):
