@@ -125,8 +125,7 @@ def on_draw():
     glEnd()
 
     for path, color, offset in [(aps.bidi_path, 'purple', -1),
-                                (aps.optimal_path, 'green', +1),
-                                (aps.right_bidi_path, 'red', 0)]:
+                                (aps.optimal_path, 'green', +1)]:
         if path is not None:
             glColor3f(*colors[color])
             glBegin(GL_LINE_STRIP)
