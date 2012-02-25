@@ -67,6 +67,8 @@ from pyglet.gl import *
 
 import zmq
 
+from util import obj
+from la import vec2
 
 colors = {'white': (1., 1., 1.),
           'grey': (.6, .6, .6),
@@ -85,18 +87,86 @@ for k, (r, g, b) in colors.items():
         colors["dark_"+k] = tuple(map(to255range, [r/2, g/2, b/2]))
 colors['default'] = colors['grey']
 
+def flatten_vec2s(vs):
+    return list(chain.from_iterable(vs))
+
 class view:
-    def __init__(self, window):
-        window.push_handlers(self)
+
+    def __init__(self):
         self.history = [obj(vertex_colors=defaultdict(lambda k: 'default'),
                             edge_colors=defaultdict(lambda k: 'default'))]
-        self.history_index = -1
+        self.play_position = -1
+        self.color_buffers_dirty = True
+
+    def create_window(self):
+        w = pyglet.window.Window(resizable=True)
+        w.push_handlers(self)
+
+    def on_resize(self, width, height):
+        print "on_resize", width, height
+        margin = .1  # at each border
+        min_ = self._vertices[0].copy()
+        max_ = self._vertices[0].copy()
+        for v in self._vertices:
+            if v.x < min_.x:
+                min_.x = v.x
+            elif v.x > max_.x:
+                max_.x = v.x
+            if v.y < min_.y:
+                min_.y = v.y
+            elif v.y > max_.y:
+                max_.y = v.y
+        range_ = max_ - min_
+
+        ww = width * (1 - margin * 2)
+        wh = height * (1 - margin * 2)
+
+        ratio = vec2(range_.x / ww, range_.y / wh)
+        
+        if ratio.x < ratio.y:
+            # We are limited by vertical height (most common case).
+            view_height = range_.y * (1 + margin * 2)
+            pixels_per_world_unit = height / view_height
+        else:
+            view_width = range_.x * (1 + margin * 2)
+            pixels_per_world_unit = width / view_width
+
+        world_center = vec2(range_.x / 2, range_.y / 2)
+
+        screen_size_in_world_units = (
+                vec2(width, height) / pixels_per_world_unit)
+        left, bottom = world_center - screen_size_in_world_units / 2
+        right, top = world_center + screen_size_in_world_units / 2
+        print "left", left, "bottom", bottom, "right", right, "top", top
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        glOrtho(left, right, bottom, top, -1.0, 1.0)
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        return pyglet.event.EVENT_HANDLED
 
     # Command handlers.
     def vertices(self, vertices):
         self._vertices = vertices
+        length = len(vertices) 
+        print "flattened", flatten_vec2s(vertices)
+        self.history[-1].vertices = pyglet.graphics.vertex_list(
+                length,
+                ('v2f/static', flatten_vec2s(vertices)),
+                ('c3b/stream', [128] * length * 3))
+
     def edges(self, edges):
-        self._edges = edges
+        # XXX: I'm structuring the data only to destructure it later.
+        #      It is cleaner in some way, but if this is any performance
+        #      concern at all, I may want to just use flat list throughout.
+        flattened = flatten_vec2s(self._vertices[v]
+                                  for v in chain.from_iterable(edges))
+        length = len(edges) * 2
+        self.history[-1].edges = pyglet.graphics.vertex_list(
+                length,
+                ('v2f/static', flattened),
+                ('c3b/stream', [128] * length * 3))
+        self.create_window()
     def start(self, vertex):
         self.start = self._vertices[vertex]
     def goal(self, vertex):
@@ -105,15 +175,23 @@ class view:
         # XXX: update on-screen colors if we are at head.
         self.history.append(
                 obj(vertex_colors=self.history[-1].vertex_colors.copy(),
-                    edge_colors=self.history[-1].edge_colors.copy()))
+                    edge_colors=self.history[-1].edge_colors.copy()),
+                    dirty=True)
     def vertex_color(self, vertex, color):
-        self.history[-1].vertex_colors[vertex] = color
+        self.history[-1].vertex_colors[vertex*3:vertex*3+3] = colors[color]
     def edge_color(self, edge, color):
-        self.history[-1].edge_colors[edge] = color
+        self.history[-1].edge_colors[edge*6:edge*6+6] = colors[color] * 2
 
     # Pyglet event handlers.
     def on_draw(self):
-
+        # XXX: dirty handlers.
+        glPointSize(3)
+        glClearColor(.5, .5, .5, 1.)
+        glColor3f(1.0, 1.0, 1.0)
+        glClear(GL_COLOR_BUFFER_BIT)
+        current = self.history[self.play_position]
+        current.vertices.draw(GL_POINTS)
+        current.edges.draw(GL_LINES)
 
 class interpreter:
 
@@ -147,8 +225,7 @@ class interpreter:
 def run():
     socket = zmq.socket(zmq.PULL)
     # XXX: full screen for demo.
-    window = pyglet.window.Window()
-    view = searchview(window)
+    view = searchview()
     it = interpreter(view)
     # XXX: do something about collisions from more than one running 
     #      client/server pair.
@@ -165,5 +242,11 @@ def run():
     pyglet.clock.schedule_interval(1/30, handle_commands)
     pyglet.app.run()
 
+def test():
+    v = view()
+    v.vertices([vec2(0,0), vec2(1, 0), vec2(0, 1), vec2(1,1)])
+    v.edges([(0, 1), (1, 3), (1, 2)])
+    pyglet.app.run()
+
 if __name__ == '__main__':
-    run()
+    test()
