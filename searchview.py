@@ -92,21 +92,18 @@ def flatten_vec2s(vs):
 
 class view:
 
-    def __init__(self):
-        self.history = [obj(vertex_colors=defaultdict(lambda k: 'default'),
-                            edge_colors=defaultdict(lambda k: 'default'))]
-        self.play_position = -1
-        self.color_buffers_dirty = True
-
-    def create_window(self):
+    def __init__(self, vertices, color_history):
+        self.vertices = vertices
+        self.history = color_history
+        self.play_position = 0
         w = pyglet.window.Window(resizable=True)
         w.push_handlers(self)
 
     def on_resize(self, width, height):
         print "on_resize", width, height
         margin = .1  # at each border
-        min_ = self._vertices[0].copy()
-        max_ = self._vertices[0].copy()
+        min_ = self.vertices[0].copy()
+        max_ = self.vertices[0].copy()
         for v in self._vertices:
             if v.x < min_.x:
                 min_.x = v.x
@@ -149,12 +146,12 @@ class view:
     def vertices(self, vertices):
         self._vertices = vertices
         length = len(vertices) 
-        print "flattened", flatten_vec2s(vertices)
-        self.history[-1].vertices = pyglet.graphics.vertex_list(
+        self.vertex_buffer = pyglet.graphics.vertex_list(
                 length,
                 ('v2f/static', flatten_vec2s(vertices)),
-                ('c3b/stream', [128] * length * 3))
-
+                ('c3B/stream', [128] * length * 3))
+        self.history[-1].vertex_colors = self.vertex_buffer.colors 
+        
     def edges(self, edges):
         # XXX: I'm structuring the data only to destructure it later.
         #      It is cleaner in some way, but if this is any performance
@@ -162,10 +159,11 @@ class view:
         flattened = flatten_vec2s(self._vertices[v]
                                   for v in chain.from_iterable(edges))
         length = len(edges) * 2
-        self.history[-1].edges = pyglet.graphics.vertex_list(
+        self.edge_buffer = pyglet.graphics.vertex_list(
                 length,
                 ('v2f/static', flattened),
-                ('c3b/stream', [128] * length * 3))
+                ('c3B/stream', [128] * length * 3))
+        self.history[-1].edge_colors = self.edge_buffer.colors
         self.create_window()
     def start(self, vertex):
         self.start = self._vertices[vertex]
@@ -173,10 +171,12 @@ class view:
         self.goal = self._vertices[vertex]
     def iteration_done(self):
         # XXX: update on-screen colors if we are at head.
+        vcolors = copy_buffer(self.history[-1].vertex_colors)
+            
         self.history.append(
-                obj(vertex_colors=self.history[-1].vertex_colors.copy(),
-                    edge_colors=self.history[-1].edge_colors.copy()),
-                    dirty=True)
+                obj(vertex_colors=copy_buffer(self.history[-1].vertex_colors),
+                    edge_colors=copy_buffer(self.history[-1].edge_colors),
+                    dirty=True))
     def vertex_color(self, vertex, color):
         self.history[-1].vertex_colors[vertex*3:vertex*3+3] = colors[color]
     def edge_color(self, edge, color):
@@ -186,41 +186,100 @@ class view:
     def on_draw(self):
         # XXX: dirty handlers.
         glPointSize(3)
-        glClearColor(.5, .5, .5, 1.)
-        glColor3f(1.0, 1.0, 1.0)
+        glClearColor(.2, .2, .2, 1.)
         glClear(GL_COLOR_BUFFER_BIT)
         current = self.history[self.play_position]
         current.vertices.draw(GL_POINTS)
         current.edges.draw(GL_LINES)
 
-class interpreter:
+def parse_commands(command_lines):
+    """
+    Parse commands and return a tuple with the following elements:
+        vertices
+            A ctypes array of vertices in v2f format.
+        edges
+            A ctypes array of vertices in v2f format, ready to pass to
+            GL_LINES.
+        start
+            The vertex corresponding to the starting position, as an index
+            into the vertices array.
+        goal
+            The vertex corresponting to the ending position, as an index
+            into the vertices array.
+        color_history
+            A list of `obj`s where each of them has the attributes:
+                time
+                    Time in seconds from start of search.
+                vertex_colors
+                    A ctypes array of colors in c3B format, corresponding to
+                    the vertices.
+                edge_colors
+                    A ctypes array of colors in c3B format, corresponding to
+                    the edges.
+    """
+    vertices = None
+    edges = None
+    start = None
+    goal = None
+    color_history = [obj()]
+    for line in command_lines:
+        print "line si", repr(line)
+        if not line.strip():
+            continue
+        cmd, args = line.strip().split(None, 1)
+        args = args.split()
+        if cmd == 'vertices':
+            vertices = (c_float * len(args))(*imap(float, args))
+            assert even(len(args))
+            len_colors = len(args) * 3 // 2
+            color_history[0].vertex_colors = (c_ubyte * len_colors)(
+                *repeat(colors['default'][0], len_colors))
+        elif cmd == 'edges':
+            assert vertices is not None
+            assert len(args) % 2 == 0
+            edges = (c_float * (len(args) * 2))(
+                    *chain.from_iterable((vertices[int(i)*2], 
+                                          vertices[int(i)*2 + 1])
+                                         for i in args))
+            assert even(len(edges))
+            len_colors = len(edges) * 3 // 2
+            color_history[0].edge_colors = (c_ubyte * len_colors)(
+                    *repeat(colors['default'][0], len_colors))
+        elif cmd == 'start':
+            assert vertices is not None
+            index = int(args[0])
+            start = vertices[index * 2], vertices[index * 2 + 1]
+        elif cmd == 'goal':
+            assert vertices is not None
+            index = int(args[0])
+            goal = vertices[index * 2], vertices[index * 2 + 1]
+        elif cmd == 'step':
+            assert None not in [vertices, edges]
+            timestamp = float(args[0])
+            color_history.append(
+                obj(time=timestamp,
+                    vertex_colors=copy_array(color_history[-1].vertex_colors),
+                    edge_colors=copy_array(color_history[-1].edge_colors)))
+        elif cmd == 'vertex_color':
+            index, color_name = args
+            index = int(index)
+            color_history[-1].vertex_colors[index*3:index*3+3] = \
+                    colors[color_name]
+        elif cmd == 'edge_color':
+            index, color_name = args
+            index = int(index)
+            color_history[-1].edge_colors[index*6:index*6+6] = \
+                    colors[color_name] * 2
+    assert None not in [vertices, edges, start, goal]
+    return vertices, edges, start, goal, color_history
 
-    def __init__(self, view):
-        self.view = view
+def even(x):
+    return not (x & 1)
 
-    def vertices(self, *lst):
-        self.view.vertices(vec2(x, y)
-                           for x, y in izip(islice(lst, 0, None, 2),
-                                            islice(lst, 1, None, 2)))
-    def edges(self, *lst):
-        self.view.edges((int(a), int(b))
-                         for a, b in izip(islice(lst, 0, None, 2),
-                                          islice(lst, 1, None, 2)))
-    def start(self, vertex):
-        self.view.start(int(vertex))
-
-    def goal(self, vertex):
-        self.view.end(int(vertex))
-
-    def iteration_done(self):
-        self.view.iteration_done()
-
-    def vertex_color(self, vertex, color):
-        self.view.vertex_color(int(vertex), color)
-
-    def edge_color(self, edge, color):
-        self.view.edge_color(int(edge), color)
-
+def copy_array(a):
+    ret = (c_ubyte * len(a))()
+    memmove(ret, a, len(a))
+    return ret
 
 def run():
     socket = zmq.socket(zmq.PULL)
@@ -242,11 +301,26 @@ def run():
     pyglet.clock.schedule_interval(1/30, handle_commands)
     pyglet.app.run()
 
-def test():
-    v = view()
-    v.vertices([vec2(0,0), vec2(1, 0), vec2(0, 1), vec2(1,1)])
-    v.edges([(0, 1), (1, 3), (1, 2)])
-    pyglet.app.run()
+#def test():
+#    v = view()
+#    v.vertices([vec2(0,0), vec2(1, 0), vec2(0, 1), vec2(1,1)])
+#    v.edges([(0, 1), (1, 3), (1, 2)])
+#    v.edge_color(1, 'yellow')
+#    pyglet.app.run()
+#
+def test2():
+    cmds = """
+vertices 100 100 200 100 200 200 100 200
+edges 0 1 1 2 1 3
+start 0
+goal 2
+step 0
+vertex_color 0 yellow
+step 1
+vertex_color 1 yellow
+edge_color 0 yellow
+""".strip().split("\n")
+    print parse_commands(cmds)
 
 if __name__ == '__main__':
-    test()
+    test2()
