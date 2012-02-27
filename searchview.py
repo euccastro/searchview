@@ -92,14 +92,26 @@ def flatten_vec2s(vs):
 
 class view:
 
-    def __init__(self, vertices, color_history):
+    def __init__(self, vertices, edges, start, goal, color_history):
         self.vertices = vertices
+        self.start = start
+        self.goal = goal
         self.history = color_history
         self.play_position = 0
+        self.vertex_buffer = pyglet.graphics.vertex_list(
+                len(vertices) // 2, 'v2f/static', 'c3B/stream')
+        self.edge_buffer = pyglet.graphics.vertex_list(
+                len(edges) // 2, 'v2f/static', 'c3B/stream')
+        copy_buffer(self.vertex_buffer.vertices, self.vertices)
+        copy_buffer(self.vertex_buffer.colors, self.history[0].vertex_colors)
+        copy_buffer(self.edge_buffer.vertices, edges)
+        copy_buffer(self.edge_buffer.colors, self.history[0].edge_colors)
         w = pyglet.window.Window(resizable=True)
         w.push_handlers(self)
 
-    def on_resize(self, width, height):
+    # Pyglet event handlers.
+
+    def _on_resize(self, width, height):
         print "on_resize", width, height
         margin = .1  # at each border
         min_ = self.vertices[0].copy()
@@ -142,55 +154,12 @@ class view:
         glLoadIdentity()
         return pyglet.event.EVENT_HANDLED
 
-    # Command handlers.
-    def vertices(self, vertices):
-        self._vertices = vertices
-        length = len(vertices) 
-        self.vertex_buffer = pyglet.graphics.vertex_list(
-                length,
-                ('v2f/static', flatten_vec2s(vertices)),
-                ('c3B/stream', [128] * length * 3))
-        self.history[-1].vertex_colors = self.vertex_buffer.colors 
-        
-    def edges(self, edges):
-        # XXX: I'm structuring the data only to destructure it later.
-        #      It is cleaner in some way, but if this is any performance
-        #      concern at all, I may want to just use flat list throughout.
-        flattened = flatten_vec2s(self._vertices[v]
-                                  for v in chain.from_iterable(edges))
-        length = len(edges) * 2
-        self.edge_buffer = pyglet.graphics.vertex_list(
-                length,
-                ('v2f/static', flattened),
-                ('c3B/stream', [128] * length * 3))
-        self.history[-1].edge_colors = self.edge_buffer.colors
-        self.create_window()
-    def start(self, vertex):
-        self.start = self._vertices[vertex]
-    def goal(self, vertex):
-        self.goal = self._vertices[vertex]
-    def iteration_done(self):
-        # XXX: update on-screen colors if we are at head.
-        vcolors = copy_buffer(self.history[-1].vertex_colors)
-            
-        self.history.append(
-                obj(vertex_colors=copy_buffer(self.history[-1].vertex_colors),
-                    edge_colors=copy_buffer(self.history[-1].edge_colors),
-                    dirty=True))
-    def vertex_color(self, vertex, color):
-        self.history[-1].vertex_colors[vertex*3:vertex*3+3] = colors[color]
-    def edge_color(self, edge, color):
-        self.history[-1].edge_colors[edge*6:edge*6+6] = colors[color] * 2
-
-    # Pyglet event handlers.
     def on_draw(self):
-        # XXX: dirty handlers.
         glPointSize(3)
         glClearColor(.2, .2, .2, 1.)
         glClear(GL_COLOR_BUFFER_BIT)
-        current = self.history[self.play_position]
-        current.vertices.draw(GL_POINTS)
-        current.edges.draw(GL_LINES)
+        self.vertex_buffer.draw(GL_POINTS)
+        self.edge_buffer.draw(GL_LINES)
 
 def parse_commands(command_lines):
     """
@@ -223,7 +192,6 @@ def parse_commands(command_lines):
     goal = None
     color_history = [obj()]
     for line in command_lines:
-        print "line si", repr(line)
         if not line.strip():
             continue
         cmd, args = line.strip().split(None, 1)
@@ -258,8 +226,8 @@ def parse_commands(command_lines):
             timestamp = float(args[0])
             color_history.append(
                 obj(time=timestamp,
-                    vertex_colors=copy_array(color_history[-1].vertex_colors),
-                    edge_colors=copy_array(color_history[-1].edge_colors)))
+                    vertex_colors=clone_array(color_history[-1].vertex_colors),
+                    edge_colors=clone_array(color_history[-1].edge_colors)))
         elif cmd == 'vertex_color':
             index, color_name = args
             index = int(index)
@@ -276,10 +244,13 @@ def parse_commands(command_lines):
 def even(x):
     return not (x & 1)
 
-def copy_array(a):
+def clone_array(a):
     ret = (c_ubyte * len(a))()
-    memmove(ret, a, len(a))
+    copy_buffer(ret, a)
     return ret
+
+def copy_buffer(dst, src):
+    memmove(dst, src, sizeof(dst))
 
 def run():
     socket = zmq.socket(zmq.PULL)
@@ -320,7 +291,8 @@ step 1
 vertex_color 1 yellow
 edge_color 0 yellow
 """.strip().split("\n")
-    print parse_commands(cmds)
+    v = view(*parse_commands(cmds))
+    pyglet.app.run()
 
 if __name__ == '__main__':
     test2()
