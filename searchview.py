@@ -68,6 +68,7 @@ import sys
 import pyglet
 from pyglet.window import key
 from pyglet.gl import *
+import yaml
 
 from util import obj
 import ui
@@ -130,21 +131,6 @@ class view(ui.window):
             self._world_extents = min_, max_
         return self._world_extents
 
-    def find_absolute_rect(self):
-        # XXX: Hack.
-        # This should be cheaper.  This is a known issue in the stable
-        # version of ui.py.
-        def get_left_bottom(w):
-            if w is self:
-                return self.rect.left, self.rect.bottom
-            for child in w.children:
-                left, bottom = get_left_bottom(child)
-                if left is not None:
-                    return left + self.rect.left, bottom + self.rect.bottom
-            return None, None
-        left, bottom = get_left_bottom(ui.desktop)
-        return ui.rect(left, bottom, self.rect.width, self.rect.height)
-
     def layout_children(self):
         "Fit graph to screen, with some margin."
 
@@ -193,8 +179,8 @@ class view(ui.window):
             self.play_position += 1
             update_buffers()
 
-    def on_draw(self):
-        glPushAttribute(GL_VIEWPORT_BIT)
+    def draw(self):
+        glPushAttrib(GL_VIEWPORT_BIT)
         glViewport(self.absolute_rect.left,
                    self.absolute_rect.bottom, 
                    self.absolute_rect.width, 
@@ -211,13 +197,12 @@ class view(ui.window):
         glMatrixMode(GL_MODELVIEW)
         glPushMatrix()
         glLoadIdentity()
-        glClear(GL_COLOR_BUFFER_BIT)
         self.vertex_buffer.draw(GL_POINTS)
         self.edge_buffer.draw(GL_LINES)
         glPopMatrix()
         glMatrixMode(GL_PROJECTION)
         glPopMatrix()
-        glPopAttribute()
+        glPopAttrib()
         glMatrixMode(GL_MODELVIEW)
 
 def parse_commands(command_lines):
@@ -334,9 +319,9 @@ def run(filename):
         of lines, or a file object that is open for reading.
     """
     w = pyglet.window.Window(resizable=True)
+    ui.init(w)
     glPointSize(3)
     glClearColor(.2, .2, .2, 1.)
-    ui.init(w)
     ui.desktop.add_child(ui.window_from_dicttree(yaml.load(file(filename))))
     stackless.tasklet(pyglet.app.run)()
     stackless.run()
