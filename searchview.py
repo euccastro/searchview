@@ -213,6 +213,12 @@ class control(ui.window):
         ui.window.__init__(self, **kw)
         self.controllees_def = controllees
         copy_children(self, 'control.yaml')
+        self.slider = self.find_window('timeslider')
+        self.slider.set_position(0)
+        self.slider.set_callback(self.on_slide)
+
+    def on_slide(self, position):
+        self.slider.set_position(position)
 
     def layout_children(self):
         ui.window.layout_children(self)
@@ -242,18 +248,26 @@ class slider(ui.window):
         copy_children(self, 'slider.yaml')
         self.handle = self.find_window('handle')
         self.dragging = None
+        self.callback = None
     def on_mouse_enter(self, *etc):
         self.handle.hilite()
     def on_mouse_leave(self, *etc):
         self.handle.lolite()
     def on_mouse_drag(self, x, y, dx, dy, *etc):
+        if not self.callback:
+            return
         if not self.dragging:
+            self.handle.hilite()
             self.dragging = x, self.handle.position
             ui.start_drag(self)
         orig_x, orig_pos = self.dragging
         pos = orig_pos + (x - orig_x) / self.handle.range
-        self.handle.set_position(max(0, min(1, pos)))
+        self.callback(max(0, min(1, pos)))
         return True
+    def set_callback(self, callback):
+        self.callback = callback
+    def set_position(self, position):
+        self.handle.set_position(max(0, min(1, position)))
     def on_end_drag(self, x, y):
         self.dragging = None
         # XXX: I should really check if the mouse cursor is still on me, but
@@ -285,7 +299,8 @@ class slider_handle(ui.window):
 
     def set_position(self, position):
         self.position = position
-        self.rect.left = int(position * self.range)
+        if hasattr(self, 'range'):  # XXX: :'(
+            self.rect.left = int(position * self.range)
 
     def _layout(self, rect, blah, parent):
         mywidth = rect.width // 50
