@@ -1,5 +1,0 @@
-Rematei o visualizador.
-Encontrei o contraexemplo que buscava.
-Implementei a versom correta e comprovei que dava o resultado certo.
-Pareei um pouco com (procurar nome) para seguir SICP.  Pero só um pouco.  Nom sei se livros som boa ideia para colaborar.
-Code review de naive bayes classifier de Isaac.

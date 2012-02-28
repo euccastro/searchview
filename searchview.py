@@ -60,8 +60,9 @@ Supported commands are (in the order in which you should invoke them):
 
 from __future__ import division
 
-import os
 from itertools import *
+import os
+import sys
 
 import pyglet
 from pyglet.window import key
@@ -263,6 +264,7 @@ def even(x):
     return not (x & 1)
 
 def clone_array(a):
+    # XXX: assuming c_ubyte array.  Learn how to figure out actual type.
     ret = (c_ubyte * len(a))()
     copy_buffer(ret, a)
     return ret
@@ -270,33 +272,6 @@ def clone_array(a):
 def copy_buffer(dst, src):
     memmove(dst, src, sizeof(dst))
 
-def run():
-    socket = zmq.socket(zmq.PULL)
-    # XXX: full screen for demo.
-    view = searchview()
-    it = interpreter(view)
-    # XXX: do something about collisions from more than one running 
-    #      client/server pair.
-    socket.setsockopt(zmq.SUBSCRIBE, '')
-    socket.bind('ipc:///tmp/searchview.ipc')
-    def handle_commands(*blah):
-        while True:
-            try:
-                cmd_line = socket.recv(zmq.NOBLOCK)
-                cmd, args = cmd_line.split(1)
-                getattr(it, cmd)(*args.split())
-            except zmq.ZMQError:
-                return
-    pyglet.clock.schedule_interval(1/30, handle_commands)
-    pyglet.app.run()
-
-#def test():
-#    v = view()
-#    v.vertices([vec2(0,0), vec2(1, 0), vec2(0, 1), vec2(1,1)])
-#    v.edges([(0, 1), (1, 3), (1, 2)])
-#    v.edge_color(1, 'yellow')
-#    pyglet.app.run()
-#
 def test2():
     cmds = """
 vertices 100 100 200 100 200 200 100 200
@@ -309,8 +284,17 @@ step 1
 vertex_color 1 yellow
 edge_color 0 yellow
 """.strip().split("\n")
-    v = view(*parse_commands(cmds))
+    run(cmds)
+
+def run(cmd_lines):
+    """
+    Display the search history described in `lines`.
+
+        `lines` is an iterable that yields lines.  For example, a list
+        of lines, or a file object that is open for reading.
+    """
+    v = view(*parse_commands(cmd_lines))
     pyglet.app.run()
 
 if __name__ == '__main__':
-    test2()
+    run(sys.stdin)
