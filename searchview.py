@@ -167,17 +167,21 @@ class view(ui.window):
         wwidth, wheight = screen_size_in_world_units
         self.world_rect = ui.rect(wleft, wbottom, wwidth, wheight)
 
-    def on_key_press(self, k, *etc):
-        def update_buffers():
-            current = self.history[self.play_position]
-            copy_buffer(self.vertex_buffer.colors, current.vertex_colors)
-            copy_buffer(self.edge_buffer.colors, current.edge_colors)
-        if k == key.LEFT and self.play_position > 0:
-            self.play_position -= 1
-            update_buffers()
-        elif k == key.RIGHT and self.play_position < len(self.history) - 1:
-            self.play_position += 1
-            update_buffers()
+    def go_to_position(self, i):
+        self.play_position = i
+        current = self.history[i]
+        copy_buffer(self.vertex_buffer.colors, current.vertex_colors)
+        copy_buffer(self.edge_buffer.colors, current.edge_colors)
+
+    def go_to_time(self, t):
+        start, end = 0, len(self.history) - 1
+        while start < end:
+            middle = (start + end) // 2
+            if self.history[middle].time < t:
+                start = middle + 1
+            else:
+                end = middle
+        self.go_to_position(start)
 
     def draw(self):
         glPushAttrib(GL_VIEWPORT_BIT)
@@ -197,8 +201,8 @@ class view(ui.window):
         glMatrixMode(GL_MODELVIEW)
         glPushMatrix()
         glLoadIdentity()
-        self.vertex_buffer.draw(GL_POINTS)
         self.edge_buffer.draw(GL_LINES)
+        self.vertex_buffer.draw(GL_POINTS)
         glPopMatrix()
         glMatrixMode(GL_PROJECTION)
         glPopMatrix()
@@ -219,6 +223,9 @@ class control(ui.window):
 
     def on_slide(self, position):
         self.slider.set_position(position)
+        time = self.end_time * position
+        for slave in self.controllees:
+            slave.go_to_time(time)
 
     def layout_children(self):
         ui.window.layout_children(self)
@@ -228,6 +235,7 @@ class control(ui.window):
                                        self.controllees_def.strip().split())
             else:
                 self.controllees = self.find_views()
+            self.end_time = max(c.history[-1].time for c in self.controllees)
 
     def find_views(self):
         def rec_find(w):
@@ -349,7 +357,7 @@ def parse_commands(command_lines):
     edges = None
     start = None
     goal = None
-    color_history = [obj()]
+    color_history = [obj(time=0.0)]
     for line in command_lines:
         if not line.strip():
             continue
