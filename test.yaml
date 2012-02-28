@@ -1,0 +1,17 @@
+name: root
+enabled: yes
+layout: fill
+children:
+    - name: controls
+      class: scratch.qor
+      qor: asul
+      layout: bottom height//5
+    - name: view1
+      class: main.view
+      history: test.history
+      layout: left width//2
+    - name: view2
+      class: main.view
+      history: test2.history
+      layout: fill
+

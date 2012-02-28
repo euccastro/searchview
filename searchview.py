@@ -62,6 +62,7 @@ from __future__ import division
 
 from itertools import *
 import os
+import stackless
 import sys
 
 import pyglet
@@ -69,6 +70,7 @@ from pyglet.window import key
 from pyglet.gl import *
 
 from util import obj
+import ui
 from la import vec2
 
 colors = {'white': (1., 1., 1.),
@@ -88,9 +90,13 @@ for k, (r, g, b) in colors.items():
         colors["dark_"+k] = tuple(map(to255range, [r/2, g/2, b/2]))
 colors['default'] = colors['grey']
 
-class view:
+class view(ui.window):
 
-    def __init__(self, vertices, edges, start, goal, color_history):
+    def __init__(self, **kw):
+        history = kw.pop('history')
+        ui.window.__init__(self, **kw)
+        vertices, edges, start, goal, color_history = \
+                parse_commands(file(history))
         self.vertices = vertices
         self.start = start
         self.goal = goal
@@ -104,38 +110,56 @@ class view:
         copy_buffer(self.vertex_buffer.colors, self.history[0].vertex_colors)
         copy_buffer(self.edge_buffer.vertices, edges)
         copy_buffer(self.edge_buffer.colors, self.history[0].edge_colors)
-        w = pyglet.window.Window(resizable=True)
-        glPointSize(3)
-        glClearColor(.2, .2, .2, 1.)
-        w.push_handlers(self)
 
-    # Pyglet event handlers.
+    def world_extents(self):
+        if not hasattr(self, '_world_extents'):
+            x = self.vertices[0]
+            y = self.vertices[1]
+            min_ = vec2(x, y)
+            max_ = vec2(x, y)
+            for x in islice(self.vertices, 0, None, 2):
+                if x < min_.x:
+                    min_.x = x
+                if x > max_.x:
+                    max_.x = x
+            for y in islice(self.vertices, 1, None, 2):
+                if y < min_.y:
+                    min_.y = y
+                if y > max_.y:
+                    max_.y = y
+            self._world_extents = min_, max_
+        return self._world_extents
 
-    def on_resize(self, width, height):
+    def find_absolute_rect(self):
+        # XXX: Hack.
+        # This should be cheaper.  This is a known issue in the stable
+        # version of ui.py.
+        def get_left_bottom(w):
+            if w is self:
+                return self.rect.left, self.rect.bottom
+            for child in w.children:
+                left, bottom = get_left_bottom(child)
+                if left is not None:
+                    return left + self.rect.left, bottom + self.rect.bottom
+            return None, None
+        left, bottom = get_left_bottom(ui.desktop)
+        return ui.rect(left, bottom, self.rect.width, self.rect.height)
 
+    def layout_children(self):
         "Fit graph to screen, with some margin."
-        
-        margin = .1  # at each border
 
-        x = self.vertices[0]
-        y = self.vertices[1]
-        min_ = vec2(x, y)
-        max_ = vec2(x, y)
-        for x in islice(self.vertices, 0, None, 2):
-            if x < min_.x:
-                min_.x = x
-            if x > max_.x:
-                max_.x = x
-        for y in islice(self.vertices, 1, None, 2):
-            if y < min_.y:
-                min_.y = y
-            if y > max_.y:
-                max_.y = y
+        ui.window.layout_children(self)
+
+        window_rect = self.absolute_rect = self.find_absolute_rect()
+        
+        min_, max_ = self.world_extents()
 
         range_ = max_ - min_
 
-        ww = width * (1 - margin * 2)
-        wh = height * (1 - margin * 2)
+        margin = .1  # at each border
+
+        ww = window_rect.width * (1 - margin * 2)
+        wh = window_rect.height * (1 - margin * 2)
 
         # Aspect is larger if something is wider in relation to its height.
         world_aspect = range_.x / range_.y
@@ -150,18 +174,12 @@ class view:
         world_center = vec2((min_.x + max_.x) / 2, (min_.y + max_.y) / 2)
 
         screen_size_in_world_units = (
-                vec2(width, height) / pixels_per_world_unit)
-        left, bottom = world_center - screen_size_in_world_units / 2
-        right, top = world_center + screen_size_in_world_units / 2
+                vec2(window_rect.width, window_rect.height) 
+                / pixels_per_world_unit)
 
-        glViewport(0, 0, width, height)
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        glOrtho(left, right, bottom, top, -1.0, 1.0)
-        glMatrixMode(GL_MODELVIEW)
-        glLoadIdentity()
-
-        return pyglet.event.EVENT_HANDLED
+        wleft, wbottom = (world_center - screen_size_in_world_units / 2)
+        wwidth, wheight = screen_size_in_world_units
+        self.world_rect = ui.rect(wleft, wbottom, wwidth, wheight)
 
     def on_key_press(self, k, *etc):
         def update_buffers():
@@ -176,9 +194,31 @@ class view:
             update_buffers()
 
     def on_draw(self):
+        glPushAttribute(GL_VIEWPORT_BIT)
+        glViewport(self.absolute_rect.left,
+                   self.absolute_rect.bottom, 
+                   self.absolute_rect.width, 
+                   self.absolute_rect.height)
+        glMatrixMode(GL_PROJECTION)
+        glPushMatrix()
+        glLoadIdentity()
+        glOrtho(self.world_rect.left, 
+                self.world_rect.right, 
+                self.world_rect.bottom, 
+                self.world_rect.top, 
+                -1.0, 
+                1.0)
+        glMatrixMode(GL_MODELVIEW)
+        glPushMatrix()
+        glLoadIdentity()
         glClear(GL_COLOR_BUFFER_BIT)
         self.vertex_buffer.draw(GL_POINTS)
         self.edge_buffer.draw(GL_LINES)
+        glPopMatrix()
+        glMatrixMode(GL_PROJECTION)
+        glPopMatrix()
+        glPopAttribute()
+        glMatrixMode(GL_MODELVIEW)
 
 def parse_commands(command_lines):
     """
@@ -286,15 +326,23 @@ edge_color 0 yellow
 """.strip().split("\n")
     run(cmds)
 
-def run(cmd_lines):
+def run(filename):
     """
     Display the search history described in `lines`.
 
         `lines` is an iterable that yields lines.  For example, a list
         of lines, or a file object that is open for reading.
     """
-    v = view(*parse_commands(cmd_lines))
-    pyglet.app.run()
+    w = pyglet.window.Window(resizable=True)
+    glPointSize(3)
+    glClearColor(.2, .2, .2, 1.)
+    ui.init(w)
+    ui.desktop.add_child(ui.window_from_dicttree(yaml.load(file(filename))))
+    stackless.tasklet(pyglet.app.run)()
+    stackless.run()
 
 if __name__ == '__main__':
-    run(sys.stdin)
+    if len(sys.argv) == 2:
+        run(sys.argv[1])
+    else:
+        print "Usage: %s <layout_description>" % sys.argv[0]
