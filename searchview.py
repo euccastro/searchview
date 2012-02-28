@@ -1,8 +1,8 @@
 """
-Usage: searchview.py [<filename>]
+Launch a window that will read commands from standard input and display the
+search history they represent.
 
-Launch a window that will subscribe to and respond to commands from the 0MQ
-ipc://searchview.ipc.  A command has the format
+Each command has the form:
 
     command_name [<argument> ...]
 
@@ -37,10 +37,13 @@ Supported commands are (in the order in which you should invoke them):
         Mark the vertex with index `vertex` as the goal position of your
         problem.
 
-    iteration_done
+    step <timestamp>
 
-        Mark the end of an iteration of the loop.  This is the finest 
-        granularity that the playback time controls will support.
+        Mark the start of a new 'step' in the search.  A step is the smallest
+        granularity that the playback time controls will support.  Timestamp
+        is in seconds from beginning of search.  It may be used to replay a
+        search in a time frame proportional to that in which the search took
+        place.
 
     vertex_color <vertex> <color>
 
@@ -58,14 +61,11 @@ Supported commands are (in the order in which you should invoke them):
 from __future__ import division
 
 import os
-import sys
-from collections import defaultdict
 from itertools import *
 
 import pyglet
+from pyglet.window import key
 from pyglet.gl import *
-
-import zmq
 
 from util import obj
 from la import vec2
@@ -104,9 +104,9 @@ class view:
         copy_buffer(self.edge_buffer.vertices, edges)
         copy_buffer(self.edge_buffer.colors, self.history[0].edge_colors)
         w = pyglet.window.Window(resizable=True)
-        w.push_handlers(self)
         glPointSize(3)
         glClearColor(.2, .2, .2, 1.)
+        w.push_handlers(self)
 
     # Pyglet event handlers.
 
@@ -161,6 +161,18 @@ class view:
         glLoadIdentity()
 
         return pyglet.event.EVENT_HANDLED
+
+    def on_key_press(self, k, *etc):
+        def update_buffers():
+            current = self.history[self.play_position]
+            copy_buffer(self.vertex_buffer.colors, current.vertex_colors)
+            copy_buffer(self.edge_buffer.colors, current.edge_colors)
+        if k == key.LEFT and self.play_position > 0:
+            self.play_position -= 1
+            update_buffers()
+        elif k == key.RIGHT and self.play_position < len(self.history) - 1:
+            self.play_position += 1
+            update_buffers()
 
     def on_draw(self):
         glClear(GL_COLOR_BUFFER_BIT)
