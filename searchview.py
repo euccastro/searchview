@@ -212,9 +212,7 @@ class control(ui.window):
         controllees = ui.pop_if_in(kw, 'controllees')
         ui.window.__init__(self, **kw)
         self.controllees_def = controllees
-        for child in \
-            ui.window_from_dicttree(yaml.load(file('control.yaml'))).children:
-            self.children.append(child)
+        copy_children(self, 'control.yaml')
 
     def layout_children(self):
         ui.window.layout_children(self)
@@ -233,6 +231,79 @@ class control(ui.window):
                 for v in rec_find(child):
                     yield v
         return list(rec_find(ui.desktop))
+
+def copy_children(self, filename):
+    for child in ui.window_from_dicttree(yaml.load(file(filename))).children:
+        self.children.append(child)
+
+class slider(ui.window):
+    def __init__(self, **kw):
+        ui.window.__init__(self, **kw)
+        copy_children(self, 'slider.yaml')
+        self.handle = self.find_window('handle')
+        self.dragging = None
+    def on_mouse_enter(self, *etc):
+        self.handle.hilite()
+    def on_mouse_leave(self, *etc):
+        self.handle.lolite()
+    def on_mouse_drag(self, x, y, dx, dy, *etc):
+        if not self.dragging:
+            self.dragging = x, self.handle.position
+            ui.start_drag(self)
+        orig_x, orig_pos = self.dragging
+        pos = orig_pos + (x - orig_x) / self.handle.range
+        self.handle.set_position(max(0, min(1, pos)))
+        return True
+    def on_end_drag(self, x, y):
+        self.dragging = None
+        # XXX: I should really check if the mouse cursor is still on me, but
+        #      current ui.py is such a mess..
+        ui.desktop.rec_mouse_motion(x, y, 0, 0)
+
+class slider_background(ui.window):
+    def draw(self):
+        glColor3ub(*colors['teal'])
+        glBegin(GL_LINE_LOOP)
+        glVertex2i(0, 0)
+        glVertex2i(self.rect.width, 0)
+        glVertex2i(self.rect.width, self.rect.height)
+        glVertex2i(0, self.rect.height)
+        glEnd()
+
+class slider_handle(ui.window):
+
+    def __init__(self, **kw):
+        ui.window.__init__(self, **kw)
+        self.position = 0
+        self.lolite()
+
+    def hilite(self):
+        self.color = colors['white']
+
+    def lolite(self):
+        self.color = colors['teal']
+
+    def set_position(self, position):
+        self.position = position
+        self.rect.left = int(position * self.range)
+
+    def _layout(self, rect, blah, parent):
+        mywidth = rect.width // 50
+        self.range = rect.width - mywidth
+        return (ui.rect(int(self.position * self.range),
+                        0,
+                        mywidth,
+                        rect.height),
+                rect)
+                
+    def draw(self):
+        glColor3ub(*self.color)
+        glBegin(GL_QUADS)
+        glVertex2i(0, 0)
+        glVertex2i(self.rect.width, 0)
+        glVertex2i(self.rect.width, self.rect.height)
+        glVertex2i(0, self.rect.height)
+        glEnd()
 
 def parse_commands(command_lines):
     """

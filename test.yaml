@@ -4,6 +4,7 @@ layout: fill
 children:
     - name: controls
       class: searchview.control
+      enabled: yes
       #controllees: view1
       layout: bottom height//5
     - id: view1
