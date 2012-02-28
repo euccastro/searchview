@@ -108,55 +108,64 @@ class view:
         copy_buffer(self.edge_buffer.colors, self.history[0].edge_colors)
         w = pyglet.window.Window(resizable=True)
         w.push_handlers(self)
+        glPointSize(3)
+        glClearColor(.2, .2, .2, 1.)
 
     # Pyglet event handlers.
 
-    def _on_resize(self, width, height):
-        print "on_resize", width, height
+    def on_resize(self, width, height):
+
+        "Fit graph to screen, with some margin."
+        
         margin = .1  # at each border
-        min_ = self.vertices[0].copy()
-        max_ = self.vertices[0].copy()
-        for v in self._vertices:
-            if v.x < min_.x:
-                min_.x = v.x
-            elif v.x > max_.x:
-                max_.x = v.x
-            if v.y < min_.y:
-                min_.y = v.y
-            elif v.y > max_.y:
-                max_.y = v.y
+
+        x = self.vertices[0]
+        y = self.vertices[1]
+        min_ = vec2(x, y)
+        max_ = vec2(x, y)
+        for x in islice(self.vertices, 0, None, 2):
+            if x < min_.x:
+                min_.x = x
+            if x > max_.x:
+                max_.x = x
+        for y in islice(self.vertices, 1, None, 2):
+            if y < min_.y:
+                min_.y = y
+            if y > max_.y:
+                max_.y = y
+
         range_ = max_ - min_
 
         ww = width * (1 - margin * 2)
         wh = height * (1 - margin * 2)
 
-        ratio = vec2(range_.x / ww, range_.y / wh)
+        # Aspect is larger if something is wider in relation to its height.
+        world_aspect = range_.x / range_.y
+        screen_aspect = ww / wh
         
-        if ratio.x < ratio.y:
+        if world_aspect < screen_aspect:
             # We are limited by vertical height (most common case).
-            view_height = range_.y * (1 + margin * 2)
-            pixels_per_world_unit = height / view_height
+            pixels_per_world_unit = wh / range_.y
         else:
-            view_width = range_.x * (1 + margin * 2)
-            pixels_per_world_unit = width / view_width
+            pixels_per_world_unit = ww / range_.x
 
-        world_center = vec2(range_.x / 2, range_.y / 2)
+        world_center = vec2((min_.x + max_.x) / 2, (min_.y + max_.y) / 2)
 
         screen_size_in_world_units = (
                 vec2(width, height) / pixels_per_world_unit)
         left, bottom = world_center - screen_size_in_world_units / 2
         right, top = world_center + screen_size_in_world_units / 2
-        print "left", left, "bottom", bottom, "right", right, "top", top
+
+        glViewport(0, 0, width, height)
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
         glOrtho(left, right, bottom, top, -1.0, 1.0)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
+
         return pyglet.event.EVENT_HANDLED
 
     def on_draw(self):
-        glPointSize(3)
-        glClearColor(.2, .2, .2, 1.)
         glClear(GL_COLOR_BUFFER_BIT)
         self.vertex_buffer.draw(GL_POINTS)
         self.edge_buffer.draw(GL_LINES)
