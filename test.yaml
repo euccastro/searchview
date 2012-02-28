@@ -3,14 +3,14 @@ enabled: yes
 layout: fill
 children:
     - name: controls
-      class: scratch.qor
-      qor: asul
+      class: searchview.control
+      #controllees: view1
       layout: bottom height//5
-    - name: view1
+    - id: view1
       class: searchview.view
       history: test.history
       layout: left width//2
-    - name: view2
+    - id: view2
       class: searchview.view
       history: test2.history
       layout: fill

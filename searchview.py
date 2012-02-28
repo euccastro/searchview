@@ -205,6 +205,35 @@ class view(ui.window):
         glPopAttrib()
         glMatrixMode(GL_MODELVIEW)
 
+
+class control(ui.window):
+
+    def __init__(self, **kw):
+        controllees = ui.pop_if_in(kw, 'controllees')
+        ui.window.__init__(self, **kw)
+        self.controllees_def = controllees
+        for child in \
+            ui.window_from_dicttree(yaml.load(file('control.yaml'))).children:
+            self.children.append(child)
+
+    def layout_children(self):
+        ui.window.layout_children(self)
+        if not hasattr(self, 'controllees'):
+            if self.controllees_def:
+                self.controllees = map(ui.desktop.find_window,
+                                       self.controllees_def.strip().split())
+            else:
+                self.controllees = self.find_views()
+
+    def find_views(self):
+        def rec_find(w):
+            if isinstance(w, view):
+                yield w
+            for child in w.children:
+                for v in rec_find(child):
+                    yield v
+        return list(rec_find(ui.desktop))
+
 def parse_commands(command_lines):
     """
     Parse commands and return a tuple with the following elements:
