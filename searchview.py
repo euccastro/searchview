@@ -168,10 +168,11 @@ class view(ui.window):
         self.world_rect = ui.rect(wleft, wbottom, wwidth, wheight)
 
     def go_to_position(self, i):
-        self.play_position = i
-        current = self.history[i]
-        copy_buffer(self.vertex_buffer.colors, current.vertex_colors)
-        copy_buffer(self.edge_buffer.colors, current.edge_colors)
+        if i != self.play_position:
+            self.play_position = i
+            current = self.history[i]
+            copy_buffer(self.vertex_buffer.colors, current.vertex_colors)
+            copy_buffer(self.edge_buffer.colors, current.edge_colors)
 
     def go_to_time(self, t):
         start, end = 0, len(self.history) - 1
@@ -419,20 +420,6 @@ def clone_array(a):
 
 def copy_buffer(dst, src):
     memmove(dst, src, sizeof(dst))
-
-def test2():
-    cmds = """
-vertices 100 100 200 100 200 200 100 200
-edges 0 1 1 2 1 3
-start 0
-goal 2
-step 0
-vertex_color 0 yellow
-step 1
-vertex_color 1 yellow
-edge_color 0 yellow
-""".strip().split("\n")
-    run(cmds)
 
 def run(filename):
     """
