@@ -1,0 +1,7 @@
+name: root
+children:
+  - id: handle
+    class: searchview.slider_handle
+  - name: background
+    class: searchview.slider_background
+    layout: center width height//5
