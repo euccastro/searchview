@@ -87,9 +87,6 @@ for k, (r, g, b) in colors.items():
         colors["dark_"+k] = tuple(map(to255range, [r/2, g/2, b/2]))
 colors['default'] = colors['grey']
 
-def flatten_vec2s(vs):
-    return list(chain.from_iterable(vs))
-
 class view:
 
     def __init__(self, vertices, edges, start, goal, color_history):
