@@ -2,7 +2,7 @@ name: root
 children:
   - name: timeslider_parent
     enabled: yes
-    layout: bottom height//2
+    layout: bottom height*2//3
     children:
       - id: timeslider
         enabled: yes
@@ -12,14 +12,6 @@ children:
     enabled: yes
     layout: fill
     children:
-      - name: fps_label
-        class: ui.label
-        text: FPS
-        layout: left parent.rect.width//len(parent.children)
-      - id: fps_edit
-        enabled: yes
-        class: ui.edit
-        layout: left parent.rect.width//len(parent.children)
       - name: total_label
         class: ui.label
         text: Total Time
@@ -27,6 +19,7 @@ children:
       - id: total_edit
         enabled: yes
         class: ui.edit
+        maxlen: 17
         layout: left parent.rect.width//len(parent.children)
       - id: realtime_button
         enabled: yes

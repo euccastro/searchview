@@ -6,7 +6,7 @@ children:
       class: searchview.control
       enabled: yes
       #controllees: view1
-      layout: bottom height//5
+      layout: bottom height//8
     - id: view1
       class: searchview.view
       history: test.history
