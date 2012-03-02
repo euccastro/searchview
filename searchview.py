@@ -64,6 +64,7 @@ from itertools import *
 import os
 import stackless
 import sys
+import time
 
 import pyglet
 from pyglet.window import key
@@ -220,11 +221,10 @@ class control(ui.window):
         copy_children(self, 'control.yaml')
         self.slider = self.find_window('timeslider')
         self.slider.set_position(0)
-        self.slider.set_callback(self.on_slide)
+        self.slider.set_callback(self.set_position)
         self.find_window('realtime_button').callback = self.set_realtime
         self.find_window('play_button').callback = self.on_click_play
         total_edit = self.find_window('total_edit')
-        total_edit.on_enter = self.on_total_edit_enter
         total_edit.validate_text = self.validate_total_edit_text
         self.play_time = 5
         self.hide_while_playing = ['total_label',
@@ -233,22 +233,35 @@ class control(ui.window):
 
     def validate_total_edit_text(self, text):
         try:
-            return float(text) > 0.0
+            t = float(text)
         except ValueError:
             return False
-
-    def on_total_edit_enter(self, text):
-        if self.validate_total_edit_text(text):
-            self.play_time = float(text)
+        if t > 0:
+            self.play_time = t
+            return True
+        else:
+            return False
 
     def on_click_play(self):
         for each in self.hide_while_playing:
             self.find_window(each).visible = False
         play_button = self.find_window('play_button')
         play_button.set_caption('Stop')
-        play_button.callback = self.on_click_stop
+        play_button.callback = self.stop
+        pyglet.clock.set_fps_limit(60)
+        self.start_time = time.time()
+        pyglet.clock.schedule(self.play)
 
-    def on_click_stop(self):
+    def play(self, dt):
+        now = time.time() - self.start_time
+        position = now / self.play_time
+        if position > 1.0:
+            position = 1.0
+            self.stop()
+        self.set_position(position)
+
+    def stop(self):
+        pyglet.clock.unschedule(self.play)
         for each in self.hide_while_playing:
             self.find_window(each).visible = True
         play_button = self.find_window('play_button')
@@ -256,9 +269,10 @@ class control(ui.window):
         play_button.callback = self.on_click_play
 
     def set_realtime(self):
+        self.play_time = self.end_time
         self.find_window('total_edit').doc.text = str(self.end_time)
 
-    def on_slide(self, position):
+    def set_position(self, position):
         self.slider.set_position(position)
         time = self.end_time * position
         for slave in self.controllees:
