@@ -221,6 +221,28 @@ class control(ui.window):
         self.slider = self.find_window('timeslider')
         self.slider.set_position(0)
         self.slider.set_callback(self.on_slide)
+        self.find_window('realtime_button').callback = self.set_realtime
+        self.find_window('play_button').callback = self.on_click_play
+        total_edit = self.find_window('total_edit')
+        total_edit.on_enter = self.on_total_edit_enter
+        total_edit.validate_text = self.validate_total_edit_text
+        self.play_time = 5
+
+    def validate_total_edit_text(self, text):
+        try:
+            return float(text) > 0.0
+        except ValueError:
+            return False
+
+    def on_total_edit_enter(self, text):
+        if self.validate_total_edit_text(text):
+            self.play_time = float(text)
+
+    def on_click_play(self):
+        print "Now I would play."
+
+    def set_realtime(self):
+        self.find_window('total_edit').doc.text = str(self.end_time)
 
     def on_slide(self, position):
         self.slider.set_position(position)
@@ -237,6 +259,7 @@ class control(ui.window):
             else:
                 self.controllees = self.find_views()
             self.end_time = max(c.history[-1].time for c in self.controllees)
+            self.set_realtime()
 
     def find_views(self):
         def rec_find(w):
