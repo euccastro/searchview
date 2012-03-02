@@ -12,7 +12,7 @@ children:
     enabled: yes
     layout: fill
     children:
-      - name: total_label
+      - id: total_label
         class: ui.label
         text: Total Time
         layout: left parent.rect.width//len(parent.children)

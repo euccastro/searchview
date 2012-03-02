@@ -227,6 +227,9 @@ class control(ui.window):
         total_edit.on_enter = self.on_total_edit_enter
         total_edit.validate_text = self.validate_total_edit_text
         self.play_time = 5
+        self.hide_while_playing = ['total_label',
+                                   'total_edit', 
+                                   'realtime_button']
 
     def validate_total_edit_text(self, text):
         try:
@@ -239,7 +242,18 @@ class control(ui.window):
             self.play_time = float(text)
 
     def on_click_play(self):
-        print "Now I would play."
+        for each in self.hide_while_playing:
+            self.find_window(each).visible = False
+        play_button = self.find_window('play_button')
+        play_button.set_caption('Stop')
+        play_button.callback = self.on_click_stop
+
+    def on_click_stop(self):
+        for each in self.hide_while_playing:
+            self.find_window(each).visible = True
+        play_button = self.find_window('play_button')
+        play_button.set_caption('Play')
+        play_button.callback = self.on_click_play
 
     def set_realtime(self):
         self.find_window('total_edit').doc.text = str(self.end_time)
