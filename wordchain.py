@@ -2,12 +2,12 @@
 
 import gc
 from heapq import heappush, heappop
+from itertools import *
 import string
 
 
-raw_dict = file('/usr/share/dict/american-english').read()
-
-default_dictionary = set(raw_dict.split())
+default_dictionary = set(imap(str.strip, 
+                              file('/usr/share/dict/american-english')))
 
 
 def memoized(f):

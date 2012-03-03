@@ -457,6 +457,9 @@ def parse_commands(command_lines):
             index = int(index)
             color_history[-1].edge_colors[index*6:index*6+6] = \
                     colors[color_name] * 2
+        else:
+            raise RuntimeError("Unknown command:", cmd)
+
     assert None not in [vertices, edges, start, goal]
     return vertices, edges, start, goal, color_history
 

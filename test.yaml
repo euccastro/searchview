@@ -2,10 +2,23 @@ name: root
 enabled: yes
 layout: fill
 children:
+    - name: right_parent
+      enabled: yes
+      layout: right width//3
+      children:
+        - name: right_controls
+          class: searchview.control
+          enabled: yes
+          controllees: view3
+          layout: bottom height//8
+        - id: view3
+          class: searchview.view
+          history: test.history
+          layout: fill
     - name: controls
       class: searchview.control
       enabled: yes
-      #controllees: view1
+      controllees: view1 view2
       layout: bottom height//8
     - id: view1
       class: searchview.view
