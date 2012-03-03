@@ -122,6 +122,7 @@ class view(ui.window):
         orig_x, orig_pos = self.dragging
         self.drag_end = x, y
         return True
+
     def on_end_drag(self, x, y):
         x1, y1 = self.dragging
         x2, y2 = self.drag_end
@@ -134,13 +135,13 @@ class view(ui.window):
         if button == pyglet.window.mouse.RIGHT:
             self.reset_zoom()
     def set_zoom(self, req_rect):
-        current_aspect = self.world_rect.width / self.world_rect.height
+        current_aspect = self.zoom_rect.width / self.zoom_rect.height
         requested_aspect = req_rect.width / req_rect.height
         # Make sure all the requested area is in the screen, and no more than
         # necessary for that.
         if requested_aspect < current_aspect:
             # Screen is wider than desired frame.
-            new_width = req_rect.width * current_aspect / requested_aspect
+            new_width = current_aspect * req_rect.height
             assert new_width > req_rect.width
             r = ui.rect(req_rect.center.x - new_width / 2,
                         req_rect.bottom,
@@ -148,18 +149,18 @@ class view(ui.window):
                         req_rect.height)
         else:
             # Screen is taller than desired frame.
-            new_height = req_rect.height * requested_aspect / current_aspect
+            new_height = req_rect.width / current_aspect
             assert new_height > req_rect.height
             r = ui.rect(req_rect.left,
                         req_rect.center.y - new_height / 2,
                         req_rect.width,
                         new_height)
-        wratio = self.world_rect.width / self.rect.width
-        hratio = self.world_rect.height / self.rect.height
+        wratio = self.zoom_rect.width / self.rect.width
+        hratio = self.zoom_rect.height / self.rect.height
         assert abs(wratio/hratio - 1) < 0.001
         ratio = (wratio + hratio) / 2
-        self.zoom_rect = ui.rect(r.left * ratio, 
-                                 r.bottom * ratio, 
+        self.zoom_rect = ui.rect(self.zoom_rect.left + r.left * ratio, 
+                                 self.zoom_rect.bottom + r.bottom * ratio, 
                                  r.width * ratio,
                                  r.height * ratio)
 
@@ -187,8 +188,6 @@ class view(ui.window):
 
     def layout_children(self):
         "Fit graph to screen, with some margin."
-
-        ui.window.layout_children(self)
 
         window_rect = self.absolute_rect = self.find_absolute_rect()
         
@@ -240,6 +239,9 @@ class view(ui.window):
         self.go_to_position(start)
 
     def draw(self):
+        if not hasattr(self, 'absolute_rect'):
+            # XXX get rid of this ugliness...
+            return
         glPushAttrib(GL_VIEWPORT_BIT)
         glViewport(self.absolute_rect.left,
                    self.absolute_rect.bottom, 
