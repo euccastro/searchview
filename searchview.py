@@ -135,6 +135,9 @@ class view(ui.window):
         if button == pyglet.window.mouse.RIGHT:
             self.reset_zoom()
     def set_zoom(self, req_rect):
+        if not req_rect.width or not req_rect.height:
+            # Bogus dragging.
+            return
         current_aspect = self.zoom_rect.width / self.zoom_rect.height
         requested_aspect = req_rect.width / req_rect.height
         # Make sure all the requested area is in the screen, and no more than
@@ -549,7 +552,7 @@ def run(filename):
     """
     w = pyglet.window.Window(resizable=True)
     ui.init(w)
-    glPointSize(2)
+    glPointSize(3)
     glClearColor(.2, .2, .2, 1.)
     ui.desktop.add_child(ui.window_from_dicttree(yaml.load(file(filename))))
     stackless.tasklet(pyglet.app.run)()
