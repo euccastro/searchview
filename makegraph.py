@@ -97,7 +97,6 @@ def test():
     print "Generating connections..."
     connections = set(frozenset((word, edit))
                       for word in wc.default_dictionary
-                          if word.startswith('a')  # For performance while testing.
                       for edit in wc.single_edits(word)
                           if edit != word
                           and edit in wc.default_dictionary)

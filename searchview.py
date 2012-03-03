@@ -112,6 +112,59 @@ class view(ui.window):
         copy_buffer(self.vertex_buffer.colors, self.history[0].vertex_colors)
         copy_buffer(self.edge_buffer.vertices, edges)
         copy_buffer(self.edge_buffer.colors, self.history[0].edge_colors)
+        self.dragging = None
+        self.drag_end = None
+
+    def on_mouse_drag(self, x, y, dx, dy, *etc):
+        if not self.dragging:
+            self.dragging = x, y
+            ui.start_drag(self)
+        orig_x, orig_pos = self.dragging
+        self.drag_end = x, y
+        return True
+    def on_end_drag(self, x, y):
+        x1, y1 = self.dragging
+        x2, y2 = self.drag_end
+        self.set_zoom(ui.rect(min(x1, x2), 
+                              min(y1, y2),
+                              abs(x1-x2), 
+                              abs(y1-y2)))
+        self.dragging = self.drag_end = None
+    def on_mouse_press(self, x, y, button, mods):
+        if button == pyglet.window.mouse.RIGHT:
+            self.reset_zoom()
+    def set_zoom(self, req_rect):
+        current_aspect = self.world_rect.width / self.world_rect.height
+        requested_aspect = req_rect.width / req_rect.height
+        # Make sure all the requested area is in the screen, and no more than
+        # necessary for that.
+        if requested_aspect < current_aspect:
+            # Screen is wider than desired frame.
+            new_width = req_rect.width * current_aspect / requested_aspect
+            assert new_width > req_rect.width
+            r = ui.rect(req_rect.center.x - new_width / 2,
+                        req_rect.bottom,
+                        new_width,
+                        req_rect.height)
+        else:
+            # Screen is taller than desired frame.
+            new_height = req_rect.height * requested_aspect / current_aspect
+            assert new_height > req_rect.height
+            r = ui.rect(req_rect.left,
+                        req_rect.center.y - new_height / 2,
+                        req_rect.width,
+                        new_height)
+        wratio = self.world_rect.width / self.rect.width
+        hratio = self.world_rect.height / self.rect.height
+        assert abs(wratio/hratio - 1) < 0.001
+        ratio = (wratio + hratio) / 2
+        self.zoom_rect = ui.rect(r.left * ratio, 
+                                 r.bottom * ratio, 
+                                 r.width * ratio,
+                                 r.height * ratio)
+
+    def reset_zoom(self):
+        self.zoom_rect = self.world_rect
 
     def world_extents(self):
         if not hasattr(self, '_world_extents'):
@@ -166,7 +219,8 @@ class view(ui.window):
 
         wleft, wbottom = (world_center - screen_size_in_world_units / 2)
         wwidth, wheight = screen_size_in_world_units
-        self.world_rect = ui.rect(wleft, wbottom, wwidth, wheight)
+        self.world_rect = self.zoom_rect = ui.rect(
+                wleft, wbottom, wwidth, wheight)
 
     def go_to_position(self, i):
         if i != self.play_position:
@@ -194,10 +248,10 @@ class view(ui.window):
         glMatrixMode(GL_PROJECTION)
         glPushMatrix()
         glLoadIdentity()
-        glOrtho(self.world_rect.left, 
-                self.world_rect.right, 
-                self.world_rect.bottom, 
-                self.world_rect.top, 
+        glOrtho(self.zoom_rect.left, 
+                self.zoom_rect.right, 
+                self.zoom_rect.bottom, 
+                self.zoom_rect.top, 
                 -1.0, 
                 1.0)
         glMatrixMode(GL_MODELVIEW)
@@ -210,7 +264,16 @@ class view(ui.window):
         glPopMatrix()
         glPopAttrib()
         glMatrixMode(GL_MODELVIEW)
-
+        if self.dragging and self.drag_end:
+            x0, y0 = self.dragging
+            x1, y1 = self.drag_end
+            glColor3ub(*colors['teal'])
+            glBegin(GL_LINE_LOOP)
+            glVertex2i(x0, y0)
+            glVertex2i(x1, y0)
+            glVertex2i(x1, y1)
+            glVertex2i(x0, y1)
+            glEnd()
 
 class control(ui.window):
 
@@ -484,7 +547,7 @@ def run(filename):
     """
     w = pyglet.window.Window(resizable=True)
     ui.init(w)
-    glPointSize(3)
+    glPointSize(2)
     glClearColor(.2, .2, .2, 1.)
     ui.desktop.add_child(ui.window_from_dicttree(yaml.load(file(filename))))
     stackless.tasklet(pyglet.app.run)()
