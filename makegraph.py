@@ -85,7 +85,6 @@ def get_edges():
     print "Generating edges..."
     return [(word, edit)
              for word in wc.default_dictionary
-                 if word.startswith('b')
              for edit in wc.single_edits(word)
                  if edit != word
                  and edit in wc.default_dictionary]
@@ -139,7 +138,7 @@ def write_graph(edges, out):
     out.write("end edges\n")
 
 if __name__ == '__main__':
-    test_search()
+    test_graph()
 
 
 

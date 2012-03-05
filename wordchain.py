@@ -4,6 +4,7 @@ import gc
 from heapq import heappush, heappop
 from itertools import *
 import string
+import time
 
 
 default_dictionary = set(
@@ -57,7 +58,20 @@ def edit_distance(w1, w2):
 #ms_edit_distance = memoized_symmetric(edit_distance)
 
 
-def wordchain(start, goal, dictionary=default_dictionary):
+def wordchain(start, 
+              goal, 
+              dictionary=default_dictionary, 
+              log_fn=None):
+
+    if log_fn is None:
+        def log(*what):
+            pass
+    else:
+        def log(*what):
+            log_fn(" ".join(map(str, what)) + "\n")
+
+    log("start", start)
+    log("goal", goal)
 
     gc.disable()
 
@@ -65,16 +79,21 @@ def wordchain(start, goal, dictionary=default_dictionary):
     search_from_start = AStarSearchState(start, goal)
     search_from_goal = AStarSearchState(goal, start)
 
-    permutations = [(search_from_start, search_from_goal),
-                    (search_from_goal, search_from_start)]
+    permutations = [(search_from_start, search_from_goal, 'red'),
+                    (search_from_goal, search_from_start, 'blue')]
 
+    start_time = time.time()
     while search_from_start.frontier and search_from_goal.frontier:
-        for search, other in permutations:
+        log("step", time.time() - start_time)
+        for search, other, color in permutations:
             estimated_cost, cost_so_far, chain, contact = heappop(search.frontier)
             last = chain[-1]
             if last in search.visited:
                 # We have considered a chain that reaches this node earlier.
                 continue
+            log("vertex_color", last, 'dark_' + color)
+            if len(chain) > 1:
+                log("edge_color", chain[-2], last, 'dark_' + color)
             search.visited.add(last)
             if contact:
                 solution = chain + list(reversed(contact[0]))
@@ -89,6 +108,8 @@ def wordchain(start, goal, dictionary=default_dictionary):
                     other_contact.append(chain[:-1])
             for word in single_edits(last):
                 if word in dictionary and word not in search.visited:
+                    log("vertex_color", word, color)
+                    log("edge_color", last, word, color)
                     heappush(search.frontier, 
                              (cost_so_far + edit_distance(word, search.goal), 
                               cost_so_far + 1, 
@@ -130,8 +151,10 @@ if __name__ == '__main__':
         times = int(sys.argv[3])
     else:
         times = 1
-    for i in xrange(times):
-        words = wordchain(*sys.argv[1:3])
+    for i in xrange(times-1):
+        wordchain(*sys.argv[1:3])
+    with file('history', 'w') as out:
+        words = wordchain(sys.argv[1], sys.argv[2], log_fn=out.write)
     if words is None:
         print "No chain found."
     else:
