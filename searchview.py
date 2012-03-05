@@ -95,6 +95,72 @@ for k, (r, g, b) in colors.items():
         colors["dark_"+k] = tuple(map(to255range, [r/2, g/2, b/2]))
 colors['default'] = colors['grey']
 
+class bsp_tree:
+
+    max_verts_per_cell = 10
+
+    class node:
+        def __init__(self, direction, center, less, more):
+            """
+            `direction` == 0 for nodes split by a vertical line (i.e. according
+            to x).
+            `direction` == 1 for nodes split by a horizontal line (i.e.
+            according to y).
+            `center` is x coordinate if direction == 0, else y coordinate.
+            `less` and `more` are nodes representing the points at either side
+            of my `center`.
+            """
+            self.direction = direction
+            self.center = center
+            self.less = less
+            self.more = more
+        def query(self, *args):
+            return (self.less
+                    if args[self.direction] < self.center
+                    else self.more).query(*args)
+
+    class leaf:
+        def __init__(self, vertices):
+            self.vertices = vertices
+        def query(self, x, y):
+            return self.vertices
+            
+    def __init__(self, vertices):
+        self.root = self.build(vertices)
+
+    def query(self, x, y):
+        return self.root.query(x, y)
+
+    @staticmethod
+    def extents(vertices):
+        min_ = vec2(*vertices[0])
+        max_ = vec2(*vertices[0])
+        for x, y in vertices:
+            if x < min_.x:
+                min_.x = x
+            if x > max_.x:
+                max_.x = x
+            if y < min_.y:
+                min_.y = y
+            if y > max_.y:
+                max_.y = y
+        size = max_ - min_
+        return ui.rect(min_.x, min_.y, size.x, size.y)
+
+    def build(self, vertices):
+        if len(vertices) <= self.max_verts_per_cell:
+            return self.leaf(vertices)
+        else:
+            rect = self.extents(vertices)
+            index = (rect.width < rect.height)
+            less = []
+            more = []
+            center = rect.center[index]
+            for v in vertices:
+                (less if v[index] < center else more).append(v)
+            assert less and more
+            return self.node(index, center, self.build(less), self.build(more))
+
 class view(ui.window):
 
     def __init__(self, **kw):
@@ -118,6 +184,23 @@ class view(ui.window):
         copy_buffer(self.edge_buffer.colors, self.history[0].edge_colors)
         self.dragging = None
         self.drag_end = None
+        self.closest_vertex = None
+        min_, max_ = self.world_extents()
+        rect = ui.rect(min_.x, min_.y, max_.x - min_.x, max_.y - min_.y)
+        self.bsp_tree = bsp_tree(zip(islice(self.vertices, 0, None, 2),
+                                     islice(self.vertices, 1, None, 2)))
+
+    def on_mouse_motion(self, x, y, *etc):
+        # XXX: factor this out.
+        ratio = self.get_zoom_ratio()
+        projx = x * ratio + self.zoom_rect.left
+        projy = y * ratio + self.zoom_rect.bottom
+        self.closest_vertex = min(
+                self.bsp_tree.query(projx, projy),
+                key=(lambda (x, y): (x-projx)**2 + (y-projy)**2))
+
+    def on_mouse_leave(self, *etc):
+        self.closest_vertex = None
 
     def on_mouse_drag(self, x, y, dx, dy, *etc):
         if not self.dragging:
@@ -162,14 +245,18 @@ class view(ui.window):
                         req_rect.center.y - new_height / 2,
                         req_rect.width,
                         new_height)
-        wratio = self.zoom_rect.width / self.rect.width
-        hratio = self.zoom_rect.height / self.rect.height
-        assert abs(wratio/hratio - 1) < 0.001
-        ratio = (wratio + hratio) / 2
+        ratio = self.get_zoom_ratio()
         self.zoom_rect = ui.rect(self.zoom_rect.left + r.left * ratio, 
                                  self.zoom_rect.bottom + r.bottom * ratio, 
                                  r.width * ratio,
                                  r.height * ratio)
+
+    def get_zoom_ratio(self):
+        wratio = self.zoom_rect.width / self.rect.width
+        hratio = self.zoom_rect.height / self.rect.height
+        # These should be mostly the same, barring some small rounding error.
+        assert abs(wratio/hratio - 1) < 0.001
+        return (wratio + hratio) / 2
 
     def reset_zoom(self):
         self.zoom_rect = self.world_rect
@@ -268,6 +355,11 @@ class view(ui.window):
         glLoadIdentity()
         self.edge_buffer.draw(GL_LINES)
         self.vertex_buffer.draw(GL_POINTS)
+        if self.closest_vertex is not None:
+            glColor3f(1., 1., 1.)
+            glBegin(GL_POINTS)
+            glVertex2f(*self.closest_vertex)
+            glEnd()
         glPopMatrix()
         glMatrixMode(GL_PROJECTION)
         glPopMatrix()

@@ -15,7 +15,7 @@ children:
     - id: view2
       class: searchview.view
       enabled: yes
-      graph: graph
+      graph: puzzle-computer.graph
       history: history
       layout: fill
 

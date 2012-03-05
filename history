@@ -1,216 +1,343 @@
-start rags
-goal riches
-step 9.53674316406e-07
-vertex_color rags dark_red
-vertex_color brags red
-edge_color rags brags red
-vertex_color bags red
-edge_color rags bags red
-vertex_color crags red
-edge_color rags crags red
-vertex_color drags red
-edge_color rags drags red
-vertex_color fags red
-edge_color rags fags red
-vertex_color gags red
-edge_color rags gags red
-vertex_color hags red
-edge_color rags hags red
-vertex_color jags red
-edge_color rags jags red
-vertex_color lags red
-edge_color rags lags red
-vertex_color nags red
-edge_color rags nags red
-vertex_color sags red
-edge_color rags sags red
-vertex_color tags red
-edge_color rags tags red
-vertex_color wags red
-edge_color rags wags red
-vertex_color rigs red
-edge_color rags rigs red
-vertex_color rugs red
-edge_color rags rugs red
-vertex_color rams red
-edge_color rags rams red
-vertex_color raps red
-edge_color rags raps red
-vertex_color rats red
-edge_color rags rats red
-vertex_color rays red
-edge_color rags rays red
-vertex_color ragas red
-edge_color rags ragas red
-vertex_color raga red
-edge_color rags raga red
-vertex_color rages red
-edge_color rags rages red
-vertex_color rage red
-edge_color rags rage red
-vertex_color rag red
-edge_color rags rag red
-vertex_color riches dark_blue
-vertex_color fiches blue
-edge_color riches fiches blue
-vertex_color niches blue
-edge_color riches niches blue
-vertex_color rices blue
-edge_color riches rices blue
-vertex_color richer blue
-edge_color riches richer blue
-vertex_color richest blue
-edge_color riches richest blue
-step 0.00122594833374
-vertex_color rages dark_red
-edge_color rags rages dark_red
-vertex_color cages red
-edge_color rages cages red
-vertex_color gages red
-edge_color rages gages red
-vertex_color pages red
-edge_color rages pages red
-vertex_color sages red
-edge_color rages sages red
-vertex_color wages red
-edge_color rages wages red
-vertex_color ages red
-edge_color rages ages red
-vertex_color races red
-edge_color rages races red
-vertex_color rakes red
-edge_color rages rakes red
-vertex_color ranges red
-edge_color rages ranges red
-vertex_color rapes red
-edge_color rages rapes red
-vertex_color rares red
-edge_color rages rares red
-vertex_color rates red
-edge_color rages rates red
-vertex_color raves red
-edge_color rages raves red
-vertex_color razes red
-edge_color rages razes red
-vertex_color ragas red
-edge_color rages ragas red
-vertex_color raged red
-edge_color rages raged red
-vertex_color rage red
-edge_color rages rage red
-vertex_color rices dark_blue
-edge_color riches rices dark_blue
-vertex_color dices blue
-edge_color rices dices blue
-vertex_color fices blue
-edge_color rices fices blue
-vertex_color prices blue
-edge_color rices prices blue
-vertex_color sices blue
-edge_color rices sices blue
-vertex_color vices blue
-edge_color rices vices blue
-vertex_color ices blue
-edge_color rices ices blue
-vertex_color races blue
-edge_color rices races blue
-vertex_color rides blue
-edge_color rices rides blue
-vertex_color riles blue
-edge_color rices riles blue
-vertex_color rimes blue
-edge_color rices rimes blue
-vertex_color ripes blue
-edge_color rices ripes blue
-vertex_color rises blue
-edge_color rices rises blue
-vertex_color rites blue
-edge_color rices rites blue
-vertex_color rives blue
-edge_color rices rives blue
-vertex_color ricks blue
-edge_color rices ricks blue
-vertex_color riced blue
-edge_color rices riced blue
-vertex_color rice blue
-edge_color rices rice blue
-step 0.00232887268066
-vertex_color rigs dark_red
-edge_color rags rigs dark_red
-vertex_color brigs red
-edge_color rigs brigs red
-vertex_color digs red
-edge_color rigs digs red
-vertex_color figs red
-edge_color rigs figs red
-vertex_color gigs red
-edge_color rigs gigs red
-vertex_color jigs red
-edge_color rigs jigs red
-vertex_color prigs red
-edge_color rigs prigs red
-vertex_color pigs red
-edge_color rigs pigs red
-vertex_color wigs red
-edge_color rigs wigs red
-vertex_color rugs red
-edge_color rigs rugs red
-vertex_color ribs red
-edge_color rigs ribs red
-vertex_color rids red
-edge_color rigs rids red
-vertex_color rims red
-edge_color rigs rims red
-vertex_color rings red
-edge_color rigs rings red
-vertex_color rips red
-edge_color rigs rips red
-vertex_color rig red
-edge_color rigs rig red
-vertex_color races dark_blue
-edge_color rices races dark_blue
-vertex_color braces blue
-edge_color races braces blue
-vertex_color faces blue
-edge_color races faces blue
-vertex_color graces blue
-edge_color races graces blue
-vertex_color laces blue
-edge_color races laces blue
-vertex_color maces blue
-edge_color races maces blue
-vertex_color paces blue
-edge_color races paces blue
-vertex_color traces blue
-edge_color races traces blue
-vertex_color taces blue
-edge_color races taces blue
-vertex_color aces blue
-edge_color races aces blue
-vertex_color rages blue
-edge_color races rages blue
-vertex_color rakes blue
-edge_color races rakes blue
-vertex_color rapes blue
-edge_color races rapes blue
-vertex_color rares blue
-edge_color races rares blue
-vertex_color rates blue
-edge_color races rates blue
-vertex_color raves blue
-edge_color races raves blue
-vertex_color razes blue
-edge_color races razes blue
-vertex_color racks blue
-edge_color races racks blue
-vertex_color raced blue
-edge_color races raced blue
-vertex_color racers blue
-edge_color races racers blue
-vertex_color racer blue
-edge_color races racer blue
-vertex_color race blue
-edge_color races race blue
-step 0.0031430721283
-vertex_color races dark_red
-edge_color rages races dark_red
+start puzzle
+goal computer
+step 0.0
+vertex_color puzzle dark_red
+vertex_color guzzle red
+edge_color puzzle guzzle red
+vertex_color muzzle red
+edge_color puzzle muzzle red
+vertex_color nuzzle red
+edge_color puzzle nuzzle red
+vertex_color puzzled red
+edge_color puzzle puzzled red
+vertex_color puzzler red
+edge_color puzzle puzzler red
+vertex_color puzzles red
+edge_color puzzle puzzles red
+vertex_color computer dark_blue
+vertex_color commuter blue
+edge_color computer commuter blue
+vertex_color computed blue
+edge_color computer computed blue
+vertex_color computes blue
+edge_color computer computes blue
+vertex_color compute blue
+edge_color computer compute blue
+vertex_color computers blue
+edge_color computer computers blue
+step 0.0016040802002
+vertex_color puzzler dark_red
+edge_color puzzle puzzler dark_red
+vertex_color guzzler red
+edge_color puzzler guzzler red
+vertex_color puzzled red
+edge_color puzzler puzzled red
+vertex_color puzzles red
+edge_color puzzler puzzles red
+vertex_color puzzlers red
+edge_color puzzler puzzlers red
+vertex_color compute dark_blue
+edge_color computer compute dark_blue
+vertex_color commute blue
+edge_color compute commute blue
+vertex_color compete blue
+edge_color compute compete blue
+vertex_color compote blue
+edge_color compute compote blue
+vertex_color computed blue
+edge_color compute computed blue
+vertex_color computes blue
+edge_color compute computes blue
+step 0.00252294540405
+vertex_color guzzle dark_red
+edge_color puzzle guzzle dark_red
+vertex_color muzzle red
+edge_color guzzle muzzle red
+vertex_color nuzzle red
+edge_color guzzle nuzzle red
+vertex_color guzzled red
+edge_color guzzle guzzled red
+vertex_color guzzler red
+edge_color guzzle guzzler red
+vertex_color guzzles red
+edge_color guzzle guzzles red
+vertex_color commuter dark_blue
+edge_color computer commuter dark_blue
+vertex_color commuted blue
+edge_color commuter commuted blue
+vertex_color commutes blue
+edge_color commuter commutes blue
+vertex_color commute blue
+edge_color commuter commute blue
+vertex_color commuters blue
+edge_color commuter commuters blue
+step 0.00337505340576
+vertex_color muzzle dark_red
+edge_color puzzle muzzle dark_red
+vertex_color nuzzle red
+edge_color muzzle nuzzle red
+vertex_color muzzled red
+edge_color muzzle muzzled red
+vertex_color muzzles red
+edge_color muzzle muzzles red
+vertex_color computed dark_blue
+edge_color computer computed dark_blue
+vertex_color commuted blue
+edge_color computed commuted blue
+vertex_color competed blue
+edge_color computed competed blue
+vertex_color computes blue
+edge_color computed computes blue
+step 0.0040590763092
+vertex_color nuzzle dark_red
+edge_color puzzle nuzzle dark_red
+vertex_color nozzle red
+edge_color nuzzle nozzle red
+vertex_color nuzzled red
+edge_color nuzzle nuzzled red
+vertex_color nuzzles red
+edge_color nuzzle nuzzles red
+vertex_color computers dark_blue
+edge_color computer computers dark_blue
+vertex_color commuters blue
+edge_color computers commuters blue
+vertex_color computes blue
+edge_color computers computes blue
+step 0.00478005409241
+vertex_color puzzled dark_red
+edge_color puzzle puzzled dark_red
+vertex_color guzzled red
+edge_color puzzled guzzled red
+vertex_color muzzled red
+edge_color puzzled muzzled red
+vertex_color nuzzled red
+edge_color puzzled nuzzled red
+vertex_color puzzles red
+edge_color puzzled puzzles red
+vertex_color computes dark_blue
+edge_color computer computes dark_blue
+vertex_color commutes blue
+edge_color computes commutes blue
+vertex_color competes blue
+edge_color computes competes blue
+vertex_color compotes blue
+edge_color computes compotes blue
+step 0.00552892684937
+vertex_color puzzles dark_red
+edge_color puzzle puzzles dark_red
+vertex_color guzzles red
+edge_color puzzles guzzles red
+vertex_color muzzles red
+edge_color puzzles muzzles red
+vertex_color nuzzles red
+edge_color puzzles nuzzles red
+vertex_color puzzlers red
+edge_color puzzles puzzlers red
+vertex_color commute dark_blue
+edge_color commuter commute dark_blue
+vertex_color commune blue
+edge_color commute commune blue
+vertex_color commuted blue
+edge_color commute commuted blue
+vertex_color commutes blue
+edge_color commute commutes blue
+step 0.00619506835938
+vertex_color guzzler dark_red
+edge_color guzzle guzzler dark_red
+vertex_color guzzled red
+edge_color guzzler guzzled red
+vertex_color guzzles red
+edge_color guzzler guzzles red
+vertex_color guzzlers red
+edge_color guzzler guzzlers red
+step 0.00652098655701
+vertex_color nozzle dark_red
+edge_color nuzzle nozzle dark_red
+vertex_color nozzles red
+edge_color nozzle nozzles red
+vertex_color compete dark_blue
+edge_color compute compete dark_blue
+vertex_color complete blue
+edge_color compete complete blue
+vertex_color compote blue
+edge_color compete compote blue
+vertex_color competed blue
+edge_color compete competed blue
+vertex_color competes blue
+edge_color compete competes blue
+step 0.00716590881348
+vertex_color compote dark_blue
+edge_color compute compote dark_blue
+vertex_color compose blue
+edge_color compote compose blue
+vertex_color compotes blue
+edge_color compote compotes blue
+step 0.00751805305481
+vertex_color guzzled dark_red
+edge_color guzzle guzzled dark_red
+vertex_color muzzled red
+edge_color guzzled muzzled red
+vertex_color nuzzled red
+edge_color guzzled nuzzled red
+vertex_color guzzles red
+edge_color guzzled guzzles red
+vertex_color commuted dark_blue
+edge_color commuter commuted dark_blue
+vertex_color communed blue
+edge_color commuted communed blue
+vertex_color commutes blue
+edge_color commuted commutes blue
+step 0.00823593139648
+vertex_color guzzles dark_red
+edge_color guzzle guzzles dark_red
+vertex_color muzzles red
+edge_color guzzles muzzles red
+vertex_color nuzzles red
+edge_color guzzles nuzzles red
+vertex_color guzzlers red
+edge_color guzzles guzzlers red
+vertex_color commutes dark_blue
+edge_color commuter commutes dark_blue
+vertex_color communes blue
+edge_color commutes communes blue
+vertex_color commuters blue
+edge_color commutes commuters blue
+step 0.00897192955017
+step 0.00897908210754
+step 0.00898408889771
+vertex_color muzzled dark_red
+edge_color muzzle muzzled dark_red
+vertex_color nuzzled red
+edge_color muzzled nuzzled red
+vertex_color muzzles red
+edge_color muzzled muzzles red
+step 0.00927400588989
+vertex_color muzzles dark_red
+edge_color muzzle muzzles dark_red
+vertex_color nuzzles red
+edge_color muzzles nuzzles red
+vertex_color competed dark_blue
+edge_color computed competed dark_blue
+vertex_color completed blue
+edge_color competed completed blue
+vertex_color competes blue
+edge_color competed competes blue
+step 0.0100059509277
+step 0.0100119113922
+vertex_color nuzzled dark_red
+edge_color nuzzle nuzzled dark_red
+vertex_color nuzzles red
+edge_color nuzzled nuzzles red
+step 0.0102980136871
+vertex_color nuzzles dark_red
+edge_color nuzzle nuzzles dark_red
+vertex_color nozzles red
+edge_color nuzzles nozzles red
+step 0.010575056076
+vertex_color competes dark_blue
+edge_color computes competes dark_blue
+vertex_color completes blue
+edge_color competes completes blue
+vertex_color compotes blue
+edge_color competes compotes blue
+step 0.0109801292419
+vertex_color compotes dark_blue
+edge_color computes compotes dark_blue
+vertex_color composes blue
+edge_color compotes composes blue
+step 0.0113899707794
+vertex_color commune dark_blue
+edge_color commute commune dark_blue
+vertex_color communed blue
+edge_color commune communed blue
+vertex_color communes blue
+edge_color commune communes blue
+step 0.0116629600525
+vertex_color complete dark_blue
+edge_color compete complete dark_blue
+vertex_color completed blue
+edge_color complete completed blue
+vertex_color completer blue
+edge_color complete completer blue
+vertex_color completes blue
+edge_color complete completes blue
+step 0.0120890140533
+step 0.0120949745178
+vertex_color puzzlers dark_red
+edge_color puzzler puzzlers dark_red
+vertex_color guzzlers red
+edge_color puzzlers guzzlers red
+vertex_color compose dark_blue
+edge_color compote compose dark_blue
+vertex_color compost blue
+edge_color compose compost blue
+vertex_color composed blue
+edge_color compose composed blue
+vertex_color composer blue
+edge_color compose composer blue
+vertex_color composes blue
+edge_color compose composes blue
+step 0.0130290985107
+vertex_color commuters dark_blue
+edge_color commuter commuters dark_blue
+step 0.0134520530701
+step 0.0134589672089
+step 0.0134630203247
+step 0.0134680271149
+vertex_color communed dark_blue
+edge_color commuted communed dark_blue
+vertex_color communes blue
+edge_color communed communes blue
+step 0.0138130187988
+vertex_color nozzles dark_red
+edge_color nozzle nozzles dark_red
+step 0.0140860080719
+vertex_color communes dark_blue
+edge_color commutes communes dark_blue
+step 0.0144219398499
+step 0.0144281387329
+step 0.0144319534302
+step 0.0144369602203
+step 0.0144410133362
+vertex_color guzzlers dark_red
+edge_color guzzler guzzlers dark_red
+vertex_color completed dark_blue
+edge_color competed completed dark_blue
+vertex_color complected blue
+edge_color completed complected blue
+vertex_color completer blue
+edge_color completed completer blue
+vertex_color completes blue
+edge_color completed completes blue
+step 0.0152769088745
+vertex_color completes dark_blue
+edge_color competes completes dark_blue
+vertex_color complexes blue
+edge_color completes complexes blue
+vertex_color completer blue
+edge_color completes completer blue
+vertex_color completest blue
+edge_color completes completest blue
+step 0.0158879756927
+step 0.0158951282501
+vertex_color composes dark_blue
+edge_color compotes composes dark_blue
+vertex_color composts blue
+edge_color composes composts blue
+vertex_color composed blue
+edge_color composes composed blue
+vertex_color composers blue
+edge_color composes composers blue
+vertex_color composer blue
+edge_color composes composer blue
+step 0.0164430141449
+step 0.0164499282837
+step 0.0164539813995
+step 0.0164580345154
+step 0.0164620876312
+step 0.0164661407471
+vertex_color completer dark_blue
+edge_color complete completer dark_blue
+vertex_color complexer blue
+edge_color completer complexer blue
+step 0.0169761180878

@@ -61,7 +61,8 @@ def edit_distance(w1, w2):
 def wordchain(start, 
               goal, 
               dictionary=default_dictionary, 
-              log_fn=None):
+              log_fn=None,
+              graph=None):
 
     if log_fn is None:
         def log(*what):
@@ -69,6 +70,13 @@ def wordchain(start,
     else:
         def log(*what):
             log_fn(" ".join(map(str, what)) + "\n")
+
+    if graph is None:
+        def add_edge(a, b):
+            pass
+    else:
+        def add_edge(a, b):
+            graph.append((a, b))
 
     log("start", start)
     log("goal", goal)
@@ -99,6 +107,7 @@ def wordchain(start,
                 solution = chain + list(reversed(contact[0]))
                 if search is search_from_goal:
                     solution.reverse()
+                log("step", time.time() - start_time)
                 return solution
             for ec, csf, other_chain, other_contact in other.frontier:
                 if other_chain[-1] == last:
@@ -108,6 +117,7 @@ def wordchain(start,
                     other_contact.append(chain[:-1])
             for word in single_edits(last):
                 if word in dictionary and word not in search.visited:
+                    add_edge(last, word)
                     log("vertex_color", word, color)
                     log("edge_color", last, word, color)
                     heappush(search.frontier, 
@@ -115,6 +125,7 @@ def wordchain(start,
                               cost_so_far + 1, 
                               chain + [word], 
                               []))
+    log("step", time.time() - start_time)
     return None
 
 def endnodes(frontier):
@@ -153,8 +164,12 @@ if __name__ == '__main__':
         times = 1
     for i in xrange(times-1):
         wordchain(*sys.argv[1:3])
+    # XXX: temporary hack to check something...
+    graph = []
     with file('history', 'w') as out:
-        words = wordchain(sys.argv[1], sys.argv[2], log_fn=out.write)
+        words = wordchain(sys.argv[1], sys.argv[2], log_fn=out.write, graph=graph)
+    import makegraph
+    makegraph.write_graph(graph, file('-'.join(sys.argv[1:3]) + '.graph', 'w'))
     if words is None:
         print "No chain found."
     else:
