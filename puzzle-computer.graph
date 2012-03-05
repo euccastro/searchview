@@ -1,0 +1,162 @@
+begin vertices
+composed 245.55 222.44
+completest 107.78 46.821
+complexer 62 95.302
+computed 222.48 73.336
+commune 320.39 54.08
+puzzle 467.78 318.98
+guzzles 436.34 313.06
+guzzled 437.45 269.69
+commuters 263.44 19.5
+computes 232.45 82.852
+computer 242.85 63.901
+composer 230.81 222.27
+composes 228.99 201.61
+compotes 217.14 137.3
+guzzlers 384 326.71
+composers 254.35 235.24
+muzzle 498.71 280.99
+compose 248.74 196.17
+composts 211.1 238.17
+nuzzles 492.48 330.92
+communes 316.09 31.166
+puzzled 443.68 295.46
+nuzzled 481.15 281.04
+compost 280.65 219.85
+guzzler 408.54 296.36
+communed 306.86 42.97
+nuzzle 512.5 306.17
+muzzles 477.1 305.19
+complected 91.562 123.03
+complete 142.13 102.75
+commuter 266.56 40.836
+commutes 277.15 47.644
+completed 124.64 102.09
+puzzles 446.8 339.16
+puzzler 420.07 332.48
+muzzled 469.28 259.5
+guzzle 460.74 288.28
+completer 101.95 95.297
+completes 128.31 79.652
+commuted 268.92 57.761
+competes 185.53 99.005
+compute 238.59 98.001
+compote 230.99 144.13
+complexes 92.56 61.867
+computers 239.82 41.679
+nozzles 545.84 355.04
+commute 281.71 68.867
+compete 194.29 113.15
+competed 173.58 89.961
+puzzlers 398.97 360.51
+nozzle 564.4 326.96
+end vertices
+
+begin edges
+computer compute
+guzzles guzzlers
+commuter commutes
+compete complete
+commuted computed
+compute computed
+compost compose
+puzzle puzzled
+computed competed
+commuted commuter
+complete completes
+commuted communed
+puzzles puzzled
+computes computers
+composer composes
+commuters computers
+computer computers
+guzzler guzzles
+commuted commutes
+completed complete
+puzzler puzzle
+muzzles muzzled
+completer completes
+computes compute
+communes communed
+compotes competes
+competes completes
+compete compote
+muzzle muzzled
+compotes computes
+computes competes
+nozzles nuzzles
+commute commutes
+muzzles nuzzles
+puzzler puzzled
+puzzles guzzles
+nozzles nozzle
+guzzled puzzled
+completest completes
+compute compote
+nuzzled muzzled
+puzzlers guzzlers
+composed compose
+compose compote
+guzzle guzzled
+compose composes
+nuzzled guzzled
+puzzle guzzle
+communes commutes
+nuzzle muzzle
+computes computed
+guzzles guzzle
+muzzle guzzle
+nuzzle puzzle
+completed competed
+guzzler guzzled
+compotes composes
+complexes completes
+computes computer
+puzzles puzzlers
+compete competed
+guzzles guzzled
+nuzzled puzzled
+completer complete
+compete compute
+nuzzle nuzzled
+puzzles nuzzles
+completed complected
+composed composes
+puzzles puzzle
+commuted commute
+competes competed
+puzzles muzzles
+composers composes
+guzzles nuzzles
+nuzzle nuzzles
+nuzzle guzzle
+muzzle puzzle
+commute commuter
+muzzled puzzled
+computer computed
+composts composes
+puzzler guzzler
+complexer completer
+puzzler puzzlers
+commune communes
+compotes compote
+nuzzle nozzle
+commune communed
+computes commutes
+commuters commuter
+commuters commutes
+commute compute
+commune commute
+guzzled muzzled
+compose composer
+nuzzled nuzzles
+guzzler guzzlers
+completed completer
+completed completes
+muzzle muzzles
+muzzles guzzles
+computer commuter
+guzzler guzzle
+competes compete
+puzzles puzzler
+end edges

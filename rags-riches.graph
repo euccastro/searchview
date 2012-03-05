@@ -1,0 +1,193 @@
+begin vertices
+nags 88.31 26.058
+rices 218.28 41.456
+sags 104.11 60.248
+riced 207.42 38.939
+vices 211.18 56.365
+raves 158.58 43.803
+gigs 53.695 33.117
+laces 189.36 36.823
+wags 81.866 31.354
+rice 219.59 60.474
+brigs 36.5 39.455
+sices 235.5 39.289
+figs 51.388 58.011
+niches 261.65 32.348
+sages 136.46 22.527
+race 176.44 19.5
+rives 227.91 37.053
+traces 185.88 26.158
+graces 167.84 22.653
+rats 106.63 45.272
+raged 141.14 57.104
+jigs 59.22 22.708
+razes 152.43 43.311
+rages 139.32 39.952
+ricks 218.83 31.609
+gags 80.509 51.061
+rags 96.576 42.828
+rims 44.914 41.722
+rings 43.944 23.837
+drags 94.265 23.005
+racks 178.76 56.339
+tags 108.8 55.277
+richest 257.01 49.043
+ranges 140.55 49.045
+dices 235.27 47.216
+rares 155.2 50.001
+rakes 159.08 37.151
+prigs 50.999 21.738
+ribs 59.745 52.754
+fags 95.754 34.155
+rams 107.76 29.192
+faces 181.75 34.071
+crags 96.537 63.06
+wages 129.52 40.84
+braces 166.02 56.259
+rises 226.54 47.311
+lags 84.483 57.347
+ices 218.58 23.454
+riles 208.97 47.902
+rapes 152.85 36.03
+rates 156.15 30.196
+raced 177.76 27.07
+digs 63.654 30.835
+racer 185.57 54.074
+races 173.14 40.136
+rigs 56.34 39.408
+prices 232.77 29.393
+jags 101.51 52.49
+raga 88.66 47.74
+rage 118.09 37.176
+gages 144.8 25.088
+riches 247.33 38.435
+richer 255.41 26.214
+fices 218.2 50.362
+ripes 233.2 54.66
+fiches 262.48 40.936
+maces 170.06 48.372
+rids 51.477 48.232
+cages 137.81 32.374
+rag 93.72 53.604
+ragas 118.94 43.951
+raps 88.096 35.211
+ages 131.69 50.923
+rips 45.673 32.123
+aces 173.03 59.857
+rig 43.871 53.371
+rugs 73.987 41.299
+bags 101.86 25.972
+rays 83.081 41.652
+racers 169.61 30.411
+rides 210.1 28.407
+taces 179.33 45.449
+wigs 38.069 47.605
+rimes 226.08 24.474
+rites 226.3 57.48
+pigs 37.468 31.491
+pages 130.37 27.395
+brags 89.638 61.964
+paces 188.38 46.208
+hags 103.36 36.871
+end vertices
+
+begin edges
+rigs digs
+rags raga
+fiches riches
+riches richer
+races maces
+ages rages
+rices riles
+rags gags
+races rices
+rigs rims
+rates rages
+rags rigs
+cages rages
+rags jags
+rigs jigs
+raged rages
+races racks
+rices rites
+rigs gigs
+races razes
+ragas rages
+races laces
+rapes races
+rares rages
+rices dices
+rags rag
+wages rages
+rices ricks
+rags rats
+rigs rig
+rags tags
+ices rices
+sages rages
+races rates
+rags rugs
+razes rages
+rices rides
+raves races
+races taces
+rimes rices
+races traces
+prices rices
+rices rises
+rakes rages
+rips rigs
+rices riced
+niches riches
+rives rices
+rags brags
+rigs ribs
+rags sags
+gages rages
+ranges rages
+rags ragas
+riches richest
+races rakes
+rapes rages
+races faces
+rigs wigs
+rigs rings
+rags lags
+rags bags
+rices riches
+rigs figs
+racer races
+prigs rigs
+pages rages
+rigs rugs
+aces races
+rags rages
+rices vices
+rags rams
+rice rices
+raps rags
+races raced
+races graces
+raves rages
+ripes rices
+rage rages
+races rages
+racers races
+paces races
+sices rices
+rigs brigs
+rags rays
+rigs pigs
+rices fices
+rags wags
+rags hags
+rags nags
+rigs rids
+rags fags
+rags rage
+races rares
+rags drags
+rags crags
+races race
+races braces
+end edges
