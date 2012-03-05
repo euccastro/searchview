@@ -1,4 +1,6 @@
 """
+XXX: THIS DOCSTRING IS OBSOLETE.
+
 Launch a window that will read commands from standard input and display the
 search history they represent.
 
@@ -61,6 +63,7 @@ Supported commands are (in the order in which you should invoke them):
 from __future__ import division
 
 from itertools import *
+ichain = chain.from_iterable
 import os
 import stackless
 import sys
@@ -95,10 +98,11 @@ colors['default'] = colors['grey']
 class view(ui.window):
 
     def __init__(self, **kw):
+        graph = kw.pop('graph')
         history = kw.pop('history')
         ui.window.__init__(self, **kw)
-        vertices, edges, start, goal, color_history = \
-                parse_commands(file(history))
+        vertices, edges, start, goal, color_history = parse(file(graph),
+                                                            file(history))
         self.vertices = vertices
         self.start = start
         self.goal = goal
@@ -448,7 +452,7 @@ class slider_handle(ui.window):
         glVertex2i(0, self.rect.height)
         glEnd()
 
-def parse_commands(command_lines):
+def parse(graph_lines, history_lines):
     """
     Parse commands and return a tuple with the following elements:
         vertices
@@ -473,63 +477,86 @@ def parse_commands(command_lines):
                     A ctypes array of colors in c3B format, corresponding to
                     the edges.
     """
+    # This function makes heavy use of iterators and itertools.
+    #
+    # http://docs.python.org/library/itertools.html
     vertices = None
     edges = None
     start = None
     goal = None
     color_history = [obj(time=0.0)]
-    for line in command_lines:
-        if not line.strip():
+
+    it = ifilter(None, imap(str.strip, graph_lines))
+
+    def take_tuples_until(s):
+        return imap(str.split,
+                    takewhile((lambda l: l != s), it))
+
+    # Vertices.
+    assert it.next() == 'begin vertices'
+    vertices = {id_: (float(x), float(y))
+                for id_, x, y in take_tuples_until('end vertices')}
+    vert_list = [(id_, x, y) for id_, (x, y) in vertices.iteritems()]
+    vertex_index_by_id = {id_: i for i, (id_, x, y) in enumerate(vert_list)}
+    vertex_buffer = (c_float * (len(vert_list) * 2))(
+            *ichain((x, y) for (id_, x, y) in vert_list))
+    len_vert_colors = len(vert_list) * 3
+    color_history[0].vertex_colors = (c_ubyte * len_vert_colors)(
+        *repeat(colors['default'][0], len_vert_colors))
+
+    # Edges.
+    assert it.next() == 'begin edges'
+    edges = [frozenset((a, b))
+             for a, b in take_tuples_until('end edges')]
+    edge_index_by_vertex_ids = {pair:i
+                                for i, pair in enumerate(edges)}
+
+    edge_buffer = (c_float * (len(edges) * 6))(
+                   *ichain(ichain((vertices[a], 
+                                   vertices[b])
+                                   for a, b in edges)))
+    len_edge_colors = len(edges) * 6
+    color_history[0].edge_colors = (c_ubyte * len_edge_colors)(
+            *repeat(colors['default'][0], len_edge_colors))
+
+    for rest in it:
+        if rest.strip():
+            print "Got unexpected line", repr(rest)
+
+    for line in history_lines:
+        line = line.strip()
+        if not line:
             continue
-        cmd, args = line.strip().split(None, 1)
-        args = args.split()
-        if cmd == 'vertices':
-            vertices = (c_float * len(args))(*imap(float, args))
-            assert even(len(args))
-            len_colors = len(args) * 3 // 2
-            color_history[0].vertex_colors = (c_ubyte * len_colors)(
-                *repeat(colors['default'][0], len_colors))
-        elif cmd == 'edges':
-            assert vertices is not None
-            assert len(args) % 2 == 0
-            edges = (c_float * (len(args) * 2))(
-                    *chain.from_iterable((vertices[int(i)*2], 
-                                          vertices[int(i)*2 + 1])
-                                         for i in args))
-            assert even(len(edges))
-            len_colors = len(edges) * 3 // 2
-            color_history[0].edge_colors = (c_ubyte * len_colors)(
-                    *repeat(colors['default'][0], len_colors))
-        elif cmd == 'start':
-            assert vertices is not None
-            index = int(args[0])
-            start = vertices[index * 2], vertices[index * 2 + 1]
+        cmd, rest = line.split(None, 1)
+        args = rest.split()
+        if cmd == 'start':
+            assert len(args) == 1
+            start = vertices[args[0]]
         elif cmd == 'goal':
-            assert vertices is not None
-            index = int(args[0])
-            goal = vertices[index * 2], vertices[index * 2 + 1]
+            assert len(args) == 1
+            goal = vertices[args[0]]
         elif cmd == 'step':
-            assert None not in [vertices, edges]
+            assert len(args) == 1
             timestamp = float(args[0])
             color_history.append(
                 obj(time=timestamp,
                     vertex_colors=clone_array(color_history[-1].vertex_colors),
                     edge_colors=clone_array(color_history[-1].edge_colors)))
         elif cmd == 'vertex_color':
-            index, color_name = args
-            index = int(index)
+            id_, color_name = args
+            index = vertex_index_by_id[id_]
             color_history[-1].vertex_colors[index*3:index*3+3] = \
                     colors[color_name]
         elif cmd == 'edge_color':
-            index, color_name = args
-            index = int(index)
+            a, b, color_name = args
+            index = edge_index_by_vertex_ids[frozenset((a, b))]
             color_history[-1].edge_colors[index*6:index*6+6] = \
                     colors[color_name] * 2
         else:
             raise RuntimeError("Unknown command:", cmd)
 
-    assert None not in [vertices, edges, start, goal]
-    return vertices, edges, start, goal, color_history
+    assert None not in [vertex_buffer, edge_buffer, start, goal]
+    return vertex_buffer, edge_buffer, start, goal, color_history
 
 def even(x):
     return not (x & 1)
@@ -544,12 +571,6 @@ def copy_buffer(dst, src):
     memmove(dst, src, sizeof(dst))
 
 def run(filename):
-    """
-    Display the search history described in `lines`.
-
-        `lines` is an iterable that yields lines.  For example, a list
-        of lines, or a file object that is open for reading.
-    """
     w = pyglet.window.Window(resizable=True)
     ui.init(w)
     glPointSize(3)
