@@ -6,8 +6,10 @@ from itertools import *
 import string
 
 
-default_dictionary = set(imap(str.strip, 
-                              file('/usr/share/dict/american-english')))
+default_dictionary = set(
+        filter(None,
+               imap(str.strip, 
+                    file('/usr/share/dict/american-english'))))
 
 
 def memoized(f):

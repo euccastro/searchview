@@ -9,11 +9,13 @@ children:
     - id: view1
       class: searchview.view
       enabled: yes
-      history: test.history
+      graph: graph
+      history: history
       layout: left width//2
     - id: view2
       class: searchview.view
       enabled: yes
-      history: test.history
+      graph: graph
+      history: history
       layout: fill
 
