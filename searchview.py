@@ -70,7 +70,7 @@ import sys
 import time
 
 import pyglet
-from pyglet.window import key
+from pyglet.window import key, mouse
 from pyglet.gl import *
 import yaml
 
@@ -245,22 +245,39 @@ class view(ui.window):
             self.children.remove(tooltip)
         self.closest_vertex = self.tooltip = None
 
-    def on_mouse_drag(self, x, y, dx, dy, *etc):
+    def on_mouse_drag(self, x, y, dx, dy, btn, *etc):
         if not self.dragging:
+            self.scrolling = (btn == mouse.LEFT) and self.zoom_rect
+            self.zooming = (btn == mouse.RIGHT)
             self.dragging = x, y
             ui.start_drag(self)
-        orig_x, orig_pos = self.dragging
-        self.drag_end = x, y
+        if self.scrolling:
+            ratio = self.get_zoom_ratio()
+            orig_x, orig_y = self.dragging
+            new_x = max(self.world_rect.left,
+                        min(self.world_rect.right - self.rect.width * ratio,
+                            self.scrolling.left - (x - orig_x) * ratio))
+            new_y = max(self.world_rect.bottom,
+                        min(self.world_rect.top - self.rect.height * ratio,
+                            self.scrolling.bottom - (y - orig_y) * ratio))
+            self.zoom_rect = ui.rect(new_x, 
+                                     new_y, 
+                                     self.zoom_rect.width,
+                                     self.zoom_rect.height)
+        if self.zooming:
+            self.drag_end = x, y
         return True
 
     def on_end_drag(self, x, y):
-        x1, y1 = self.dragging
-        x2, y2 = self.drag_end
-        self.set_zoom(ui.rect(min(x1, x2), 
-                              min(y1, y2),
-                              abs(x1-x2), 
-                              abs(y1-y2)))
+        if self.zooming:
+            x1, y1 = self.dragging
+            x2, y2 = self.drag_end
+            self.set_zoom(ui.rect(min(x1, x2), 
+                                  min(y1, y2),
+                                  abs(x1-x2), 
+                                  abs(y1-y2)))
         self.dragging = self.drag_end = None
+        self.scrolling = self.zooming = False
     def on_mouse_press(self, x, y, button, mods):
         if button == pyglet.window.mouse.RIGHT:
             self.reset_zoom()
