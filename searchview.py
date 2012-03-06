@@ -279,7 +279,7 @@ class view(ui.window):
         self.dragging = self.drag_end = None
         self.scrolling = self.zooming = False
     def on_mouse_press(self, x, y, button, mods):
-        if button == pyglet.window.mouse.RIGHT:
+        if button == mouse.MIDDLE:
             self.reset_zoom()
     def set_zoom(self, req_rect):
         if not req_rect.width or not req_rect.height:
