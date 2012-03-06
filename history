@@ -1,6 +1,6 @@
 start puzzle
 goal computer
-step 0.0
+step 9.53674316406e-07
 vertex_color puzzle dark_red
 vertex_color guzzle red
 edge_color puzzle guzzle red
@@ -25,7 +25,7 @@ vertex_color compute blue
 edge_color computer compute blue
 vertex_color computers blue
 edge_color computer computers blue
-step 0.0016040802002
+step 0.00168395042419
 vertex_color puzzler dark_red
 edge_color puzzle puzzler dark_red
 vertex_color guzzler red
@@ -48,7 +48,7 @@ vertex_color computed blue
 edge_color compute computed blue
 vertex_color computes blue
 edge_color compute computes blue
-step 0.00252294540405
+step 0.00271391868591
 vertex_color guzzle dark_red
 edge_color puzzle guzzle dark_red
 vertex_color muzzle red
@@ -71,7 +71,7 @@ vertex_color commute blue
 edge_color commuter commute blue
 vertex_color commuters blue
 edge_color commuter commuters blue
-step 0.00337505340576
+step 0.00366497039795
 vertex_color muzzle dark_red
 edge_color puzzle muzzle dark_red
 vertex_color nuzzle red
@@ -88,7 +88,7 @@ vertex_color competed blue
 edge_color computed competed blue
 vertex_color computes blue
 edge_color computed computes blue
-step 0.0040590763092
+step 0.00442004203796
 vertex_color nuzzle dark_red
 edge_color puzzle nuzzle dark_red
 vertex_color nozzle red
@@ -103,7 +103,7 @@ vertex_color commuters blue
 edge_color computers commuters blue
 vertex_color computes blue
 edge_color computers computes blue
-step 0.00478005409241
+step 0.00524592399597
 vertex_color puzzled dark_red
 edge_color puzzle puzzled dark_red
 vertex_color guzzled red
@@ -122,7 +122,7 @@ vertex_color competes blue
 edge_color computes competes blue
 vertex_color compotes blue
 edge_color computes compotes blue
-step 0.00552892684937
+step 0.00612092018127
 vertex_color puzzles dark_red
 edge_color puzzle puzzles dark_red
 vertex_color guzzles red
@@ -141,7 +141,7 @@ vertex_color commuted blue
 edge_color commute commuted blue
 vertex_color commutes blue
 edge_color commute commutes blue
-step 0.00619506835938
+step 0.00689196586609
 vertex_color guzzler dark_red
 edge_color guzzle guzzler dark_red
 vertex_color guzzled red
@@ -150,7 +150,7 @@ vertex_color guzzles red
 edge_color guzzler guzzles red
 vertex_color guzzlers red
 edge_color guzzler guzzlers red
-step 0.00652098655701
+step 0.00726795196533
 vertex_color nozzle dark_red
 edge_color nuzzle nozzle dark_red
 vertex_color nozzles red
@@ -165,14 +165,14 @@ vertex_color competed blue
 edge_color compete competed blue
 vertex_color competes blue
 edge_color compete competes blue
-step 0.00716590881348
+step 0.00800704956055
 vertex_color compote dark_blue
 edge_color compute compote dark_blue
 vertex_color compose blue
 edge_color compote compose blue
 vertex_color compotes blue
 edge_color compote compotes blue
-step 0.00751805305481
+step 0.00841403007507
 vertex_color guzzled dark_red
 edge_color guzzle guzzled dark_red
 vertex_color muzzled red
@@ -187,7 +187,7 @@ vertex_color communed blue
 edge_color commuted communed blue
 vertex_color commutes blue
 edge_color commuted commutes blue
-step 0.00823593139648
+step 0.00923204421997
 vertex_color guzzles dark_red
 edge_color guzzle guzzles dark_red
 vertex_color muzzles red
@@ -202,16 +202,16 @@ vertex_color communes blue
 edge_color commutes communes blue
 vertex_color commuters blue
 edge_color commutes commuters blue
-step 0.00897192955017
-step 0.00897908210754
-step 0.00898408889771
+step 0.0100510120392
+step 0.010057926178
+step 0.0100629329681
 vertex_color muzzled dark_red
 edge_color muzzle muzzled dark_red
 vertex_color nuzzled red
 edge_color muzzled nuzzled red
 vertex_color muzzles red
 edge_color muzzled muzzles red
-step 0.00927400588989
+step 0.0103859901428
 vertex_color muzzles dark_red
 edge_color muzzle muzzles dark_red
 vertex_color nuzzles red
@@ -222,37 +222,37 @@ vertex_color completed blue
 edge_color competed completed blue
 vertex_color competes blue
 edge_color competed competes blue
-step 0.0100059509277
-step 0.0100119113922
+step 0.0111999511719
+step 0.0112068653107
 vertex_color nuzzled dark_red
 edge_color nuzzle nuzzled dark_red
 vertex_color nuzzles red
 edge_color nuzzled nuzzles red
-step 0.0102980136871
+step 0.0115220546722
 vertex_color nuzzles dark_red
 edge_color nuzzle nuzzles dark_red
 vertex_color nozzles red
 edge_color nuzzles nozzles red
-step 0.010575056076
+step 0.0118598937988
 vertex_color competes dark_blue
 edge_color computes competes dark_blue
 vertex_color completes blue
 edge_color competes completes blue
 vertex_color compotes blue
 edge_color competes compotes blue
-step 0.0109801292419
+step 0.0123279094696
 vertex_color compotes dark_blue
 edge_color computes compotes dark_blue
 vertex_color composes blue
 edge_color compotes composes blue
-step 0.0113899707794
+step 0.0128049850464
 vertex_color commune dark_blue
 edge_color commute commune dark_blue
 vertex_color communed blue
 edge_color commune communed blue
 vertex_color communes blue
 edge_color commune communes blue
-step 0.0116629600525
+step 0.0131289958954
 vertex_color complete dark_blue
 edge_color compete complete dark_blue
 vertex_color completed blue
@@ -261,8 +261,8 @@ vertex_color completer blue
 edge_color complete completer blue
 vertex_color completes blue
 edge_color complete completes blue
-step 0.0120890140533
-step 0.0120949745178
+step 0.0136079788208
+step 0.0136139392853
 vertex_color puzzlers dark_red
 edge_color puzzler puzzlers dark_red
 vertex_color guzzlers red
@@ -277,28 +277,28 @@ vertex_color composer blue
 edge_color compose composer blue
 vertex_color composes blue
 edge_color compose composes blue
-step 0.0130290985107
+step 0.0146288871765
 vertex_color commuters dark_blue
 edge_color commuter commuters dark_blue
-step 0.0134520530701
-step 0.0134589672089
-step 0.0134630203247
-step 0.0134680271149
+step 0.0151219367981
+step 0.0151288509369
+step 0.0151338577271
+step 0.0151388645172
 vertex_color communed dark_blue
 edge_color commuted communed dark_blue
 vertex_color communes blue
 edge_color communed communes blue
-step 0.0138130187988
+step 0.0155329704285
 vertex_color nozzles dark_red
 edge_color nozzle nozzles dark_red
-step 0.0140860080719
+step 0.0158648490906
 vertex_color communes dark_blue
 edge_color commutes communes dark_blue
-step 0.0144219398499
-step 0.0144281387329
-step 0.0144319534302
-step 0.0144369602203
-step 0.0144410133362
+step 0.0162570476532
+step 0.0162630081177
+step 0.0162680149078
+step 0.0162720680237
+step 0.0162758827209
 vertex_color guzzlers dark_red
 edge_color guzzler guzzlers dark_red
 vertex_color completed dark_blue
@@ -309,7 +309,7 @@ vertex_color completer blue
 edge_color completed completer blue
 vertex_color completes blue
 edge_color completed completes blue
-step 0.0152769088745
+step 0.0173418521881
 vertex_color completes dark_blue
 edge_color competes completes dark_blue
 vertex_color complexes blue
@@ -318,8 +318,8 @@ vertex_color completer blue
 edge_color completes completer blue
 vertex_color completest blue
 edge_color completes completest blue
-step 0.0158879756927
-step 0.0158951282501
+step 0.0181019306183
+step 0.0181109905243
 vertex_color composes dark_blue
 edge_color compotes composes dark_blue
 vertex_color composts blue
@@ -330,14 +330,13 @@ vertex_color composers blue
 edge_color composes composers blue
 vertex_color composer blue
 edge_color composes composer blue
-step 0.0164430141449
-step 0.0164499282837
-step 0.0164539813995
-step 0.0164580345154
-step 0.0164620876312
-step 0.0164661407471
+step 0.0187020301819
+step 0.0187108516693
+step 0.0187158584595
+step 0.0187199115753
+step 0.0187239646912
+step 0.0187289714813
 vertex_color completer dark_blue
 edge_color complete completer dark_blue
 vertex_color complexer blue
 edge_color completer complexer blue
-step 0.0169761180878

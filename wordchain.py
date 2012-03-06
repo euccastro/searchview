@@ -7,11 +7,10 @@ import string
 import time
 
 
-default_dictionary = set(
-        filter(None,
-               imap(str.strip, 
-                    file('/usr/share/dict/american-english'))))
-
+default_dictionary = set([
+        s.lower()
+        for s in imap(str.strip, file('/usr/share/dict/american-english'))
+        if s and "'" not in s])
 
 def memoized(f):
     """
@@ -116,16 +115,16 @@ def wordchain(start,
                     assert not other_contact
                     other_contact.append(chain[:-1])
             for word in single_edits(last):
-                if word in dictionary and word not in search.visited:
-                    add_edge(last, word)
-                    log("vertex_color", word, color)
-                    log("edge_color", last, word, color)
-                    heappush(search.frontier, 
-                             (cost_so_far + edit_distance(word, search.goal), 
-                              cost_so_far + 1, 
-                              chain + [word], 
-                              []))
-    log("step", time.time() - start_time)
+                if word in dictionary and word != last:
+                    add_edge(last, word) 
+                    if word not in search.visited:
+                        log("vertex_color", word, color)
+                        log("edge_color", last, word, color)
+                        heappush(search.frontier, 
+                                 (cost_so_far + edit_distance(word, search.goal), 
+                                  cost_so_far + 1, 
+                                  chain + [word], 
+                                  []))
     return None
 
 def endnodes(frontier):
@@ -148,10 +147,12 @@ def single_edits(word):
         if word:
             yield letter + word[1:]  # substitute first letter
     if word:
-        yield word[1:]  # remove first letter
-        for edit in single_edits(word[1:]):
+        suffix = word[1:]
+        yield suffix  # remove first letter
+        for edit in single_edits(suffix):
             # add all edits to subsequent letter positions
-            yield word[0] + edit
+            if edit != suffix:
+                yield word[0] + edit
 
 if __name__ == '__main__':
     import sys

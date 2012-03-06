@@ -79,7 +79,7 @@ import ui
 from la import vec2
 
 colors = {'white': (1., 1., 1.),
-          'grey': (.6, .6, .6),
+          'grey': (.5, .5, .5),
           'red': (1., .0, .0),
           'green': (.0, 1., .0),
           'blue': (.0, .0, 1.),
@@ -133,9 +133,9 @@ class bsp_tree:
 
     @staticmethod
     def extents(vertices):
-        min_ = vec2(*vertices[0])
-        max_ = vec2(*vertices[0])
-        for x, y in vertices:
+        min_ = vec2(*vertices[0][1:])
+        max_ = vec2(*vertices[0][1:])
+        for id_, x, y in vertices:
             if x < min_.x:
                 min_.x = x
             if x > max_.x:
@@ -152,12 +152,13 @@ class bsp_tree:
             return self.leaf(vertices)
         else:
             rect = self.extents(vertices)
-            index = (rect.width < rect.height)
+            index = int(rect.width < rect.height)
             less = []
             more = []
             center = rect.center[index]
             for v in vertices:
-                (less if v[index] < center else more).append(v)
+                coord = v[index + 1]  # v is (id_, x, y)
+                (less if coord < center else more).append(v)
             assert less and more
             return self.node(index, center, self.build(less), self.build(more))
 
@@ -175,10 +176,10 @@ class view(ui.window):
         self.history = color_history
         self.play_position = 0
         self.vertex_buffer = pyglet.graphics.vertex_list(
-                len(vertices) // 2, 'v2f/static', 'c3B/stream')
+                len(vertices.buffer) // 2, 'v2f/static', 'c3B/stream')
         self.edge_buffer = pyglet.graphics.vertex_list(
                 len(edges) // 2, 'v2f/static', 'c3B/stream')
-        copy_buffer(self.vertex_buffer.vertices, self.vertices)
+        copy_buffer(self.vertex_buffer.vertices, self.vertices.buffer)
         copy_buffer(self.vertex_buffer.colors, self.history[0].vertex_colors)
         copy_buffer(self.edge_buffer.vertices, edges)
         copy_buffer(self.edge_buffer.colors, self.history[0].edge_colors)
@@ -187,20 +188,62 @@ class view(ui.window):
         self.closest_vertex = None
         min_, max_ = self.world_extents()
         rect = ui.rect(min_.x, min_.y, max_.x - min_.x, max_.y - min_.y)
-        self.bsp_tree = bsp_tree(zip(islice(self.vertices, 0, None, 2),
-                                     islice(self.vertices, 1, None, 2)))
+        self.bsp_tree = bsp_tree(self.vertices.flat_list)
 
     def on_mouse_motion(self, x, y, *etc):
         # XXX: factor this out.
         ratio = self.get_zoom_ratio()
         projx = x * ratio + self.zoom_rect.left
         projy = y * ratio + self.zoom_rect.bottom
-        self.closest_vertex = min(
-                self.bsp_tree.query(projx, projy),
-                key=(lambda (x, y): (x-projx)**2 + (y-projy)**2))
+        closest = min(self.bsp_tree.query(projx, projy),
+                      key=(lambda (id_, x, y): (x-projx)**2 + (y-projy)**2))
+        if closest != self.closest_vertex:
+            self.remove_closest_display()
+            self.closest_vertex = closest
+            self.show_tooltip(*closest)
 
     def on_mouse_leave(self, *etc):
-        self.closest_vertex = None
+        self.remove_closest_display()
+
+    def world_to_window(self, x, y):
+        ratio = self.get_zoom_ratio()
+        return ((x - self.zoom_rect.left) / ratio,
+                (y - self.zoom_rect.bottom) / ratio)
+
+    def window_to_world(self, x, y):
+        ratio = self.get_zoom_ratio()
+        return (x * ratio + self.zoom_rect.left,
+                y * ratio + self.zoom_rect.bottom)
+
+    def show_tooltip(self, id_, x, y):
+        height = self.rect.height // 30
+        try:
+            label = ui.label(layout=ui.fill_layout(), 
+                             text=repr(id_)[1:-1],
+                             color=(1., 1., 1., 1.))
+        except UnicodeDecodeError:
+            print "Bad string", repr(id_)
+            return
+        lw, lh = label.content_size(height)
+        margin = .2
+        bg_width = lw * (1 + 2 * margin)
+        bg_height = lh * (1 + 2 * margin)
+        x, y = self.world_to_window(x, y)
+        x = max(0, min(self.rect.width - bg_width, x))
+        y = max(0, min(self.rect.height - bg_height, y))
+        bg_rect = ui.rect(x, y, bg_width, bg_height)
+        background = ui.plain_color(id='tooltip',
+                                    rect=bg_rect,
+                                    color=(.0, .0, .0, .5))
+        background.children.append(label)
+        background.layout_children()
+        self.children.append(background)
+
+    def remove_closest_display(self):
+        tooltip = self.find_window('tooltip')
+        if tooltip:
+            self.children.remove(tooltip)
+        self.closest_vertex = self.tooltip = None
 
     def on_mouse_drag(self, x, y, dx, dy, *etc):
         if not self.dragging:
@@ -263,16 +306,14 @@ class view(ui.window):
 
     def world_extents(self):
         if not hasattr(self, '_world_extents'):
-            x = self.vertices[0]
-            y = self.vertices[1]
+            id_, x, y = self.vertices.flat_list[0]
             min_ = vec2(x, y)
             max_ = vec2(x, y)
-            for x in islice(self.vertices, 0, None, 2):
+            for id_, x, y in self.vertices.flat_list:
                 if x < min_.x:
                     min_.x = x
                 if x > max_.x:
                     max_.x = x
-            for y in islice(self.vertices, 1, None, 2):
                 if y < min_.y:
                     min_.y = y
                 if y > max_.y:
@@ -282,6 +323,8 @@ class view(ui.window):
 
     def layout_children(self):
         "Fit graph to screen, with some margin."
+
+        self.remove_closest_display()
 
         window_rect = self.absolute_rect = self.find_absolute_rect()
         
@@ -319,7 +362,9 @@ class view(ui.window):
         if i != self.play_position:
             self.play_position = i
             current = self.history[i]
+            assert len(self.vertex_buffer.colors) == len(current.vertex_colors)
             copy_buffer(self.vertex_buffer.colors, current.vertex_colors)
+            assert len(self.edge_buffer.colors) == len(current.edge_colors)
             copy_buffer(self.edge_buffer.colors, current.edge_colors)
 
     def go_to_time(self, t):
@@ -358,7 +403,7 @@ class view(ui.window):
         if self.closest_vertex is not None:
             glColor3f(1., 1., 1.)
             glBegin(GL_POINTS)
-            glVertex2f(*self.closest_vertex)
+            glVertex2f(*self.closest_vertex[1:])
             glEnd()
         glPopMatrix()
         glMatrixMode(GL_PROJECTION)
@@ -592,6 +637,11 @@ def parse(graph_lines, history_lines):
     vertex_index_by_id = {id_: i for i, (id_, x, y) in enumerate(vert_list)}
     vertex_buffer = (c_float * (len(vert_list) * 2))(
             *ichain((x, y) for (id_, x, y) in vert_list))
+
+    v = obj(coords_by_id=vertices,
+            flat_list=vert_list,
+            index_by_id=vertex_index_by_id,
+            buffer=vertex_buffer)
     len_vert_colors = len(vert_list) * 3
     color_history[0].vertex_colors = (c_ubyte * len_vert_colors)(
         *repeat(colors['default'][0], len_vert_colors))
@@ -603,7 +653,7 @@ def parse(graph_lines, history_lines):
     edge_index_by_vertex_ids = {pair:i
                                 for i, pair in enumerate(edges)}
 
-    edge_buffer = (c_float * (len(edges) * 6))(
+    edge_buffer = (c_float * (len(edges) * 4))(
                    *ichain(ichain((vertices[a], 
                                    vertices[b])
                                    for a, b in edges)))
@@ -648,7 +698,7 @@ def parse(graph_lines, history_lines):
             raise RuntimeError("Unknown command:", cmd)
 
     assert None not in [vertex_buffer, edge_buffer, start, goal]
-    return vertex_buffer, edge_buffer, start, goal, color_history
+    return v, edge_buffer, start, goal, color_history
 
 def even(x):
     return not (x & 1)
@@ -657,6 +707,7 @@ def clone_array(a):
     # XXX: assuming c_ubyte array.  Learn how to figure out actual type.
     ret = (c_ubyte * len(a))()
     copy_buffer(ret, a)
+    assert len(ret) == len(a)
     return ret
 
 def copy_buffer(dst, src):
@@ -667,6 +718,8 @@ def run(filename):
     ui.init(w)
     glPointSize(3)
     glClearColor(.2, .2, .2, 1.)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glEnable(GL_BLEND)
     ui.desktop.add_child(ui.window_from_dicttree(yaml.load(file(filename))))
     stackless.tasklet(pyglet.app.run)()
     stackless.run()
