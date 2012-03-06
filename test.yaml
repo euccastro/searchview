@@ -15,7 +15,7 @@ children:
     - id: view2
       class: searchview.view
       enabled: yes
-      graph: conceives-vindicate.graph
+      graph: yammering-distill.graph
       history: history
       layout: fill
 

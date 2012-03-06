@@ -98,9 +98,9 @@ def wordchain(start,
             if last in search.visited:
                 # We have considered a chain that reaches this node earlier.
                 continue
-            log("vertex_color", last, 'dark_' + color)
+            log("vertex_color", last, color)
             if len(chain) > 1:
-                log("edge_color", chain[-2], last, 'dark_' + color)
+                log("edge_color", chain[-2], last, color)
             search.visited.add(last)
             if contact:
                 solution = chain + list(reversed(contact[0]))
@@ -125,8 +125,8 @@ def wordchain(start,
                 if word in dictionary and word != last:
                     add_edge(last, word) 
                     if word not in search.visited:
-                        log("vertex_color", word, color)
-                        log("edge_color", last, word, color)
+                        log("vertex_color", word, 'dark_' + color)
+                        log("edge_color", last, word, 'dark_' + color)
                         heappush(search.frontier, 
                                  (cost_so_far + edit_distance(word, search.goal), 
                                   cost_so_far + 1, 
