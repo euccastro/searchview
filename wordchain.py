@@ -107,6 +107,13 @@ def wordchain(start,
                 if search is search_from_goal:
                     solution.reverse()
                 log("step", time.time() - start_time)
+                for a, b in izip(solution[:-1], solution[1:]):
+                    if a != last:
+                        log("vertex_color", a, "green")
+                    if b != last:
+                        log("vertex_color", b, "green")
+                    log("edge_color", a, b, "green")
+                log("vertex_color", last, "yellow")
                 return solution
             for ec, csf, other_chain, other_contact in other.frontier:
                 if other_chain[-1] == last:
@@ -125,6 +132,7 @@ def wordchain(start,
                                   cost_so_far + 1, 
                                   chain + [word], 
                                   []))
+    log("step", time.time() - start_time)
     return None
 
 def endnodes(frontier):

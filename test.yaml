@@ -15,7 +15,7 @@ children:
     - id: view2
       class: searchview.view
       enabled: yes
-      graph: puzzle-computer.graph
+      graph: conceives-vindicate.graph
       history: history
       layout: fill
 
