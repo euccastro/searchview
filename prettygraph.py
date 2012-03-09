@@ -3,14 +3,14 @@ from __future__ import division
 import random
 import time
 
-from la import vec2
+from la import convex_hull, vec2
 
 
 # Parameters.
 world_width = 700
 world_height = 500
-min_dist = 4
-packedness = .6
+min_dist = 20
+prob_link = .5
 
 
 class vec2wid(vec2):
@@ -43,7 +43,11 @@ def verts():
     return ret
 
 def edges(vertices):
+
     ret = []
+    def add_edge(a, b):
+        ret.append((a, b))
+
     def rec_edges(hsorted, vsorted):
         """
         Populate the `ret` array with a suitable list of edges.
@@ -59,100 +63,128 @@ def edges(vertices):
         hdelta = hsorted[-1].x - hsorted[0].x
         vdelta = vsorted[-1].y - vsorted[0].y
 
-        if hdelta < vdelta:
-            # Space is vertically elongated, split about horizontal axis, that
-            # is, according to y value.
+        # If True, space is vertically elongated, split about horizontal axis,
+        # that is, according to y value.
+        vertical = int(hdelta < vdelta)
 
-            # Index of lowest element in top partition.
-            mid_index = len(l)//2+1
-            mid_y = vsorted[mid_index].y
-            bottom_vsorted = vsorted[:mid_index]
-            top_vsorted = vsorted[mid_index:]
-            bottom_hsorted = [v
-                              for v in hsorted
-                              if v.y < mid_y]
-            top_hsorted = [v
-                           for v in hsorted
-                           if v.y >= mid_y]
-            rec_vertices(bottom_hsorted, bottom_vsorted)
-            rec_vertices(top_hsorted, top_vsorted)
-            # At this point I have hopefully done a decent job of connecting
-            # both divisions internally.  I'll add some edges to connect top
-            # to bottom.
+        if vertical:
+            array, other_array = vsorted, hsorted
+        else:
+            array, other_array = hsorted, vsorted
 
-            # If possible, I'd rather connect only edges that are not too far
-            # from each other.  First I'll try to isolate a horizontal strip
-            # around the division point.
-            strip_height = min_dist * 2
-            top_strip = [(i, v)
-                         for i, v in top_hsorted
-                         if v.y - mid_y < strip_height]
-            # Give bottom half a bit more of leeway.
-            bottom_strip = [(i, v)
-                            for i, v in bottom_hsorted
-                            if mid_y - v.y < strip_height]
+        # Index of lowest element in top partition.
+        mid_index = len(array)//2+len(array)%2
+        mid_coord = array[mid_index][vertical]
+        less_sorted = array[:mid_index]
+        more_sorted = array[mid_index:]
 
-            # If this doesn't give me some candidate vertices at both sides,
-            # I'll default to just sloppily connect the division vertex with
-            # the highest vertex in the low division.  This last resource
-            # should avoid islands.
-            if not bottom_strip:
-                edges.append(top_vsorted[0][0],
-                             bottom_vsorted[-1][0])
-                return
+        # XXX: sleazy hack.  Not sure that this is correct, but if I get a
+        #      good-looking graph I'll happily sweep this under the rug.
+        #      To ensure correctness, I should do this as a preprocess instead.
+        epsilon = .0001
+        for v in reversed(less_sorted):
+            if v[vertical] == mid_coord:
+                v[vertical] -= epsilon
+            else:
+                break
 
-            # In order to guarantee that I don't cross any edges internal to
-            # each subdivision, for each strip I'll discard all vertices but
-            # the ones in the 'front-facing' side of its convex hull.  A simple
-            # way to discard 'back-facing' vertices is to add two additional
-            # vertices that are guaranteed to form the whole backside, then
-            # remove those.
+        other_less_sorted = [v
+                             for v in other_array
+                             if v[vertical] < mid_coord]
+        other_more_sorted = [v
+                             for v in other_array
+                             if v[vertical] >= mid_coord]
+        if vertical:
+            rec_edges(other_less_sorted, less_sorted)
+            rec_edges(other_more_sorted, more_sorted)
+        else:
+            rec_edges(less_sorted, other_less_sorted)
+            rec_edges(more_sorted, other_more_sorted)
 
-            def frontside(strip, direction):
-                behind = mid_y - direction * strip_height * 2
-                backyard_eaters = [vec2(strip[0].x,
-                                        behind),
-                                   vec2(strip[-1].x,
-                                        behind)]
-                ret = la.convex_hull(strip + backyard_eaters)
-                for bogus in backyard_eaters:
-                    strip.remove(bogus)
-                return strip
-            
-            bottom_strip = frontside(bottom_strip, +1)
-            top_strip = frontside(top_strip, -1)
-            
-            def merge(a_strip, b_strip):
-                a = a_strip.pop(0)
-                b = b_strip.pop(0)
-                while True:
-                    yield a, b
-                    if not a_strip:
-                        for b in b_strip:
-                            yield a, b
-                        return
-                    if not b_strip:
-                        for a in a_strip:
-                            yield a, b
-                        return
-                    if a[0].x < b[0].x:
-                        a = a_strip.pop(0)
-                    else:
-                        b = b_strip.pop(0)
+        # At this point I have hopefully done a decent job of connecting
+        # both divisions internally.  I'll add some edges to connect top
+        # to bottom.
 
-            linked_any = False
-            # I get this now because merge destroys the strips.
-            default = a_strip[len(a_strip)//2], b_strip[len(b_strip//2)]
-            for bottom, top in merge(bottom_strip, top_strip):
-                if random.random() <= prob_link:
-                    ret.append((bottom, top))
-                    linked_any = True
-            if not linked_any:
-                ret.append(default)
-                
+        # If possible, I'd rather connect only edges that are not too far
+        # from each other.  First I'll try to isolate a horizontal strip
+        # around the division point.
+        # I want this strip ordered in the 'other' direction.
+        strip_breadth = min_dist * 2
+        def filter_strip(division):
+            return [v
+                    for v in division
+                    if abs(v[vertical] - mid_coord) < strip_breadth]
 
-    return rec_vertices(sorted(verts, key=(lambda v: v.x)), 
-                        sorted(verts, key=(lambda v: v.y)))
+        less_strip = filter_strip(other_less_sorted)
+        more_strip = filter_strip(other_more_sorted)
+
+        # If this doesn't give me some candidate vertices at both sides,
+        # I'll default to just sloppily connect the division vertex with
+        # the highest vertex in the low division.  This last resource
+        # should avoid islands.
+        if not less_strip:
+            add_edge(more_sorted[0], less_sorted[-1])
+            return
+
+        # In order to guarantee that I don't cross any edges internal to
+        # each subdivision, for each strip I'll discard all vertices but
+        # the ones in the 'front-facing' side of its convex hull.  A simple
+        # way to discard 'back-facing' vertices is to add two additional
+        # vertices that are guaranteed to form the whole backside, then
+        # remove those.
+
+        def frontside(strip, direction):
+            behind = mid_coord - direction * strip_breadth * 2
+            backyard_eaters = [vec2(0, 0), vec2(0, 0)]
+            backyard_eaters[0][vertical] = behind
+            backyard_eaters[0][not vertical] = strip[0][not vertical]
+            backyard_eaters[1][vertical] = behind
+            backyard_eaters[1][not vertical] = strip[-1][not vertical]
+            ret = convex_hull(strip + backyard_eaters)
+            for bogus in backyard_eaters:
+                try:
+                    ret.remove(bogus)
+                except ValueError:
+                    # Special case: we had only one vertex, or several aligned
+                    # vertices.
+                    assert len(ret) == 1
+            return ret
+        
+        less_strip = frontside(less_strip, +1)
+        more_strip = frontside(more_strip, -1)
+        
+        def merge(a_strip, b_strip):
+            a = a_strip.pop(0)
+            b = b_strip.pop(0)
+            while True:
+                yield a, b
+                if not a_strip:
+                    for b in b_strip:
+                        yield a, b
+                    return
+                if not b_strip:
+                    for a in a_strip:
+                        yield a, b
+                    return
+                if a_strip[0][not vertical] < b_strip[0][not vertical]:
+                    a = a_strip.pop(0)
+                else:
+                    b = b_strip.pop(0)
+
+        linked_any = False
+        # I get this now because merge destroys the strips.
+        default_edge = (less_strip[len(less_strip)//2], 
+                        more_strip[len(more_strip)//2])
+        for less, more in merge(less_strip, more_strip):
+            if random.random() <= prob_link:
+                add_edge(less, more)
+                linked_any = True
+        if not linked_any:
+            add_edge(*default_edge)
+
+    rec_edges(sorted(vertices, key=(lambda v: v.x)), 
+              sorted(vertices, key=(lambda v: v.y)))
+    return ret
 
 def write_verts():
     v = verts()
@@ -162,3 +194,8 @@ def write_verts():
             out.write("%s %s %s\n" % (v.id, v.x, v.y))
         out.write("end vertices\n")
     print "Dun.", len(v)
+
+if __name__ == '__main__':
+    v = verts()
+    e = edges(v)
+    print "Got edges", len(e)
