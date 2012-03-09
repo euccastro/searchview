@@ -349,7 +349,7 @@ class view(ui.window):
 
         range_ = max_ - min_
 
-        margin = .1  # at each border
+        margin = .02  # at each border
 
         ww = window_rect.width * (1 - margin * 2)
         wh = window_rect.height * (1 - margin * 2)
