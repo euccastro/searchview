@@ -9,14 +9,16 @@ from la import convex_hull, vec2
 # Parameters.
 world_width = 700
 world_height = 500
-min_dist = 20
-prob_link = .5
+min_dist = 10
+prob_link = 1. 
 
 
 class vec2wid(vec2):
     def __init__(self, x, y, id_=None):
         vec2.__init__(self, x, y)
-        self.id = id
+        self.id = id_
+    def __repr__(self):
+        return "<vec2 %s: %s, %s>" % (self.id, self.x, self.y)
 
 def verts():
     ret = []
@@ -48,7 +50,7 @@ def edges(vertices):
     def add_edge(a, b):
         ret.append((a, b))
 
-    def rec_edges(hsorted, vsorted):
+    def rec_edges(hsorted, vsorted, indentation=0):
         """
         Populate the `ret` array with a suitable list of edges.
 
@@ -57,6 +59,9 @@ def edges(vertices):
 
         Target time complexity is n*log(n).
         """
+        def prindent(*args):
+            return
+            print ("    " * indentation) + " ".join(map(str, args))
         assert len(hsorted) == len(vsorted)
         if len(hsorted) < 2:
             return
@@ -69,14 +74,24 @@ def edges(vertices):
 
         if vertical:
             array, other_array = vsorted, hsorted
+
         else:
             array, other_array = hsorted, vsorted
 
         # Index of lowest element in top partition.
-        mid_index = len(array)//2+len(array)%2
+        mid_index = len(array)//2
         mid_coord = array[mid_index][vertical]
         less_sorted = array[:mid_index]
         more_sorted = array[mid_index:]
+
+        if vertical:
+            prindent("Vertical split around %s." % array[mid_index].id)
+            prindent("below:", *(v.id for v in less_sorted))
+            prindent("above:", *(v.id for v in more_sorted))
+        else:
+            prindent("Horizontal split around %s." % array[mid_index].id)
+            prindent("left:", *(v.id for v in less_sorted))
+            prindent("right:", *(v.id for v in more_sorted))
 
         # XXX: sleazy hack.  Not sure that this is correct, but if I get a
         #      good-looking graph I'll happily sweep this under the rug.
@@ -95,11 +110,11 @@ def edges(vertices):
                              for v in other_array
                              if v[vertical] >= mid_coord]
         if vertical:
-            rec_edges(other_less_sorted, less_sorted)
-            rec_edges(other_more_sorted, more_sorted)
+            rec_edges(other_less_sorted, less_sorted, indentation+1)
+            rec_edges(other_more_sorted, more_sorted, indentation+1)
         else:
-            rec_edges(less_sorted, other_less_sorted)
-            rec_edges(more_sorted, other_more_sorted)
+            rec_edges(less_sorted, other_less_sorted, indentation+1)
+            rec_edges(more_sorted, other_more_sorted, indentation+1)
 
         # At this point I have hopefully done a decent job of connecting
         # both divisions internally.  I'll add some edges to connect top
@@ -123,6 +138,7 @@ def edges(vertices):
         # the highest vertex in the low division.  This last resource
         # should avoid islands.
         if not less_strip:
+            prindent("something crazy", more_sorted[0].id, less_sorted[-1].id)
             add_edge(more_sorted[0], less_sorted[-1])
             return
 
@@ -148,6 +164,9 @@ def edges(vertices):
                     # Special case: we had only one vertex, or several aligned
                     # vertices.
                     assert len(ret) == 1
+            # convex_hull() messes with the ordering of our lists!
+            # I need to re-sort here :/
+            ret.sort(key=(lambda v: v[not vertical]))
             return ret
         
         less_strip = frontside(less_strip, +1)
@@ -176,26 +195,48 @@ def edges(vertices):
         default_edge = (less_strip[len(less_strip)//2], 
                         more_strip[len(more_strip)//2])
         for less, more in merge(less_strip, more_strip):
+            prindent("considering", less.id, more.id)
             if random.random() <= prob_link:
+                prindent("adding edge", less.id, more.id)
                 add_edge(less, more)
                 linked_any = True
         if not linked_any:
+            prindent("default edge", default_edge[0].id, default_edge[1].id)
             add_edge(*default_edge)
+        prindent("end split")
 
     rec_edges(sorted(vertices, key=(lambda v: v.x)), 
               sorted(vertices, key=(lambda v: v.y)))
     return ret
 
-def write_verts():
-    v = verts()
-    with file('verts', 'w') as out:
-        out.write("begin vertices\n")
-        for vec in v:
-            out.write("%s %s %s\n" % (v.id, v.x, v.y))
-        out.write("end vertices\n")
-    print "Dun.", len(v)
-
-if __name__ == '__main__':
+def write_verts_and_edges():
     v = verts()
     e = edges(v)
-    print "Got edges", len(e)
+    with file('prettygraph', 'w') as out:
+        out.write("begin vertices\n")
+        for vec in v:
+            out.write("%s %s %s\n" % (vec.id, vec.x, vec.y))
+        out.write("end vertices\n\nbegin edges\n")
+        for a, b in e:
+            out.write("%s %s\n" % (a.id, b.id))
+        out.write("end edges\n")
+    
+def debug_edges():
+    import itertools as it
+    lines = iter(it.imap(str.strip, file('prettygraph')))
+    for line in lines:
+        if line == 'begin vertices':
+            break
+    vertices = []
+    for line in lines:
+        if line == 'end vertices':
+            break
+        id_, x, y = line.split()
+        vertices.append(vec2wid(float(x), float(y), id_))
+    import pdb
+    pdb.set_trace()
+    e = edges(vertices)
+
+if __name__ == '__main__':
+    write_verts_and_edges()
+    #debug_edges()
