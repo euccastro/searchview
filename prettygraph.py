@@ -139,7 +139,7 @@ def edges(vertices):
         # should avoid islands.
         if not less_strip:
             prindent("something crazy", more_sorted[0].id, less_sorted[-1].id)
-            add_edge(more_sorted[0], less_sorted[-1])
+            #add_edge(more_sorted[0], less_sorted[-1])
             return
 
         # In order to guarantee that I don't cross any edges internal to
