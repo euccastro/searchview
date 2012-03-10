@@ -1,0 +1,15 @@
+name: root
+enabled: yes
+layout: fill
+children:
+    - name: controls
+      class: searchview.control
+      enabled: yes
+      layout: bottom height//8
+    - id: view
+      class: searchview.view
+      enabled: yes
+      graph: prettygraph
+      history: verthistory
+      layout: fill
+
