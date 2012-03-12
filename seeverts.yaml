@@ -10,16 +10,16 @@ children:
       enabled: yes
       layout: fill
       children:
-#        - id: view1
-#          class: searchview.view
-#          enabled: yes
-#          graph: prettygraph
-#          history: depth_first_history
-#          layout: left parent.rect.width//len(parent.children)
+        - id: view1
+          class: searchview.view
+          enabled: yes
+          graph: prettygraph
+          history: astar_history
+          layout: left parent.rect.width//len(parent.children)
         - id: view2
           class: searchview.view
           enabled: yes
-          history: depth_first_history
+          history: bidirectional_astar_history
           graph: prettygraph
           layout: left parent.rect.width//len(parent.children)
 

@@ -26,14 +26,15 @@ class problem_2d:
         self.goal = vert_dict[goal]
     def start_node(self):
         return node(self.start, None, 0, (self.start - self.goal).length())
-    def expand(self, n):
+    def goal_node(self):
+        return node(self.goal, None, 0, (self.start - self.goal).length())
+    def expand(self, n, goal=None):
+        goal = goal or self.goal
         for v in self.connections[n.state.id]:
             yield node(v, 
                        n, 
                        n.cost + (v - n.state).length(), 
-                       (v - self.goal).length())
-    def is_start(self, state):
-        return state.id == self.start.id
+                       (v - goal).length())
     def is_goal(self, state):
         return state.id == self.goal.id
     def heuristic_cost(self, node):
@@ -66,11 +67,9 @@ def graph_search(add_to_frontier, choose_from_frontier):
                 node = choose_from_frontier(frontier)
                 if problem.is_goal(node.state):
                     ret = solution(node)
-                    log('vertex_color', ret[0], solution_color)
-                    for a, b in izip(ret[:-1], ret[1:]):
-                        log('vertex_color', b, solution_color)
-                        log('edge_color', a, b, solution_color)
-                    print "total cost is", node.cost, "length is", len(ret)
+                    log_solution(ret, log)
+                    print "total cost is", node.cost
+                    print "length is", len(ret)
                     return ret
                 log('vertex_color', node.state.id, visited_color)
                 if node.parent:
@@ -78,10 +77,10 @@ def graph_search(add_to_frontier, choose_from_frontier):
                         node.parent.state.id,
                         node.state.id, 
                         visited_color)
-                if node.state not in visited: 
-                    visited.add(node.state)
+                if node.state.id not in visited: 
+                    visited.add(node.state.id)
                     for neighbor in problem.expand(node):
-                        if neighbor.state not in visited:
+                        if neighbor.state.id not in visited:
                             log('vertex_color', 
                                 neighbor.state.id, 
                                 frontier_color)
@@ -93,6 +92,12 @@ def graph_search(add_to_frontier, choose_from_frontier):
         finally:
             log('step', time.time() - start_time)
     return search
+
+def log_solution(solution, log):
+    log('vertex_color', solution[0], solution_color)
+    for a, b in izip(solution[:-1], solution[1:]):
+        log('vertex_color', b, solution_color)
+        log('edge_color', a, b, solution_color)
 
 breadth_first_search = graph_search(list.append, (lambda l: l.pop(0)))
 depth_first_search = graph_search(list.append, list.pop)
@@ -108,6 +113,68 @@ best_first_search = graph_search(push_by_heuristic, pop_by_priority)
 def astar_push(frontier, node):
     heappush(frontier, (node.cost + node.heuristic_estimate, node))
 astar_search = graph_search(astar_push, pop_by_priority)
+
+class search_state:
+    def __init__(self, start, goal, color):
+        self.visited = set()
+        self.frontier = [(0, start)]
+        self.goal = goal
+        self.frontier_color = color
+        self.visited_color = 'dark_' + color
+
+def bidirectional_astar_search(problem, log):
+    start = problem.start_node()
+    goal = problem.goal_node()
+    searches = [search_state(start, goal, 'red'),
+                search_state(goal, start, 'blue')]
+    best_path_cost = sys.maxint
+    best_path = None
+    start_time = time.time()
+    while searches[0].frontier and searches[1].frontier:
+        for search, other in searches, reversed(searches):
+            log('step', time.time() - start_time)
+            blah, node = heappop(search.frontier)
+            estimate = node.cost + node.heuristic_estimate
+            log('vertex_color', node.state.id, search.visited_color)
+            if node.parent:
+                log('edge_color', 
+                    node.parent.state.id,
+                    node.state.id,
+                    search.visited_color)
+            if node.state.id in search.visited or estimate > best_path_cost:
+                continue
+            search.visited.add(node.state.id)
+            for blah, other_node in other.frontier:
+                if other_node.state.id == node.state.id:
+                    log('vertex_color', node.state.id, 'yellow')
+                    cost = node.cost + other_node.cost
+                    if cost < best_path_cost:
+                        best_path = node, other_node
+                        best_path_cost = cost
+            for child in problem.expand(node, search.goal.state):
+                estimate = child.cost + child.heuristic_estimate
+                if (estimate < best_path_cost
+                    and child.state.id not in search.visited):
+                    log('vertex_color', child.state.id, search.frontier_color)
+                    log('edge_color',
+                        node.state.id, 
+                        child.state.id, 
+                        search.frontier_color)
+                    heappush(search.frontier, 
+                             (estimate, child))
+    log('step', time.time() - start_time)
+    if best_path is None:
+        return None
+    else:
+        a, b = best_path
+      
+        ret = solution(a)[:-1] + list(reversed(solution(b)))
+        if ret[0] != start.state.id:
+            ret.reverse()
+        log_solution(ret, log)
+        print "total cost", a.cost + b.cost
+        print "length is", len(ret)
+        return ret
 
 def log_search(search, graph_filename, start, goal, log_filename):
     gc.disable()
