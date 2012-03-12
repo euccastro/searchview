@@ -68,7 +68,7 @@ def graph_search(add_to_frontier, choose_from_frontier):
                     for a, b in izip(ret[:-1], ret[1:]):
                         log('vertex_color', b, solution_color)
                         log('edge_color', a, b, solution_color)
-                    print "total cost is", node.cost
+                    print "total cost is", node.cost, "length is", len(ret)
                     return ret
                 log('vertex_color', node.state.id, visited_color)
                 if node.parent:
@@ -76,7 +76,7 @@ def graph_search(add_to_frontier, choose_from_frontier):
                         node.parent.state.id,
                         node.state.id, 
                         visited_color)
-                if node.state not in visited:
+                if node.state not in visited: 
                     visited.add(node.state)
                     for neighbor in problem.expand(node):
                         if neighbor.state not in visited:
@@ -91,6 +91,50 @@ def graph_search(add_to_frontier, choose_from_frontier):
         finally:
             log('step', time.time() - start_time)
     return search
+
+def recursive_depth_limited_search(problem, node, log, depth, color):
+    """
+    I'm not bothering to distinguish failed searches from those
+    that were cut off, since I know that a solution will eventually
+    be found in my graph.
+    """
+    if depth == 0:
+        return None
+    if problem.is_goal(node.state):
+        ret = solution(node)
+        log('vertex_color', ret[0], solution_color)
+        for a, b in izip(ret[:-1], ret[1:]):
+            log('vertex_color', b, solution_color)
+            log('edge_color', a, b, solution_color)
+        print "total cost is", node.cost, "length is", len(ret)
+        return ret
+    log("vertex_color", node.state.id, color)
+    if node.parent:
+        log("edge_color", node.parent.state.id, node.state.id, color)
+    for child in problem.expand(node):
+        ret = recursive_depth_limited_search(problem, node, log, depth-1, color)
+        if ret:
+            return ret
+
+
+def iterative_deepening_df_search(problem, log):
+    for depth in xrange(1, 150):
+        print "trying depth", depth
+        ret = recursive_depth_limited_search(
+                problem, 
+                problem.start_node(), 
+                log,
+                depth,
+                'red' if depth%2 else 'blue')
+        if ret is not None:
+            return ret
+
+def path_length(node):
+    ret = 0
+    while node:
+        ret += 1
+        node = node.parent
+    return ret
 
 breadth_first_search = graph_search(list.append, (lambda l: l.pop(0)))
 depth_first_search = graph_search(list.append, list.pop)
