@@ -2,6 +2,7 @@ from __future__ import division
 
 from collections import defaultdict
 from heapq import heappush, heappop
+from itertools import *
 import sys
 import time
 
@@ -24,11 +25,14 @@ class problem_2d:
         self.goal = vert_dict[goal]
     def start_node(self):
         return node(self.start, None, 0, (self.start - self.goal).length())
-    def expand(self, node):
-        for v in self.connections[node.state.id]:
-            yield node(v, node, (v - node).length(), (v - self.goal).length())
-    def is_goal(self, node):
-        return node.state.id == self.goal.id
+    def expand(self, n):
+        for v in self.connections[n.state.id]:
+            yield node(v, 
+                       n, 
+                       (v - n.state).length(), 
+                       (v - self.goal).length())
+    def is_goal(self, state):
+        return state.id == self.goal.id
     def heuristic_cost(self, node):
         return (node.state - self.goal).length()
 
@@ -47,7 +51,7 @@ def solution(node):
     ret.reverse()
     return ret
 
-def graph_serch(add_to_frontier, pick_from_frontier):
+def graph_search(add_to_frontier, choose_from_frontier):
     def search(problem, log):
         visited = set()
         start = problem.start_node()
@@ -60,7 +64,7 @@ def graph_serch(add_to_frontier, pick_from_frontier):
                 node = choose_from_frontier(frontier)
                 if problem.is_goal(node.state):
                     ret = solution(node)
-                    log('vertex_color', a, solution_color)
+                    log('vertex_color', ret[0], solution_color)
                     for a, b in izip(ret[:-1], ret[1:]):
                         log('vertex_color', b, solution_color)
                         log('edge_color', a, b, solution_color)
@@ -104,14 +108,17 @@ def log_search(search, graph_filename, start, goal, log_filename):
     problem = problem_2d(vertices, edges, start, goal)
     with file(log_filename, 'w') as log_file:
         def log(*args):
-            file.write(' '.join(map(str, args))+'\n')
+            log_file.write(' '.join(map(str, args))+'\n')
+        log('start', start)
+        log('goal', goal)
         globals()[search+'_search'](problem, log)
 
 if __name__ == '__main__':
     try:
         search, graph_filename, start, end, log_filename = sys.argv[1:]
     except ValueError:
-        print ("Usage: %s <search_algorithm> <start> <end> <log_filename>"
+        print ("Usage: %s <search_algorithm> <graph_filename> "
+               "<start> <end> <log_filename>"
                % sys.argv[0])
         sys.exit(1)
     log_search(search, graph_filename, start, end, log_filename)
