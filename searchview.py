@@ -731,9 +731,9 @@ def copy_buffer(dst, src):
     memmove(dst, src, sizeof(dst))
 
 def run(filename):
-    w = pyglet.window.Window(resizable=True)
+    w = pyglet.window.Window(width=800, height=600, resizable=True)
     ui.init(w)
-    glPointSize(3)
+    glPointSize(2)
     glClearColor(.2, .2, .2, 1.)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glEnable(GL_BLEND)

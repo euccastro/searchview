@@ -9,8 +9,8 @@ from la import convex_hull, vec2
 # Parameters.
 world_width = 700
 world_height = 500
-min_dist = 10
-prob_link = 1. 
+min_dist = 3
+prob_link = .4 
 
 
 class vec2wid(vec2):
@@ -124,7 +124,7 @@ def edges(vertices):
         # from each other.  First I'll try to isolate a horizontal strip
         # around the division point.
         # I want this strip ordered in the 'other' direction.
-        strip_breadth = min_dist * 2
+        strip_breadth = min_dist * 1.3
         def filter_strip(division):
             return [v
                     for v in division
@@ -139,7 +139,7 @@ def edges(vertices):
         # should avoid islands.
         if not less_strip:
             prindent("something crazy", more_sorted[0].id, less_sorted[-1].id)
-            #add_edge(more_sorted[0], less_sorted[-1])
+            add_edge(more_sorted[0], less_sorted[-1])
             return
 
         # In order to guarantee that I don't cross any edges internal to
@@ -169,8 +169,8 @@ def edges(vertices):
             ret.sort(key=(lambda v: v[not vertical]))
             return ret
         
-        less_strip = frontside(less_strip, +1)
-        more_strip = frontside(more_strip, -1)
+        #less_strip = frontside(less_strip, +1)
+        #more_strip = frontside(more_strip, -1)
         
         def merge(a_strip, b_strip):
             a = a_strip.pop(0)
@@ -209,9 +209,9 @@ def edges(vertices):
               sorted(vertices, key=(lambda v: v.y)))
     return ret
 
-def write_verts_and_edges():
-    v = verts()
-    e = edges(v)
+def write_verts_and_edges(v=None, e=None):
+    v = v or verts()
+    e = e or edges(v)
     with file('prettygraph', 'w') as out:
         out.write("begin vertices\n")
         for vec in v:
@@ -221,22 +221,40 @@ def write_verts_and_edges():
             out.write("%s %s\n" % (a.id, b.id))
         out.write("end edges\n")
     
-def debug_edges():
+def load_vertices(filename):
     import itertools as it
-    lines = iter(it.imap(str.strip, file('prettygraph')))
+    lines = iter(it.imap(str.strip, file(filename)))
     for line in lines:
         if line == 'begin vertices':
             break
-    vertices = []
+    ret = []
     for line in lines:
         if line == 'end vertices':
             break
         id_, x, y = line.split()
-        vertices.append(vec2wid(float(x), float(y), id_))
-    import pdb
-    pdb.set_trace()
-    e = edges(vertices)
+        ret.append(vec2wid(float(x), float(y), id_))
+    return ret
+
+def load_edges(filename):
+    import itertools as it
+    lines = iter(it.imap(str.strip, file(filename)))
+    for line in lines:
+        if line == 'begin edges':
+            break
+    ret = []
+    for line in lines:
+        if line == 'end edges':
+            break
+        ret.append(line.split())
+    return ret
+
+def debug_edges():
+    write_verts_and_edges(load_vertices('prettygraph'))
+
+def load_graph(filename):
+    return load_vertices(filename), load_edges(filename)    
+
 
 if __name__ == '__main__':
-    write_verts_and_edges()
-    #debug_edges()
+    #write_verts_and_edges()
+    debug_edges()

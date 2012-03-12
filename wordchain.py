@@ -114,6 +114,7 @@ def wordchain(start,
                         log("vertex_color", b, "green")
                     log("edge_color", a, b, "green")
                 log("vertex_color", last, "yellow")
+                print "solution has length", len(solution)
                 return solution
             for ec, csf, other_chain, other_contact in other.frontier:
                 if other_chain[-1] == last:
