@@ -9,7 +9,7 @@ from la import convex_hull, vec2
 # Parameters.
 world_width = 700
 world_height = 500
-min_dist = 3
+min_dist = 4
 prob_link = .4 
 
 
@@ -256,5 +256,5 @@ def load_graph(filename):
 
 
 if __name__ == '__main__':
-    #write_verts_and_edges()
-    debug_edges()
+    write_verts_and_edges()
+    #debug_edges()

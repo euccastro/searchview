@@ -1,928 +1,1631 @@
-start 6910
-goal 9536
+start 4510
+goal 1407
 step 9.53674316406e-07
-vertex_color 6910 blue
-vertex_color 9960 red
-edge_color 6910 9960 red
-vertex_color 5138 red
-edge_color 6910 5138 red
-vertex_color 4648 red
-edge_color 6910 4648 red
-step 7.20024108887e-05
-vertex_color 5138 blue
-edge_color 6910 5138 blue
-vertex_color 3522 red
-edge_color 5138 3522 red
-vertex_color 5892 red
-edge_color 5138 5892 red
-vertex_color 6910 red
-edge_color 5138 6910 red
-step 0.000119924545288
-step 0.000125885009766
-vertex_color 5892 blue
-edge_color 5138 5892 blue
-vertex_color 3522 red
-edge_color 5892 3522 red
-vertex_color 5138 red
-edge_color 5892 5138 red
-vertex_color 7424 red
-edge_color 5892 7424 red
-step 0.000169038772583
-step 0.000172853469849
-vertex_color 9960 blue
-edge_color 6910 9960 blue
-vertex_color 6910 red
-edge_color 9960 6910 red
-vertex_color 6905 red
-edge_color 9960 6905 red
-vertex_color 4648 red
-edge_color 9960 4648 red
-step 0.000216007232666
-step 0.000221014022827
-vertex_color 7424 blue
-edge_color 5892 7424 blue
-vertex_color 7275 red
-edge_color 7424 7275 red
-vertex_color 4000 red
-edge_color 7424 4000 red
-vertex_color 3522 red
-edge_color 7424 3522 red
-vertex_color 5892 red
-edge_color 7424 5892 red
-step 0.000287055969238
-vertex_color 7275 blue
-edge_color 7424 7275 blue
-vertex_color 8957 red
-edge_color 7275 8957 red
-vertex_color 7424 red
-edge_color 7275 7424 red
-vertex_color 1646 red
-edge_color 7275 1646 red
-vertex_color 3032 red
-edge_color 7275 3032 red
-vertex_color 2662 red
-edge_color 7275 2662 red
-step 0.000362873077393
-vertex_color 2662 blue
-edge_color 7275 2662 blue
-vertex_color 11157 red
-edge_color 2662 11157 red
-vertex_color 3032 red
-edge_color 2662 3032 red
-vertex_color 7275 red
-edge_color 2662 7275 red
-step 0.000412940979004
-vertex_color 11157 blue
-edge_color 2662 11157 blue
-vertex_color 8678 red
-edge_color 11157 8678 red
-vertex_color 2662 red
-edge_color 11157 2662 red
-vertex_color 1754 red
-edge_color 11157 1754 red
-vertex_color 2014 red
-edge_color 11157 2014 red
-step 0.000468015670776
-vertex_color 1754 blue
-edge_color 11157 1754 blue
-vertex_color 180 red
-edge_color 1754 180 red
-vertex_color 11157 red
-edge_color 1754 11157 red
-step 0.000503063201904
-vertex_color 180 blue
-edge_color 1754 180 blue
-vertex_color 1754 red
-edge_color 180 1754 red
-vertex_color 6353 red
-edge_color 180 6353 red
-vertex_color 9512 red
-edge_color 180 9512 red
-vertex_color 8678 red
-edge_color 180 8678 red
-step 0.000557899475098
-vertex_color 9512 blue
-edge_color 180 9512 blue
-vertex_color 5316 red
-edge_color 9512 5316 red
-vertex_color 8 red
-edge_color 9512 8 red
-vertex_color 180 red
-edge_color 9512 180 red
-step 0.000601053237915
-vertex_color 8 blue
-edge_color 9512 8 blue
-vertex_color 9512 red
-edge_color 8 9512 red
-vertex_color 2158 red
-edge_color 8 2158 red
-vertex_color 1383 red
-edge_color 8 1383 red
-step 0.00064492225647
-vertex_color 1383 blue
-edge_color 8 1383 blue
-vertex_color 8211 red
-edge_color 1383 8211 red
-vertex_color 9855 red
-edge_color 1383 9855 red
-vertex_color 8 red
-edge_color 1383 8 red
-step 0.000690937042236
-vertex_color 9855 blue
-edge_color 1383 9855 blue
-vertex_color 6157 red
-edge_color 9855 6157 red
-vertex_color 7636 red
-edge_color 9855 7636 red
-vertex_color 5040 red
-edge_color 9855 5040 red
-vertex_color 8211 red
-edge_color 9855 8211 red
-vertex_color 1383 red
-edge_color 9855 1383 red
-step 0.000761985778809
-vertex_color 5040 blue
-edge_color 9855 5040 blue
-vertex_color 8085 red
-edge_color 5040 8085 red
-vertex_color 5798 red
-edge_color 5040 5798 red
-vertex_color 9855 red
-edge_color 5040 9855 red
-vertex_color 1808 red
-edge_color 5040 1808 red
-step 0.000826835632324
-vertex_color 1808 blue
-edge_color 5040 1808 blue
-vertex_color 1520 red
-edge_color 1808 1520 red
-vertex_color 5040 red
-edge_color 1808 5040 red
-step 0.000861883163452
-vertex_color 1520 blue
-edge_color 1808 1520 blue
-vertex_color 1808 red
-edge_color 1520 1808 red
-vertex_color 10674 red
-edge_color 1520 10674 red
-vertex_color 8085 red
-edge_color 1520 8085 red
-step 0.000910997390747
-vertex_color 10674 blue
-edge_color 1520 10674 blue
-vertex_color 1520 red
-edge_color 10674 1520 red
-vertex_color 3050 red
-edge_color 10674 3050 red
-vertex_color 2646 red
-edge_color 10674 2646 red
-step 0.000970840454102
-vertex_color 2646 blue
-edge_color 10674 2646 blue
-vertex_color 9717 red
-edge_color 2646 9717 red
-vertex_color 10255 red
-edge_color 2646 10255 red
-vertex_color 10674 red
-edge_color 2646 10674 red
-step 0.00101685523987
-vertex_color 10255 blue
-edge_color 2646 10255 blue
-vertex_color 1363 red
-edge_color 10255 1363 red
-vertex_color 7572 red
-edge_color 10255 7572 red
-vertex_color 2646 red
-edge_color 10255 2646 red
-vertex_color 10035 red
-edge_color 10255 10035 red
-vertex_color 3664 red
-edge_color 10255 3664 red
-step 0.00108599662781
-vertex_color 3664 blue
-edge_color 10255 3664 blue
-vertex_color 4892 red
-edge_color 3664 4892 red
-vertex_color 10255 red
-edge_color 3664 10255 red
-vertex_color 1363 red
-edge_color 3664 1363 red
-step 0.00112986564636
-vertex_color 4892 blue
-edge_color 3664 4892 blue
-vertex_color 10035 red
-edge_color 4892 10035 red
-vertex_color 3664 red
-edge_color 4892 3664 red
-vertex_color 6202 red
-edge_color 4892 6202 red
-vertex_color 4225 red
-edge_color 4892 4225 red
-vertex_color 10172 red
-edge_color 4892 10172 red
-step 0.00120401382446
-vertex_color 4225 blue
-edge_color 4892 4225 blue
-vertex_color 9733 red
-edge_color 4225 9733 red
-vertex_color 10172 red
-edge_color 4225 10172 red
-vertex_color 3266 red
-edge_color 4225 3266 red
-vertex_color 4892 red
-edge_color 4225 4892 red
-step 0.0012629032135
-vertex_color 3266 blue
-edge_color 4225 3266 blue
-vertex_color 7764 red
-edge_color 3266 7764 red
-vertex_color 6202 red
-edge_color 3266 6202 red
-vertex_color 4225 red
-edge_color 3266 4225 red
-vertex_color 20 red
-edge_color 3266 20 red
-step 0.00131988525391
-vertex_color 20 blue
-edge_color 3266 20 blue
-vertex_color 1719 red
-edge_color 20 1719 red
-vertex_color 5963 red
-edge_color 20 5963 red
-vertex_color 7764 red
-edge_color 20 7764 red
-vertex_color 3266 red
-edge_color 20 3266 red
-vertex_color 4667 red
-edge_color 20 4667 red
-vertex_color 9781 red
-edge_color 20 9781 red
-step 0.00139999389648
-vertex_color 1719 blue
-edge_color 20 1719 blue
-vertex_color 20 red
-edge_color 1719 20 red
-vertex_color 9781 red
-edge_color 1719 9781 red
-vertex_color 827 red
-edge_color 1719 827 red
-step 0.00145888328552
-vertex_color 827 blue
-edge_color 1719 827 blue
-vertex_color 605 red
-edge_color 827 605 red
-vertex_color 7300 red
-edge_color 827 7300 red
-vertex_color 1719 red
-edge_color 827 1719 red
-step 0.00150489807129
-vertex_color 605 blue
-edge_color 827 605 blue
-vertex_color 27 red
-edge_color 605 27 red
-vertex_color 827 red
-edge_color 605 827 red
-vertex_color 813 red
-edge_color 605 813 red
-vertex_color 4086 red
-edge_color 605 4086 red
-vertex_color 3895 red
-edge_color 605 3895 red
-step 0.00157189369202
-vertex_color 27 blue
-edge_color 605 27 blue
-vertex_color 605 red
-edge_color 27 605 red
-vertex_color 2757 red
-edge_color 27 2757 red
-step 0.00160598754883
-vertex_color 2757 blue
-edge_color 27 2757 blue
-vertex_color 1289 red
-edge_color 2757 1289 red
-vertex_color 7274 red
-edge_color 2757 7274 red
-vertex_color 27 red
-edge_color 2757 27 red
-step 0.00165390968323
-vertex_color 7274 blue
-edge_color 2757 7274 blue
-vertex_color 10161 red
-edge_color 7274 10161 red
-vertex_color 2757 red
-edge_color 7274 2757 red
-vertex_color 8391 red
-edge_color 7274 8391 red
-step 0.00170397758484
-vertex_color 8391 blue
-edge_color 7274 8391 blue
-vertex_color 5870 red
-edge_color 8391 5870 red
-vertex_color 6118 red
-edge_color 8391 6118 red
-vertex_color 1289 red
-edge_color 8391 1289 red
-vertex_color 7274 red
-edge_color 8391 7274 red
-vertex_color 1946 red
-edge_color 8391 1946 red
-step 0.00177383422852
-vertex_color 5870 blue
-edge_color 8391 5870 blue
-vertex_color 8391 red
-edge_color 5870 8391 red
-vertex_color 413 red
-edge_color 5870 413 red
-step 0.00180697441101
-vertex_color 413 blue
-edge_color 5870 413 blue
-vertex_color 806 red
-edge_color 413 806 red
-vertex_color 10267 red
-edge_color 413 10267 red
-vertex_color 5870 red
-edge_color 413 5870 red
-step 0.00185394287109
-step 0.00185894966125
-vertex_color 806 blue
-edge_color 413 806 blue
-vertex_color 413 red
-edge_color 806 413 red
-vertex_color 7178 red
-edge_color 806 7178 red
-step 0.00189805030823
-vertex_color 7178 blue
-edge_color 806 7178 blue
-vertex_color 6893 red
-edge_color 7178 6893 red
-vertex_color 9861 red
-edge_color 7178 9861 red
-vertex_color 10730 red
-edge_color 7178 10730 red
-vertex_color 806 red
-edge_color 7178 806 red
-step 0.00195598602295
-vertex_color 6893 blue
-edge_color 7178 6893 blue
-vertex_color 7178 red
-edge_color 6893 7178 red
-vertex_color 8929 red
-edge_color 6893 8929 red
-vertex_color 9861 red
-edge_color 6893 9861 red
-step 0.00200390815735
-vertex_color 8929 blue
-edge_color 6893 8929 blue
-vertex_color 1588 red
-edge_color 8929 1588 red
-vertex_color 6893 red
-edge_color 8929 6893 red
-vertex_color 9327 red
-edge_color 8929 9327 red
-vertex_color 7680 red
-edge_color 8929 7680 red
-step 0.00206303596497
-vertex_color 9327 blue
-edge_color 8929 9327 blue
-vertex_color 5105 red
-edge_color 9327 5105 red
-vertex_color 8074 red
-edge_color 9327 8074 red
-vertex_color 8929 red
-edge_color 9327 8929 red
-vertex_color 1588 red
-edge_color 9327 1588 red
-vertex_color 4015 red
-edge_color 9327 4015 red
-step 0.00213599205017
-vertex_color 1588 blue
-edge_color 8929 1588 blue
-vertex_color 7701 red
-edge_color 1588 7701 red
-vertex_color 8929 red
-edge_color 1588 8929 red
-vertex_color 9327 red
-edge_color 1588 9327 red
-step 0.00218105316162
-step 0.00218605995178
-step 0.00218987464905
-vertex_color 7701 blue
-edge_color 1588 7701 blue
-vertex_color 1588 red
-edge_color 7701 1588 red
-vertex_color 7680 red
-edge_color 7701 7680 red
-vertex_color 453 red
-edge_color 7701 453 red
-step 0.0022349357605
-vertex_color 453 blue
-edge_color 7701 453 blue
-vertex_color 641 red
-edge_color 453 641 red
-vertex_color 4500 red
-edge_color 453 4500 red
-vertex_color 8954 red
-edge_color 453 8954 red
-vertex_color 7680 red
-edge_color 453 7680 red
-vertex_color 7701 red
-edge_color 453 7701 red
-step 0.00230288505554
-vertex_color 641 blue
-edge_color 453 641 blue
-vertex_color 8726 red
-edge_color 641 8726 red
-vertex_color 453 red
-edge_color 641 453 red
-vertex_color 7755 red
-edge_color 641 7755 red
-step 0.00234794616699
-vertex_color 7755 blue
-edge_color 641 7755 blue
-vertex_color 8849 red
-edge_color 7755 8849 red
-vertex_color 7195 red
-edge_color 7755 7195 red
-vertex_color 1522 red
-edge_color 7755 1522 red
-vertex_color 641 red
-edge_color 7755 641 red
-step 0.00242900848389
-vertex_color 7195 blue
-edge_color 7755 7195 blue
-vertex_color 6807 red
-edge_color 7195 6807 red
-vertex_color 7755 red
-edge_color 7195 7755 red
-step 0.00246405601501
-vertex_color 6807 blue
-edge_color 7195 6807 blue
-vertex_color 7157 red
-edge_color 6807 7157 red
-vertex_color 7195 red
-edge_color 6807 7195 red
-vertex_color 2097 red
-edge_color 6807 2097 red
-step 0.00250792503357
-vertex_color 2097 blue
-edge_color 6807 2097 blue
-vertex_color 3410 red
-edge_color 2097 3410 red
-vertex_color 8917 red
-edge_color 2097 8917 red
-vertex_color 3022 red
-edge_color 2097 3022 red
-vertex_color 6807 red
-edge_color 2097 6807 red
-step 0.00256490707397
-vertex_color 3410 blue
-edge_color 2097 3410 blue
-vertex_color 2097 red
-edge_color 3410 2097 red
-vertex_color 9383 red
-edge_color 3410 9383 red
-step 0.00259804725647
-vertex_color 9383 blue
-edge_color 3410 9383 blue
-vertex_color 2894 red
-edge_color 9383 2894 red
-vertex_color 1198 red
-edge_color 9383 1198 red
-vertex_color 3410 red
-edge_color 9383 3410 red
-step 0.00264692306519
-vertex_color 2894 blue
-edge_color 9383 2894 blue
-vertex_color 2029 red
-edge_color 2894 2029 red
-vertex_color 9383 red
-edge_color 2894 9383 red
-vertex_color 1198 red
-edge_color 2894 1198 red
-vertex_color 5911 red
-edge_color 2894 5911 red
-vertex_color 9009 red
-edge_color 2894 9009 red
-step 0.00271797180176
-vertex_color 5911 blue
-edge_color 2894 5911 blue
+vertex_color 4510 dark_red
+vertex_color 5409 red
+edge_color 4510 5409 red
+vertex_color 9089 red
+edge_color 4510 9089 red
+vertex_color 5693 red
+edge_color 4510 5693 red
+step 6.79492950439e-05
+vertex_color 5693 dark_red
+edge_color 4510 5693 dark_red
+vertex_color 9089 red
+edge_color 5693 9089 red
+vertex_color 8689 red
+edge_color 5693 8689 red
+step 0.000118970870972
+vertex_color 8689 dark_red
+edge_color 5693 8689 dark_red
+vertex_color 8935 red
+edge_color 8689 8935 red
+vertex_color 5631 red
+edge_color 8689 5631 red
+vertex_color 5433 red
+edge_color 8689 5433 red
+step 0.000171899795532
+vertex_color 5631 dark_red
+edge_color 8689 5631 dark_red
+vertex_color 2542 red
+edge_color 5631 2542 red
+vertex_color 8262 red
+edge_color 5631 8262 red
+step 0.000211954116821
+vertex_color 8262 dark_red
+edge_color 5631 8262 dark_red
+vertex_color 9071 red
+edge_color 8262 9071 red
+step 0.000237941741943
+vertex_color 9071 dark_red
+edge_color 8262 9071 dark_red
+vertex_color 1845 red
+edge_color 9071 1845 red
+vertex_color 4113 red
+edge_color 9071 4113 red
+step 0.0002760887146
+vertex_color 4113 dark_red
+edge_color 9071 4113 dark_red
+vertex_color 5690 red
+edge_color 4113 5690 red
+vertex_color 2798 red
+edge_color 4113 2798 red
+vertex_color 1845 red
+edge_color 4113 1845 red
+step 0.000330924987793
+vertex_color 5690 dark_red
+edge_color 4113 5690 dark_red
+vertex_color 7054 red
+edge_color 5690 7054 red
+step 0.000365018844604
+vertex_color 7054 dark_red
+edge_color 5690 7054 dark_red
+vertex_color 7390 red
+edge_color 7054 7390 red
+vertex_color 1038 red
+edge_color 7054 1038 red
+vertex_color 2606 red
+edge_color 7054 2606 red
+vertex_color 5497 red
+edge_color 7054 5497 red
+step 0.000427961349487
+vertex_color 5497 dark_red
+edge_color 7054 5497 dark_red
+vertex_color 9023 red
+edge_color 5497 9023 red
+vertex_color 4351 red
+edge_color 5497 4351 red
+vertex_color 3724 red
+edge_color 5497 3724 red
+vertex_color 1038 red
+edge_color 5497 1038 red
+step 0.000486135482788
+vertex_color 4351 dark_red
+edge_color 5497 4351 dark_red
+vertex_color 9023 red
+edge_color 4351 9023 red
+step 0.000514030456543
+vertex_color 3724 dark_red
+edge_color 5497 3724 dark_red
+vertex_color 533 red
+edge_color 3724 533 red
+vertex_color 3861 red
+edge_color 3724 3861 red
+vertex_color 3206 red
+edge_color 3724 3206 red
+step 0.000566959381104
+vertex_color 3861 dark_red
+edge_color 3724 3861 dark_red
+vertex_color 1898 red
+edge_color 3861 1898 red
+vertex_color 5632 red
+edge_color 3861 5632 red
+vertex_color 7377 red
+edge_color 3861 7377 red
+step 0.000616073608398
+vertex_color 7377 dark_red
+edge_color 3861 7377 dark_red
+vertex_color 3538 red
+edge_color 7377 3538 red
+vertex_color 10959 red
+edge_color 7377 10959 red
+step 0.000653982162476
+vertex_color 10959 dark_red
+edge_color 7377 10959 dark_red
+vertex_color 532 red
+edge_color 10959 532 red
+vertex_color 4852 red
+edge_color 10959 4852 red
+vertex_color 5857 red
+edge_color 10959 5857 red
+step 0.00070595741272
+vertex_color 5857 dark_red
+edge_color 10959 5857 dark_red
+vertex_color 10144 red
+edge_color 5857 10144 red
+vertex_color 3963 red
+edge_color 5857 3963 red
+step 0.000746011734009
+vertex_color 3963 dark_red
+edge_color 5857 3963 dark_red
+vertex_color 4506 red
+edge_color 3963 4506 red
+step 0.000772953033447
+vertex_color 4506 dark_red
+edge_color 3963 4506 dark_red
+vertex_color 179 red
+edge_color 4506 179 red
+vertex_color 3170 red
+edge_color 4506 3170 red
+step 0.000811100006104
+vertex_color 10144 dark_red
+edge_color 5857 10144 dark_red
+vertex_color 4852 red
+edge_color 10144 4852 red
+vertex_color 5331 red
+edge_color 10144 5331 red
+step 0.000849008560181
+vertex_color 5331 dark_red
+edge_color 10144 5331 dark_red
+vertex_color 10118 red
+edge_color 5331 10118 red
+vertex_color 883 red
+edge_color 5331 883 red
+vertex_color 3877 red
+edge_color 5331 3877 red
+vertex_color 8955 red
+edge_color 5331 8955 red
+step 0.000906944274902
+vertex_color 3877 dark_red
+edge_color 5331 3877 dark_red
+vertex_color 2311 red
+edge_color 3877 2311 red
+step 0.000936031341553
+vertex_color 2311 dark_red
+edge_color 3877 2311 dark_red
+vertex_color 8955 red
+edge_color 2311 8955 red
+vertex_color 10635 red
+edge_color 2311 10635 red
+vertex_color 2417 red
+edge_color 2311 2417 red
+step 0.00100994110107
+vertex_color 2417 dark_red
+edge_color 2311 2417 dark_red
+vertex_color 8023 red
+edge_color 2417 8023 red
+vertex_color 2715 red
+edge_color 2417 2715 red
+vertex_color 4383 red
+edge_color 2417 4383 red
+vertex_color 2877 red
+edge_color 2417 2877 red
+step 0.00106906890869
+vertex_color 8023 dark_red
+edge_color 2417 8023 dark_red
+vertex_color 10635 red
+edge_color 8023 10635 red
+vertex_color 5659 red
+edge_color 8023 5659 red
+vertex_color 1377 red
+edge_color 8023 1377 red
+step 0.0011191368103
+vertex_color 5659 dark_red
+edge_color 8023 5659 dark_red
+vertex_color 2003 red
+edge_color 5659 2003 red
+vertex_color 5829 red
+edge_color 5659 5829 red
+step 0.00116205215454
+vertex_color 5829 dark_red
+edge_color 5659 5829 dark_red
+vertex_color 2003 red
+edge_color 5829 2003 red
+vertex_color 2315 red
+edge_color 5829 2315 red
+vertex_color 959 red
+edge_color 5829 959 red
+step 0.00121307373047
+vertex_color 959 dark_red
+edge_color 5829 959 dark_red
+vertex_color 4912 red
+edge_color 959 4912 red
+vertex_color 1212 red
+edge_color 959 1212 red
+vertex_color 7723 red
+edge_color 959 7723 red
+step 0.00126194953918
+vertex_color 4912 dark_red
+edge_color 959 4912 dark_red
+vertex_color 3018 red
+edge_color 4912 3018 red
+vertex_color 2517 red
+edge_color 4912 2517 red
+vertex_color 8525 red
+edge_color 4912 8525 red
+step 0.00131297111511
+vertex_color 2517 dark_red
+edge_color 4912 2517 dark_red
+vertex_color 365 red
+edge_color 2517 365 red
+vertex_color 8525 red
+edge_color 2517 8525 red
+vertex_color 5334 red
+edge_color 2517 5334 red
+step 0.00136494636536
+vertex_color 365 dark_red
+edge_color 2517 365 dark_red
+vertex_color 642 red
+edge_color 365 642 red
+step 0.00139212608337
+vertex_color 642 dark_red
+edge_color 365 642 dark_red
+vertex_color 470 red
+edge_color 642 470 red
+vertex_color 4779 red
+edge_color 642 4779 red
+vertex_color 2228 red
+edge_color 642 2228 red
+vertex_color 10610 red
+edge_color 642 10610 red
+vertex_color 6917 red
+edge_color 642 6917 red
+step 0.00146198272705
+vertex_color 10610 dark_red
+edge_color 642 10610 dark_red
+vertex_color 8840 red
+edge_color 10610 8840 red
+vertex_color 1502 red
+edge_color 10610 1502 red
+vertex_color 2218 red
+edge_color 10610 2218 red
+vertex_color 10050 red
+edge_color 10610 10050 red
+step 0.00152492523193
+vertex_color 10050 dark_red
+edge_color 10610 10050 dark_red
+vertex_color 2020 red
+edge_color 10050 2020 red
+vertex_color 8840 red
+edge_color 10050 8840 red
+step 0.00156497955322
+vertex_color 2020 dark_red
+edge_color 10050 2020 dark_red
+vertex_color 1802 red
+edge_color 2020 1802 red
+vertex_color 2218 red
+edge_color 2020 2218 red
+vertex_color 3616 red
+edge_color 2020 3616 red
+vertex_color 3219 red
+edge_color 2020 3219 red
+vertex_color 7034 red
+edge_color 2020 7034 red
+vertex_color 197 red
+edge_color 2020 197 red
+step 0.00164890289307
+vertex_color 3616 dark_red
+edge_color 2020 3616 dark_red
+vertex_color 3219 red
+edge_color 3616 3219 red
+step 0.00168395042419
+vertex_color 3219 dark_red
+edge_color 2020 3219 dark_red
+vertex_color 3372 red
+edge_color 3219 3372 red
+step 0.00171709060669
+vertex_color 3372 dark_red
+edge_color 3219 3372 dark_red
+vertex_color 197 red
+edge_color 3372 197 red
+vertex_color 5889 red
+edge_color 3372 5889 red
+step 0.00175809860229
+vertex_color 5889 dark_red
+edge_color 3372 5889 dark_red
+vertex_color 6375 red
+edge_color 5889 6375 red
+vertex_color 4054 red
+edge_color 5889 4054 red
+vertex_color 9811 red
+edge_color 5889 9811 red
+vertex_color 707 red
+edge_color 5889 707 red
+step 0.00181913375854
+vertex_color 707 dark_red
+edge_color 5889 707 dark_red
+vertex_color 2785 red
+edge_color 707 2785 red
+vertex_color 6375 red
+edge_color 707 6375 red
+vertex_color 6934 red
+edge_color 707 6934 red
+vertex_color 3055 red
+edge_color 707 3055 red
+step 0.00188112258911
+vertex_color 3055 dark_red
+edge_color 707 3055 dark_red
+vertex_color 9401 red
+edge_color 3055 9401 red
+vertex_color 6101 red
+edge_color 3055 6101 red
+vertex_color 5781 red
+edge_color 3055 5781 red
+vertex_color 111 red
+edge_color 3055 111 red
+vertex_color 1783 red
+edge_color 3055 1783 red
+step 0.00196290016174
+vertex_color 111 dark_red
+edge_color 3055 111 dark_red
+vertex_color 11063 red
+edge_color 111 11063 red
+vertex_color 2143 red
+edge_color 111 2143 red
+vertex_color 6638 red
+edge_color 111 6638 red
+step 0.00201296806335
+vertex_color 6638 dark_red
+edge_color 111 6638 dark_red
+vertex_color 1078 red
+edge_color 6638 1078 red
+vertex_color 2824 red
+edge_color 6638 2824 red
+step 0.00205111503601
+vertex_color 1078 dark_red
+edge_color 6638 1078 dark_red
+vertex_color 11035 red
+edge_color 1078 11035 red
+vertex_color 4411 red
+edge_color 1078 4411 red
+step 0.00209212303162
+vertex_color 4411 dark_red
+edge_color 1078 4411 dark_red
+vertex_color 5228 red
+edge_color 4411 5228 red
+vertex_color 11035 red
+edge_color 4411 11035 red
+step 0.00213408470154
+vertex_color 5228 dark_red
+edge_color 4411 5228 dark_red
+vertex_color 6693 red
+edge_color 5228 6693 red
+vertex_color 3088 red
+edge_color 5228 3088 red
+vertex_color 9871 red
+edge_color 5228 9871 red
+step 0.00218200683594
+vertex_color 3088 dark_red
+edge_color 5228 3088 dark_red
+vertex_color 3286 red
+edge_color 3088 3286 red
+vertex_color 5183 red
+edge_color 3088 5183 red
+vertex_color 4220 red
+edge_color 3088 4220 red
+step 0.00223112106323
+vertex_color 5183 dark_red
+edge_color 3088 5183 dark_red
+vertex_color 2624 red
+edge_color 5183 2624 red
+vertex_color 7775 red
+edge_color 5183 7775 red
+vertex_color 4718 red
+edge_color 5183 4718 red
+step 0.00228595733643
+vertex_color 4718 dark_red
+edge_color 5183 4718 dark_red
+vertex_color 4357 red
+edge_color 4718 4357 red
+vertex_color 1479 red
+edge_color 4718 1479 red
+vertex_color 10947 red
+edge_color 4718 10947 red
+vertex_color 2624 red
+edge_color 4718 2624 red
+step 0.00234889984131
+vertex_color 1479 dark_red
+edge_color 4718 1479 dark_red
+vertex_color 4816 red
+edge_color 1479 4816 red
+vertex_color 6337 red
+edge_color 1479 6337 red
+step 0.00238704681396
+vertex_color 4816 dark_red
+edge_color 1479 4816 dark_red
+vertex_color 4312 red
+edge_color 4816 4312 red
+vertex_color 10406 red
+edge_color 4816 10406 red
+step 0.00242495536804
+vertex_color 10406 dark_red
+edge_color 4816 10406 dark_red
+vertex_color 3302 red
+edge_color 10406 3302 red
+vertex_color 543 red
+edge_color 10406 543 red
+vertex_color 8169 red
+edge_color 10406 8169 red
+vertex_color 5935 red
+edge_color 10406 5935 red
+vertex_color 882 red
+edge_color 10406 882 red
+step 0.00249600410461
+vertex_color 543 dark_red
+edge_color 10406 543 dark_red
+vertex_color 3302 red
+edge_color 543 3302 red
+step 0.00252795219421
+vertex_color 3302 dark_red
+edge_color 10406 3302 dark_red
+vertex_color 3771 red
+edge_color 3302 3771 red
+vertex_color 3788 red
+edge_color 3302 3788 red
+step 0.00257110595703
+vertex_color 3771 dark_red
+edge_color 3302 3771 dark_red
+vertex_color 4850 red
+edge_color 3771 4850 red
+vertex_color 3456 red
+edge_color 3771 3456 red
+step 0.00260996818542
+vertex_color 3456 dark_red
+edge_color 3771 3456 dark_red
+vertex_color 5206 red
+edge_color 3456 5206 red
+vertex_color 1592 red
+edge_color 3456 1592 red
+step 0.00264811515808
+vertex_color 1592 dark_red
+edge_color 3456 1592 dark_red
+vertex_color 5123 red
+edge_color 1592 5123 red
+step 0.00267601013184
+vertex_color 5206 dark_red
+edge_color 3456 5206 dark_red
+vertex_color 2586 red
+edge_color 5206 2586 red
+vertex_color 9568 red
+edge_color 5206 9568 red
+step 0.00271606445312
+vertex_color 2586 dark_red
+edge_color 5206 2586 dark_red
+vertex_color 9568 red
+edge_color 2586 9568 red
+vertex_color 6325 red
+edge_color 2586 6325 red
+vertex_color 10595 red
+edge_color 2586 10595 red
+step 0.00277209281921
+vertex_color 10595 dark_red
+edge_color 2586 10595 dark_red
+vertex_color 10653 red
+edge_color 10595 10653 red
+vertex_color 4872 red
+edge_color 10595 4872 red
+vertex_color 9349 red
+edge_color 10595 9349 red
+vertex_color 6325 red
+edge_color 10595 6325 red
+step 0.00283193588257
+vertex_color 10653 dark_red
+edge_color 10595 10653 dark_red
+vertex_color 4082 red
+edge_color 10653 4082 red
+vertex_color 9472 red
+edge_color 10653 9472 red
+vertex_color 7994 red
+edge_color 10653 7994 red
+vertex_color 9047 red
+edge_color 10653 9047 red
+vertex_color 10847 red
+edge_color 10653 10847 red
+step 0.0029079914093
+vertex_color 9472 dark_red
+edge_color 10653 9472 dark_red
+vertex_color 5918 red
+edge_color 9472 5918 red
+step 0.00293707847595
+vertex_color 7994 dark_red
+edge_color 10653 7994 dark_red
+vertex_color 9047 red
+edge_color 7994 9047 red
+vertex_color 4082 red
+edge_color 7994 4082 red
+step 0.00298309326172
+vertex_color 9047 dark_red
+edge_color 10653 9047 dark_red
+vertex_color 10297 red
+edge_color 9047 10297 red
+vertex_color 10847 red
+edge_color 9047 10847 red
+step 0.00302791595459
+vertex_color 10297 dark_red
+edge_color 9047 10297 dark_red
+vertex_color 2801 red
+edge_color 10297 2801 red
+vertex_color 240 red
+edge_color 10297 240 red
+vertex_color 1879 red
+edge_color 10297 1879 red
+vertex_color 2365 red
+edge_color 10297 2365 red
+step 0.00308799743652
+vertex_color 240 dark_red
+edge_color 10297 240 dark_red
+vertex_color 10424 red
+edge_color 240 10424 red
+vertex_color 8921 red
+edge_color 240 8921 red
+vertex_color 4501 red
+edge_color 240 4501 red
+vertex_color 2801 red
+edge_color 240 2801 red
+vertex_color 6389 red
+edge_color 240 6389 red
+step 0.0031909942627
+vertex_color 4501 dark_red
+edge_color 240 4501 dark_red
+vertex_color 3398 red
+edge_color 4501 3398 red
+vertex_color 4759 red
+edge_color 4501 4759 red
+vertex_color 397 red
+edge_color 4501 397 red
+step 0.00324511528015
+vertex_color 397 dark_red
+edge_color 4501 397 dark_red
+vertex_color 5757 red
+edge_color 397 5757 red
+vertex_color 6555 red
+edge_color 397 6555 red
+vertex_color 1906 red
+edge_color 397 1906 red
+step 0.00329399108887
+vertex_color 1906 dark_red
+edge_color 397 1906 dark_red
+vertex_color 4972 red
+edge_color 1906 4972 red
+vertex_color 3754 red
+edge_color 1906 3754 red
+vertex_color 6555 red
+edge_color 1906 6555 red
+step 0.00337290763855
+vertex_color 3754 dark_red
+edge_color 1906 3754 dark_red
+vertex_color 8786 red
+edge_color 3754 8786 red
+vertex_color 4972 red
+edge_color 3754 4972 red
+vertex_color 3633 red
+edge_color 3754 3633 red
+vertex_color 343 red
+edge_color 3754 343 red
+step 0.00343990325928
+vertex_color 343 dark_red
+edge_color 3754 343 dark_red
+vertex_color 7320 red
+edge_color 343 7320 red
+vertex_color 6383 red
+edge_color 343 6383 red
+vertex_color 8697 red
+edge_color 343 8697 red
+step 0.00348901748657
+vertex_color 7320 dark_red
+edge_color 343 7320 dark_red
+vertex_color 2986 red
+edge_color 7320 2986 red
+step 0.00351595878601
+vertex_color 6383 dark_red
+edge_color 343 6383 dark_red
+vertex_color 1977 red
+edge_color 6383 1977 red
+vertex_color 5846 red
+edge_color 6383 5846 red
+step 0.00355410575867
+vertex_color 1977 dark_red
+edge_color 6383 1977 dark_red
+vertex_color 4867 red
+edge_color 1977 4867 red
+vertex_color 2735 red
+edge_color 1977 2735 red
+step 0.00359606742859
+vertex_color 4867 dark_red
+edge_color 1977 4867 dark_red
+vertex_color 7501 red
+edge_color 4867 7501 red
+vertex_color 2095 red
+edge_color 4867 2095 red
+step 0.00363397598267
+vertex_color 2095 dark_red
+edge_color 4867 2095 dark_red
+vertex_color 2735 red
+edge_color 2095 2735 red
+vertex_color 7914 red
+edge_color 2095 7914 red
+vertex_color 715 red
+edge_color 2095 715 red
+step 0.00368905067444
+vertex_color 715 dark_red
+edge_color 2095 715 dark_red
+vertex_color 8943 red
+edge_color 715 8943 red
+vertex_color 8581 red
+edge_color 715 8581 red
+vertex_color 137 red
+edge_color 715 137 red
+step 0.00374102592468
+vertex_color 137 dark_red
+edge_color 715 137 dark_red
+vertex_color 11107 red
+edge_color 137 11107 red
+vertex_color 10403 red
+edge_color 137 10403 red
+vertex_color 8943 red
+edge_color 137 8943 red
+vertex_color 3711 red
+edge_color 137 3711 red
+vertex_color 10046 red
+edge_color 137 10046 red
+step 0.0038161277771
+vertex_color 3711 dark_red
+edge_color 137 3711 dark_red
+vertex_color 4008 red
+edge_color 3711 4008 red
+vertex_color 1803 red
+edge_color 3711 1803 red
+vertex_color 6234 red
+edge_color 3711 6234 red
+step 0.00386691093445
+vertex_color 1803 dark_red
+edge_color 3711 1803 dark_red
+vertex_color 4008 red
+edge_color 1803 4008 red
+vertex_color 10217 red
+edge_color 1803 10217 red
+step 0.0039119720459
+vertex_color 10217 dark_red
+edge_color 1803 10217 dark_red
+vertex_color 11004 red
+edge_color 10217 11004 red
+vertex_color 9715 red
+edge_color 10217 9715 red
+vertex_color 5364 red
+edge_color 10217 5364 red
+step 0.00396990776062
+vertex_color 9715 dark_red
+edge_color 10217 9715 dark_red
+vertex_color 7398 red
+edge_color 9715 7398 red
+step 0.00399804115295
+vertex_color 7398 dark_red
+edge_color 9715 7398 dark_red
+vertex_color 7869 red
+edge_color 7398 7869 red
+vertex_color 6009 red
+edge_color 7398 6009 red
+step 0.00403690338135
+vertex_color 6009 dark_red
+edge_color 7398 6009 dark_red
+vertex_color 11181 red
+edge_color 6009 11181 red
+vertex_color 3212 red
+edge_color 6009 3212 red
+step 0.00407600402832
+vertex_color 11181 dark_red
+edge_color 6009 11181 dark_red
+vertex_color 5196 red
+edge_color 11181 5196 red
+vertex_color 4194 red
+edge_color 11181 4194 red
+vertex_color 2743 red
+edge_color 11181 2743 red
+step 0.00412702560425
+vertex_color 2743 dark_red
+edge_color 11181 2743 dark_red
+vertex_color 8061 red
+edge_color 2743 8061 red
+vertex_color 6298 red
+edge_color 2743 6298 red
 vertex_color 4577 red
-edge_color 5911 4577 red
+edge_color 2743 4577 red
+vertex_color 5196 red
+edge_color 2743 5196 red
+step 0.00418996810913
+vertex_color 4577 dark_red
+edge_color 2743 4577 dark_red
+vertex_color 5911 red
+edge_color 4577 5911 red
+vertex_color 7608 red
+edge_color 4577 7608 red
+vertex_color 3576 red
+edge_color 4577 3576 red
+step 0.00424599647522
+vertex_color 5911 dark_red
+edge_color 4577 5911 dark_red
 vertex_color 2894 red
 edge_color 5911 2894 red
 vertex_color 347 red
 edge_color 5911 347 red
 vertex_color 2342 red
 edge_color 5911 2342 red
-step 0.00277495384216
-vertex_color 2342 blue
-edge_color 5911 2342 blue
-vertex_color 5007 red
-edge_color 2342 5007 red
-vertex_color 261 red
-edge_color 2342 261 red
-vertex_color 5911 red
-edge_color 2342 5911 red
-vertex_color 4513 red
-edge_color 2342 4513 red
-step 0.00283193588257
-vertex_color 5007 blue
-edge_color 2342 5007 blue
+step 0.00429797172546
+vertex_color 347 dark_red
+edge_color 5911 347 dark_red
+vertex_color 5753 red
+edge_color 347 5753 red
+step 0.00432705879211
+vertex_color 5753 dark_red
+edge_color 347 5753 dark_red
 vertex_color 11044 red
-edge_color 5007 11044 red
-vertex_color 2342 red
-edge_color 5007 2342 red
-vertex_color 10761 red
-edge_color 5007 10761 red
-vertex_color 3850 red
-edge_color 5007 3850 red
-step 0.00289797782898
-vertex_color 10761 blue
-edge_color 5007 10761 blue
-vertex_color 10780 red
-edge_color 10761 10780 red
-vertex_color 5007 red
-edge_color 10761 5007 red
-vertex_color 3850 red
-edge_color 10761 3850 red
-step 0.0029468536377
-vertex_color 10780 blue
-edge_color 10761 10780 blue
-vertex_color 6034 red
-edge_color 10780 6034 red
-vertex_color 10761 red
-edge_color 10780 10761 red
-vertex_color 7789 red
-edge_color 10780 7789 red
-step 0.00299501419067
-vertex_color 6034 blue
-edge_color 10780 6034 blue
-vertex_color 10780 red
-edge_color 6034 10780 red
-vertex_color 8497 red
-edge_color 6034 8497 red
-vertex_color 7789 red
-edge_color 6034 7789 red
-step 0.00304388999939
-vertex_color 8497 blue
-edge_color 6034 8497 blue
+edge_color 5753 11044 red
+vertex_color 2125 red
+edge_color 5753 2125 red
+vertex_color 5875 red
+edge_color 5753 5875 red
+step 0.00437712669373
+vertex_color 5875 dark_red
+edge_color 5753 5875 dark_red
+vertex_color 6022 red
+edge_color 5875 6022 red
 vertex_color 6283 red
-edge_color 8497 6283 red
-vertex_color 6034 red
-edge_color 8497 6034 red
-vertex_color 8754 red
-edge_color 8497 8754 red
-step 0.00308895111084
-vertex_color 8754 blue
-edge_color 8497 8754 blue
-vertex_color 7358 red
-edge_color 8754 7358 red
-vertex_color 5081 red
-edge_color 8754 5081 red
-vertex_color 10507 red
-edge_color 8754 10507 red
+edge_color 5875 6283 red
+step 0.00441598892212
+vertex_color 6283 dark_red
+edge_color 5875 6283 dark_red
 vertex_color 8497 red
-edge_color 8754 8497 red
-vertex_color 7789 red
-edge_color 8754 7789 red
-step 0.00315690040588
-vertex_color 7358 blue
-edge_color 8754 7358 blue
-vertex_color 5081 red
-edge_color 7358 5081 red
-vertex_color 8754 red
-edge_color 7358 8754 red
-vertex_color 9059 red
-edge_color 7358 9059 red
-vertex_color 912 red
-edge_color 7358 912 red
-step 0.00322103500366
-vertex_color 912 blue
-edge_color 7358 912 blue
-vertex_color 9692 red
-edge_color 912 9692 red
-vertex_color 9059 red
-edge_color 912 9059 red
-vertex_color 7358 red
-edge_color 912 7358 red
-step 0.00326895713806
-vertex_color 9692 blue
-edge_color 912 9692 blue
-vertex_color 912 red
-edge_color 9692 912 red
-vertex_color 9059 red
-edge_color 9692 9059 red
-vertex_color 5612 red
-edge_color 9692 5612 red
-step 0.00331687927246
-vertex_color 5612 blue
-edge_color 9692 5612 blue
-vertex_color 6331 red
-edge_color 5612 6331 red
-vertex_color 9692 red
-edge_color 5612 9692 red
-step 0.00335288047791
-vertex_color 6331 blue
-edge_color 5612 6331 blue
-vertex_color 5612 red
-edge_color 6331 5612 red
-vertex_color 8369 red
-edge_color 6331 8369 red
-step 0.00431799888611
-vertex_color 8369 blue
-edge_color 6331 8369 blue
-vertex_color 570 red
-edge_color 8369 570 red
-vertex_color 6843 red
-edge_color 8369 6843 red
-vertex_color 6331 red
-edge_color 8369 6331 red
-vertex_color 2641 red
-edge_color 8369 2641 red
-vertex_color 4291 red
-edge_color 8369 4291 red
-step 0.00440096855164
-vertex_color 4291 blue
-edge_color 8369 4291 blue
-vertex_color 2641 red
-edge_color 4291 2641 red
-vertex_color 3452 red
-edge_color 4291 3452 red
-vertex_color 10956 red
-edge_color 4291 10956 red
-vertex_color 8369 red
-edge_color 4291 8369 red
-vertex_color 6285 red
-edge_color 4291 6285 red
-step 0.00447988510132
-vertex_color 10956 blue
-edge_color 4291 10956 blue
-vertex_color 8362 red
-edge_color 10956 8362 red
-vertex_color 3452 red
-edge_color 10956 3452 red
-vertex_color 8112 red
-edge_color 10956 8112 red
-vertex_color 4291 red
-edge_color 10956 4291 red
-step 0.00453996658325
-vertex_color 8112 blue
-edge_color 10956 8112 blue
-vertex_color 167 red
-edge_color 8112 167 red
-vertex_color 10956 red
-edge_color 8112 10956 red
-vertex_color 9107 red
-edge_color 8112 9107 red
-step 0.0045850276947
-vertex_color 167 blue
-edge_color 8112 167 blue
-vertex_color 2521 red
-edge_color 167 2521 red
-vertex_color 8112 red
-edge_color 167 8112 red
-vertex_color 2833 red
-edge_color 167 2833 red
-step 0.00462889671326
-vertex_color 2521 blue
-edge_color 167 2521 blue
-vertex_color 167 red
-edge_color 2521 167 red
-step 0.00465393066406
-step 0.00465893745422
-vertex_color 2833 blue
-edge_color 167 2833 blue
-vertex_color 9107 red
-edge_color 2833 9107 red
-vertex_color 7219 red
-edge_color 2833 7219 red
-vertex_color 7063 red
-edge_color 2833 7063 red
-vertex_color 167 red
-edge_color 2833 167 red
-step 0.00472903251648
-vertex_color 7063 blue
-edge_color 2833 7063 blue
-vertex_color 2262 red
-edge_color 7063 2262 red
-vertex_color 10404 red
-edge_color 7063 10404 red
-vertex_color 2833 red
-edge_color 7063 2833 red
-step 0.00478005409241
-vertex_color 2262 blue
-edge_color 7063 2262 blue
-vertex_color 7063 red
-edge_color 2262 7063 red
-vertex_color 575 red
-edge_color 2262 575 red
-vertex_color 945 red
-edge_color 2262 945 red
-step 0.00482487678528
-vertex_color 575 blue
-edge_color 2262 575 blue
-vertex_color 1067 red
-edge_color 575 1067 red
-vertex_color 3368 red
-edge_color 575 3368 red
-vertex_color 2262 red
-edge_color 575 2262 red
-vertex_color 10404 red
-edge_color 575 10404 red
-step 0.0048840045929
-vertex_color 3368 blue
-edge_color 575 3368 blue
-vertex_color 575 red
-edge_color 3368 575 red
-vertex_color 10268 red
-edge_color 3368 10268 red
-vertex_color 945 red
-edge_color 3368 945 red
-vertex_color 7255 red
-edge_color 3368 7255 red
-step 0.00494885444641
-vertex_color 10268 blue
-edge_color 3368 10268 blue
-vertex_color 4055 red
-edge_color 10268 4055 red
-vertex_color 3368 red
-edge_color 10268 3368 red
-vertex_color 9953 red
-edge_color 10268 9953 red
-vertex_color 2684 red
-edge_color 10268 2684 red
-vertex_color 3935 red
-edge_color 10268 3935 red
-step 0.00502300262451
-vertex_color 9953 blue
-edge_color 10268 9953 blue
-vertex_color 2684 red
-edge_color 9953 2684 red
-vertex_color 4236 red
-edge_color 9953 4236 red
-vertex_color 10268 red
-edge_color 9953 10268 red
-vertex_color 4227 red
-edge_color 9953 4227 red
-vertex_color 10380 red
-edge_color 9953 10380 red
-step 0.00510096549988
-vertex_color 4227 blue
-edge_color 9953 4227 blue
-vertex_color 10380 red
-edge_color 4227 10380 red
-vertex_color 9536 red
-edge_color 4227 9536 red
-vertex_color 9953 red
-edge_color 4227 9953 red
-step 0.00514888763428
-vertex_color 6910 green
-vertex_color 5138 green
-edge_color 6910 5138 green
-vertex_color 5892 green
-edge_color 5138 5892 green
-vertex_color 7424 green
-edge_color 5892 7424 green
-vertex_color 7275 green
-edge_color 7424 7275 green
-vertex_color 2662 green
-edge_color 7275 2662 green
-vertex_color 11157 green
-edge_color 2662 11157 green
-vertex_color 1754 green
-edge_color 11157 1754 green
-vertex_color 180 green
-edge_color 1754 180 green
-vertex_color 9512 green
-edge_color 180 9512 green
-vertex_color 8 green
-edge_color 9512 8 green
-vertex_color 1383 green
-edge_color 8 1383 green
-vertex_color 9855 green
-edge_color 1383 9855 green
-vertex_color 5040 green
-edge_color 9855 5040 green
-vertex_color 1808 green
-edge_color 5040 1808 green
-vertex_color 1520 green
-edge_color 1808 1520 green
-vertex_color 10674 green
-edge_color 1520 10674 green
-vertex_color 2646 green
-edge_color 10674 2646 green
-vertex_color 10255 green
-edge_color 2646 10255 green
-vertex_color 3664 green
-edge_color 10255 3664 green
-vertex_color 4892 green
-edge_color 3664 4892 green
-vertex_color 4225 green
-edge_color 4892 4225 green
-vertex_color 3266 green
-edge_color 4225 3266 green
-vertex_color 20 green
-edge_color 3266 20 green
-vertex_color 1719 green
-edge_color 20 1719 green
-vertex_color 827 green
-edge_color 1719 827 green
-vertex_color 605 green
-edge_color 827 605 green
-vertex_color 27 green
-edge_color 605 27 green
-vertex_color 2757 green
-edge_color 27 2757 green
-vertex_color 7274 green
-edge_color 2757 7274 green
-vertex_color 8391 green
-edge_color 7274 8391 green
-vertex_color 5870 green
-edge_color 8391 5870 green
-vertex_color 413 green
-edge_color 5870 413 green
-vertex_color 806 green
-edge_color 413 806 green
-vertex_color 7178 green
-edge_color 806 7178 green
-vertex_color 6893 green
-edge_color 7178 6893 green
-vertex_color 8929 green
-edge_color 6893 8929 green
-vertex_color 1588 green
-edge_color 8929 1588 green
-vertex_color 7701 green
-edge_color 1588 7701 green
-vertex_color 453 green
-edge_color 7701 453 green
-vertex_color 641 green
-edge_color 453 641 green
-vertex_color 7755 green
-edge_color 641 7755 green
-vertex_color 7195 green
-edge_color 7755 7195 green
-vertex_color 6807 green
-edge_color 7195 6807 green
-vertex_color 2097 green
-edge_color 6807 2097 green
-vertex_color 3410 green
-edge_color 2097 3410 green
-vertex_color 9383 green
-edge_color 3410 9383 green
-vertex_color 2894 green
-edge_color 9383 2894 green
+edge_color 6283 8497 red
+vertex_color 5446 red
+edge_color 6283 5446 red
+vertex_color 4481 red
+edge_color 6283 4481 red
+step 0.00446510314941
+vertex_color 4481 dark_red
+edge_color 6283 4481 dark_red
+vertex_color 6022 red
+edge_color 4481 6022 red
+vertex_color 2955 red
+edge_color 4481 2955 red
+step 0.00450491905212
+vertex_color 2955 dark_red
+edge_color 4481 2955 dark_red
+vertex_color 5542 red
+edge_color 2955 5542 red
+vertex_color 9299 red
+edge_color 2955 9299 red
+vertex_color 1098 red
+edge_color 2955 1098 red
+step 0.00455498695374
+vertex_color 9299 dark_red
+edge_color 2955 9299 dark_red
+vertex_color 10825 red
+edge_color 9299 10825 red
+vertex_color 596 red
+edge_color 9299 596 red
+vertex_color 1713 red
+edge_color 9299 1713 red
+step 0.00460696220398
+vertex_color 596 dark_red
+edge_color 9299 596 dark_red
+vertex_color 1713 red
+edge_color 596 1713 red
+step 0.00464200973511
+vertex_color 10825 dark_red
+edge_color 9299 10825 dark_red
+vertex_color 10391 red
+edge_color 10825 10391 red
+step 0.00467300415039
+vertex_color 10391 dark_red
+edge_color 10825 10391 dark_red
+vertex_color 8924 red
+edge_color 10391 8924 red
+vertex_color 1504 red
+edge_color 10391 1504 red
+vertex_color 8794 red
+edge_color 10391 8794 red
+step 0.00472712516785
+vertex_color 8794 dark_red
+edge_color 10391 8794 dark_red
+vertex_color 3601 red
+edge_color 8794 3601 red
+vertex_color 3179 red
+edge_color 8794 3179 red
+vertex_color 1504 red
+edge_color 8794 1504 red
+vertex_color 1138 red
+edge_color 8794 1138 red
+step 0.00479292869568
+vertex_color 1138 dark_red
+edge_color 8794 1138 dark_red
+vertex_color 769 red
+edge_color 1138 769 red
+vertex_color 4345 red
+edge_color 1138 4345 red
+step 0.00483202934265
+vertex_color 4345 dark_red
+edge_color 1138 4345 dark_red
+vertex_color 9151 red
+edge_color 4345 9151 red
+vertex_color 11175 red
+edge_color 4345 11175 red
+step 0.00487303733826
+vertex_color 9151 dark_red
+edge_color 4345 9151 dark_red
+vertex_color 3512 red
+edge_color 9151 3512 red
+step 0.00490498542786
+vertex_color 3512 dark_red
+edge_color 9151 3512 dark_red
+vertex_color 6117 red
+edge_color 3512 6117 red
+vertex_color 2640 red
+edge_color 3512 2640 red
+vertex_color 8442 red
+edge_color 3512 8442 red
+step 0.00495600700378
+vertex_color 2640 dark_red
+edge_color 3512 2640 dark_red
+vertex_color 3805 red
+edge_color 2640 3805 red
+vertex_color 534 red
+edge_color 2640 534 red
+step 0.00499391555786
+vertex_color 3805 dark_red
+edge_color 2640 3805 dark_red
+vertex_color 2777 red
+edge_color 3805 2777 red
+step 0.0050220489502
+vertex_color 534 dark_red
+edge_color 2640 534 dark_red
+vertex_color 3795 red
+edge_color 534 3795 red
+step 0.00505113601685
+vertex_color 3795 dark_red
+edge_color 534 3795 dark_red
+vertex_color 1350 red
+edge_color 3795 1350 red
+vertex_color 7229 red
+edge_color 3795 7229 red
+vertex_color 9296 red
+edge_color 3795 9296 red
+step 0.00510406494141
+vertex_color 9296 dark_red
+edge_color 3795 9296 dark_red
+vertex_color 4272 red
+edge_color 9296 4272 red
+vertex_color 5188 red
+edge_color 9296 5188 red
+vertex_color 7229 red
+edge_color 9296 7229 red
+vertex_color 1350 red
+edge_color 9296 1350 red
+step 0.00517106056213
+vertex_color 4272 dark_red
+edge_color 9296 4272 dark_red
+vertex_color 3747 red
+edge_color 4272 3747 red
+vertex_color 3489 red
+edge_color 4272 3489 red
+step 0.00520992279053
+vertex_color 3489 dark_red
+edge_color 4272 3489 dark_red
+vertex_color 3388 red
+edge_color 3489 3388 red
+vertex_color 8346 red
+edge_color 3489 8346 red
+vertex_color 7332 red
+edge_color 3489 7332 red
+step 0.00525903701782
+vertex_color 3388 dark_red
+edge_color 3489 3388 dark_red
+vertex_color 5050 red
+edge_color 3388 5050 red
+vertex_color 9567 red
+edge_color 3388 9567 red
+step 0.0052969455719
+vertex_color 9567 dark_red
+edge_color 3388 9567 dark_red
+vertex_color 5050 red
+edge_color 9567 5050 red
+vertex_color 4050 red
+edge_color 9567 4050 red
+step 0.00534009933472
+vertex_color 4050 dark_red
+edge_color 9567 4050 dark_red
+vertex_color 9981 red
+edge_color 4050 9981 red
+vertex_color 4137 red
+edge_color 4050 4137 red
+step 0.00537896156311
+vertex_color 9981 dark_red
+edge_color 4050 9981 dark_red
+step 0.00539612770081
+vertex_color 4137 dark_red
+edge_color 4050 4137 dark_red
+vertex_color 8592 red
+edge_color 4137 8592 red
+vertex_color 2416 red
+edge_color 4137 2416 red
+vertex_color 6614 red
+edge_color 4137 6614 red
+step 0.00544500350952
+vertex_color 2416 dark_red
+edge_color 4137 2416 dark_red
+vertex_color 2363 red
+edge_color 2416 2363 red
+vertex_color 6614 red
+edge_color 2416 6614 red
+vertex_color 2221 red
+edge_color 2416 2221 red
+step 0.00550007820129
+vertex_color 2363 dark_red
+edge_color 2416 2363 dark_red
+vertex_color 4749 red
+edge_color 2363 4749 red
+step 0.00552797317505
+vertex_color 4749 dark_red
+edge_color 2363 4749 dark_red
+vertex_color 2221 red
+edge_color 4749 2221 red
+vertex_color 8345 red
+edge_color 4749 8345 red
+vertex_color 5791 red
+edge_color 4749 5791 red
+step 0.0055820941925
+vertex_color 8345 dark_red
+edge_color 4749 8345 dark_red
+vertex_color 2082 red
+edge_color 8345 2082 red
+vertex_color 7615 red
+edge_color 8345 7615 red
+vertex_color 9036 red
+edge_color 8345 9036 red
+step 0.00563097000122
+vertex_color 7615 dark_red
+edge_color 8345 7615 dark_red
+vertex_color 9503 red
+edge_color 7615 9503 red
+vertex_color 5311 red
+edge_color 7615 5311 red
+vertex_color 4665 red
+edge_color 7615 4665 red
+vertex_color 10405 red
+edge_color 7615 10405 red
+step 0.00569605827332
+vertex_color 10405 dark_red
+edge_color 7615 10405 dark_red
+vertex_color 6859 red
+edge_color 10405 6859 red
+vertex_color 4665 red
+edge_color 10405 4665 red
+vertex_color 2577 red
+edge_color 10405 2577 red
+vertex_color 2082 red
+edge_color 10405 2082 red
+step 0.00576210021973
+vertex_color 6859 dark_red
+edge_color 10405 6859 dark_red
+vertex_color 4665 red
+edge_color 6859 4665 red
+vertex_color 2577 red
+edge_color 6859 2577 red
+vertex_color 3257 red
+edge_color 6859 3257 red
+vertex_color 9462 red
+edge_color 6859 9462 red
+vertex_color 1699 red
+edge_color 6859 1699 red
+step 0.00583600997925
+vertex_color 9462 dark_red
+edge_color 6859 9462 dark_red
+vertex_color 1699 red
+edge_color 9462 1699 red
+vertex_color 4819 red
+edge_color 9462 4819 red
+step 0.00588393211365
+vertex_color 4819 dark_red
+edge_color 9462 4819 dark_red
+vertex_color 2577 red
+edge_color 4819 2577 red
+vertex_color 131 red
+edge_color 4819 131 red
+vertex_color 5891 red
+edge_color 4819 5891 red
+step 0.00593709945679
+vertex_color 5891 dark_red
+edge_color 4819 5891 dark_red
+vertex_color 7565 red
+edge_color 5891 7565 red
+vertex_color 1185 red
+edge_color 5891 1185 red
+vertex_color 8414 red
+edge_color 5891 8414 red
+step 0.00599312782288
+vertex_color 7565 dark_red
+edge_color 5891 7565 dark_red
+vertex_color 1185 red
+edge_color 7565 1185 red
+vertex_color 8804 red
+edge_color 7565 8804 red
+step 0.0060350894928
+vertex_color 8804 dark_red
+edge_color 7565 8804 dark_red
+vertex_color 4576 red
+edge_color 8804 4576 red
+vertex_color 3859 red
+edge_color 8804 3859 red
+vertex_color 1185 red
+edge_color 8804 1185 red
+step 0.00609803199768
+vertex_color 4576 dark_red
+edge_color 8804 4576 dark_red
+vertex_color 6554 red
+edge_color 4576 6554 red
+vertex_color 5161 red
+edge_color 4576 5161 red
+step 0.00614190101624
+vertex_color 5161 dark_red
+edge_color 4576 5161 dark_red
+vertex_color 8372 red
+edge_color 5161 8372 red
+vertex_color 10061 red
+edge_color 5161 10061 red
+step 0.00619697570801
+vertex_color 8372 dark_red
+edge_color 5161 8372 dark_red
+vertex_color 4701 red
+edge_color 8372 4701 red
+vertex_color 10061 red
+edge_color 8372 10061 red
+vertex_color 5675 red
+edge_color 8372 5675 red
+step 0.00625491142273
+vertex_color 4701 dark_red
+edge_color 8372 4701 dark_red
+vertex_color 7208 red
+edge_color 4701 7208 red
+step 0.00628304481506
+vertex_color 7208 dark_red
+edge_color 4701 7208 dark_red
+vertex_color 5547 red
+edge_color 7208 5547 red
+step 0.0063099861145
+vertex_color 5547 dark_red
+edge_color 7208 5547 dark_red
+vertex_color 6675 red
+edge_color 5547 6675 red
+vertex_color 7524 red
+edge_color 5547 7524 red
+vertex_color 11177 red
+edge_color 5547 11177 red
+step 0.0063591003418
+vertex_color 6675 dark_red
+edge_color 5547 6675 dark_red
+vertex_color 5287 red
+edge_color 6675 5287 red
+step 0.00638604164124
+vertex_color 5287 dark_red
+edge_color 6675 5287 dark_red
+vertex_color 4153 red
+edge_color 5287 4153 red
+vertex_color 906 red
+edge_color 5287 906 red
+vertex_color 7435 red
+edge_color 5287 7435 red
+step 0.00643610954285
+vertex_color 7435 dark_red
+edge_color 5287 7435 dark_red
+vertex_color 1113 red
+edge_color 7435 1113 red
+vertex_color 5808 red
+edge_color 7435 5808 red
+step 0.00647711753845
+vertex_color 1113 dark_red
+edge_color 7435 1113 dark_red
+vertex_color 5820 red
+edge_color 1113 5820 red
+vertex_color 6289 red
+edge_color 1113 6289 red
+vertex_color 3327 red
+edge_color 1113 3327 red
+step 0.00652694702148
+vertex_color 6289 dark_red
+edge_color 1113 6289 dark_red
+vertex_color 7743 red
+edge_color 6289 7743 red
+vertex_color 5919 red
+edge_color 6289 5919 red
+step 0.00656604766846
+vertex_color 5919 dark_red
+edge_color 6289 5919 dark_red
+vertex_color 9432 red
+edge_color 5919 9432 red
+vertex_color 5443 red
+edge_color 5919 5443 red
+step 0.00660395622253
+vertex_color 5443 dark_red
+edge_color 5919 5443 dark_red
+vertex_color 1163 red
+edge_color 5443 1163 red
+vertex_color 1301 red
+edge_color 5443 1301 red
+vertex_color 5441 red
+edge_color 5443 5441 red
+step 0.00665402412415
+vertex_color 5441 dark_red
+edge_color 5443 5441 dark_red
+vertex_color 1970 red
+edge_color 5441 1970 red
+vertex_color 4879 red
+edge_color 5441 4879 red
+vertex_color 1301 red
+edge_color 5441 1301 red
+step 0.00671195983887
+vertex_color 1970 dark_red
+edge_color 5441 1970 dark_red
+vertex_color 9901 red
+edge_color 1970 9901 red
+vertex_color 7522 red
+edge_color 1970 7522 red
+step 0.00675106048584
+vertex_color 9901 dark_red
+edge_color 1970 9901 dark_red
+vertex_color 9989 red
+edge_color 9901 9989 red
+vertex_color 8681 red
+edge_color 9901 8681 red
+step 0.00678896903992
+vertex_color 8681 dark_red
+edge_color 9901 8681 dark_red
+vertex_color 6656 red
+edge_color 8681 6656 red
+vertex_color 7946 red
+edge_color 8681 7946 red
+vertex_color 84 red
+edge_color 8681 84 red
+step 0.00684499740601
+vertex_color 84 dark_red
+edge_color 8681 84 dark_red
+vertex_color 10108 red
+edge_color 84 10108 red
+vertex_color 7946 red
+edge_color 84 7946 red
+vertex_color 21 red
+edge_color 84 21 red
+step 0.00690698623657
+vertex_color 10108 dark_red
+edge_color 84 10108 dark_red
+vertex_color 3750 red
+edge_color 10108 3750 red
+step 0.00693392753601
+vertex_color 3750 dark_red
+edge_color 10108 3750 dark_red
+vertex_color 9272 red
+edge_color 3750 9272 red
+vertex_color 7085 red
+edge_color 3750 7085 red
+vertex_color 10365 red
+edge_color 3750 10365 red
+step 0.00698304176331
+vertex_color 10365 dark_red
+edge_color 3750 10365 dark_red
+vertex_color 9524 red
+edge_color 10365 9524 red
+vertex_color 6268 red
+edge_color 10365 6268 red
+vertex_color 9 red
+edge_color 10365 9 red
+vertex_color 4403 red
+edge_color 10365 4403 red
+vertex_color 7958 red
+edge_color 10365 7958 red
+step 0.00705695152283
+vertex_color 4403 dark_red
+edge_color 10365 4403 dark_red
+vertex_color 6219 red
+edge_color 4403 6219 red
+vertex_color 5536 red
+edge_color 4403 5536 red
+vertex_color 7958 red
+edge_color 4403 7958 red
+vertex_color 9288 red
+edge_color 4403 9288 red
+step 0.0071280002594
+vertex_color 5536 dark_red
+edge_color 4403 5536 dark_red
+vertex_color 9524 red
+edge_color 5536 9524 red
+step 0.00715899467468
+vertex_color 6219 dark_red
+edge_color 4403 6219 dark_red
+vertex_color 484 red
+edge_color 6219 484 red
+vertex_color 9288 red
+edge_color 6219 9288 red
+vertex_color 7665 red
+edge_color 6219 7665 red
+step 0.00721192359924
+vertex_color 484 dark_red
+edge_color 6219 484 dark_red
+vertex_color 8183 red
+edge_color 484 8183 red
+vertex_color 202 red
+edge_color 484 202 red
+vertex_color 2109 red
+edge_color 484 2109 red
+step 0.00726509094238
+vertex_color 2109 dark_red
+edge_color 484 2109 dark_red
+vertex_color 202 red
+edge_color 2109 202 red
+vertex_color 1998 red
+edge_color 2109 1998 red
+step 0.00730800628662
+vertex_color 1998 dark_red
+edge_color 2109 1998 dark_red
+step 0.00732612609863
+vertex_color 202 dark_red
+edge_color 484 202 dark_red
+vertex_color 5376 red
+edge_color 202 5376 red
+step 0.00735998153687
+vertex_color 5376 dark_red
+edge_color 202 5376 dark_red
+vertex_color 2184 red
+edge_color 5376 2184 red
+vertex_color 6002 red
+edge_color 5376 6002 red
+step 0.00739812850952
+vertex_color 6002 dark_red
+edge_color 5376 6002 dark_red
+vertex_color 2414 red
+edge_color 6002 2414 red
+vertex_color 4848 red
+edge_color 6002 4848 red
+step 0.00743699073792
+vertex_color 4848 dark_red
+edge_color 6002 4848 dark_red
+vertex_color 48 red
+edge_color 4848 48 red
+vertex_color 10760 red
+edge_color 4848 10760 red
+vertex_color 4103 red
+edge_color 4848 4103 red
+step 0.00748801231384
+vertex_color 48 dark_red
+edge_color 4848 48 dark_red
+vertex_color 10760 red
+edge_color 48 10760 red
+vertex_color 4103 red
+edge_color 48 4103 red
+step 0.00753402709961
+vertex_color 4103 dark_red
+edge_color 4848 4103 dark_red
+vertex_color 7593 red
+edge_color 4103 7593 red
+vertex_color 9824 red
+edge_color 4103 9824 red
+vertex_color 5708 red
+edge_color 4103 5708 red
+vertex_color 3871 red
+edge_color 4103 3871 red
+step 0.00760293006897
+vertex_color 7593 dark_red
+edge_color 4103 7593 dark_red
+vertex_color 5708 red
+edge_color 7593 5708 red
+step 0.00763297080994
+vertex_color 9824 dark_red
+edge_color 4103 9824 dark_red
+vertex_color 3810 red
+edge_color 9824 3810 red
+step 0.00766110420227
+vertex_color 3810 dark_red
+edge_color 9824 3810 dark_red
+vertex_color 10762 red
+edge_color 3810 10762 red
+vertex_color 679 red
+edge_color 3810 679 red
+vertex_color 5093 red
+edge_color 3810 5093 red
+vertex_color 10179 red
+edge_color 3810 10179 red
+step 0.00772094726562
+vertex_color 5093 dark_red
+edge_color 3810 5093 dark_red
+vertex_color 8143 red
+edge_color 5093 8143 red
+vertex_color 6582 red
+edge_color 5093 6582 red
+step 0.00776505470276
+vertex_color 8143 dark_red
+edge_color 5093 8143 dark_red
+step 0.00778198242188
+vertex_color 6582 dark_red
+edge_color 5093 6582 dark_red
+vertex_color 10179 red
+edge_color 6582 10179 red
+vertex_color 6165 red
+edge_color 6582 6165 red
+vertex_color 1407 red
+edge_color 6582 1407 red
+vertex_color 9346 red
+edge_color 6582 9346 red
+step 0.0078489780426
+vertex_color 4510 green
+vertex_color 5693 green
+edge_color 4510 5693 green
+vertex_color 8689 green
+edge_color 5693 8689 green
+vertex_color 5631 green
+edge_color 8689 5631 green
+vertex_color 8262 green
+edge_color 5631 8262 green
+vertex_color 9071 green
+edge_color 8262 9071 green
+vertex_color 4113 green
+edge_color 9071 4113 green
+vertex_color 5690 green
+edge_color 4113 5690 green
+vertex_color 7054 green
+edge_color 5690 7054 green
+vertex_color 5497 green
+edge_color 7054 5497 green
+vertex_color 3724 green
+edge_color 5497 3724 green
+vertex_color 3861 green
+edge_color 3724 3861 green
+vertex_color 7377 green
+edge_color 3861 7377 green
+vertex_color 10959 green
+edge_color 7377 10959 green
+vertex_color 5857 green
+edge_color 10959 5857 green
+vertex_color 10144 green
+edge_color 5857 10144 green
+vertex_color 5331 green
+edge_color 10144 5331 green
+vertex_color 3877 green
+edge_color 5331 3877 green
+vertex_color 2311 green
+edge_color 3877 2311 green
+vertex_color 2417 green
+edge_color 2311 2417 green
+vertex_color 8023 green
+edge_color 2417 8023 green
+vertex_color 5659 green
+edge_color 8023 5659 green
+vertex_color 5829 green
+edge_color 5659 5829 green
+vertex_color 959 green
+edge_color 5829 959 green
+vertex_color 4912 green
+edge_color 959 4912 green
+vertex_color 2517 green
+edge_color 4912 2517 green
+vertex_color 365 green
+edge_color 2517 365 green
+vertex_color 642 green
+edge_color 365 642 green
+vertex_color 10610 green
+edge_color 642 10610 green
+vertex_color 10050 green
+edge_color 10610 10050 green
+vertex_color 2020 green
+edge_color 10050 2020 green
+vertex_color 3219 green
+edge_color 2020 3219 green
+vertex_color 3372 green
+edge_color 3219 3372 green
+vertex_color 5889 green
+edge_color 3372 5889 green
+vertex_color 707 green
+edge_color 5889 707 green
+vertex_color 3055 green
+edge_color 707 3055 green
+vertex_color 111 green
+edge_color 3055 111 green
+vertex_color 6638 green
+edge_color 111 6638 green
+vertex_color 1078 green
+edge_color 6638 1078 green
+vertex_color 4411 green
+edge_color 1078 4411 green
+vertex_color 5228 green
+edge_color 4411 5228 green
+vertex_color 3088 green
+edge_color 5228 3088 green
+vertex_color 5183 green
+edge_color 3088 5183 green
+vertex_color 4718 green
+edge_color 5183 4718 green
+vertex_color 1479 green
+edge_color 4718 1479 green
+vertex_color 4816 green
+edge_color 1479 4816 green
+vertex_color 10406 green
+edge_color 4816 10406 green
+vertex_color 3302 green
+edge_color 10406 3302 green
+vertex_color 3771 green
+edge_color 3302 3771 green
+vertex_color 3456 green
+edge_color 3771 3456 green
+vertex_color 5206 green
+edge_color 3456 5206 green
+vertex_color 2586 green
+edge_color 5206 2586 green
+vertex_color 10595 green
+edge_color 2586 10595 green
+vertex_color 10653 green
+edge_color 10595 10653 green
+vertex_color 9047 green
+edge_color 10653 9047 green
+vertex_color 10297 green
+edge_color 9047 10297 green
+vertex_color 240 green
+edge_color 10297 240 green
+vertex_color 4501 green
+edge_color 240 4501 green
+vertex_color 397 green
+edge_color 4501 397 green
+vertex_color 1906 green
+edge_color 397 1906 green
+vertex_color 3754 green
+edge_color 1906 3754 green
+vertex_color 343 green
+edge_color 3754 343 green
+vertex_color 6383 green
+edge_color 343 6383 green
+vertex_color 1977 green
+edge_color 6383 1977 green
+vertex_color 4867 green
+edge_color 1977 4867 green
+vertex_color 2095 green
+edge_color 4867 2095 green
+vertex_color 715 green
+edge_color 2095 715 green
+vertex_color 137 green
+edge_color 715 137 green
+vertex_color 3711 green
+edge_color 137 3711 green
+vertex_color 1803 green
+edge_color 3711 1803 green
+vertex_color 10217 green
+edge_color 1803 10217 green
+vertex_color 9715 green
+edge_color 10217 9715 green
+vertex_color 7398 green
+edge_color 9715 7398 green
+vertex_color 6009 green
+edge_color 7398 6009 green
+vertex_color 11181 green
+edge_color 6009 11181 green
+vertex_color 2743 green
+edge_color 11181 2743 green
+vertex_color 4577 green
+edge_color 2743 4577 green
 vertex_color 5911 green
-edge_color 2894 5911 green
-vertex_color 2342 green
-edge_color 5911 2342 green
-vertex_color 5007 green
-edge_color 2342 5007 green
-vertex_color 10761 green
-edge_color 5007 10761 green
-vertex_color 10780 green
-edge_color 10761 10780 green
-vertex_color 6034 green
-edge_color 10780 6034 green
-vertex_color 8497 green
-edge_color 6034 8497 green
-vertex_color 8754 green
-edge_color 8497 8754 green
-vertex_color 7358 green
-edge_color 8754 7358 green
-vertex_color 912 green
-edge_color 7358 912 green
-vertex_color 9692 green
-edge_color 912 9692 green
-vertex_color 5612 green
-edge_color 9692 5612 green
-vertex_color 6331 green
-edge_color 5612 6331 green
-vertex_color 8369 green
-edge_color 6331 8369 green
-vertex_color 4291 green
-edge_color 8369 4291 green
-vertex_color 10956 green
-edge_color 4291 10956 green
-vertex_color 8112 green
-edge_color 10956 8112 green
-vertex_color 167 green
-edge_color 8112 167 green
-vertex_color 2833 green
-edge_color 167 2833 green
-vertex_color 7063 green
-edge_color 2833 7063 green
-vertex_color 2262 green
-edge_color 7063 2262 green
-vertex_color 575 green
-edge_color 2262 575 green
-vertex_color 3368 green
-edge_color 575 3368 green
-vertex_color 10268 green
-edge_color 3368 10268 green
-vertex_color 9953 green
-edge_color 10268 9953 green
-vertex_color 4227 green
-edge_color 9953 4227 green
-vertex_color 9536 green
-edge_color 4227 9536 green
-step 0.00543689727783
+edge_color 4577 5911 green
+vertex_color 347 green
+edge_color 5911 347 green
+vertex_color 5753 green
+edge_color 347 5753 green
+vertex_color 5875 green
+edge_color 5753 5875 green
+vertex_color 6283 green
+edge_color 5875 6283 green
+vertex_color 4481 green
+edge_color 6283 4481 green
+vertex_color 2955 green
+edge_color 4481 2955 green
+vertex_color 9299 green
+edge_color 2955 9299 green
+vertex_color 10825 green
+edge_color 9299 10825 green
+vertex_color 10391 green
+edge_color 10825 10391 green
+vertex_color 8794 green
+edge_color 10391 8794 green
+vertex_color 1138 green
+edge_color 8794 1138 green
+vertex_color 4345 green
+edge_color 1138 4345 green
+vertex_color 9151 green
+edge_color 4345 9151 green
+vertex_color 3512 green
+edge_color 9151 3512 green
+vertex_color 2640 green
+edge_color 3512 2640 green
+vertex_color 534 green
+edge_color 2640 534 green
+vertex_color 3795 green
+edge_color 534 3795 green
+vertex_color 9296 green
+edge_color 3795 9296 green
+vertex_color 4272 green
+edge_color 9296 4272 green
+vertex_color 3489 green
+edge_color 4272 3489 green
+vertex_color 3388 green
+edge_color 3489 3388 green
+vertex_color 9567 green
+edge_color 3388 9567 green
+vertex_color 4050 green
+edge_color 9567 4050 green
+vertex_color 4137 green
+edge_color 4050 4137 green
+vertex_color 2416 green
+edge_color 4137 2416 green
+vertex_color 2363 green
+edge_color 2416 2363 green
+vertex_color 4749 green
+edge_color 2363 4749 green
+vertex_color 8345 green
+edge_color 4749 8345 green
+vertex_color 7615 green
+edge_color 8345 7615 green
+vertex_color 10405 green
+edge_color 7615 10405 green
+vertex_color 6859 green
+edge_color 10405 6859 green
+vertex_color 9462 green
+edge_color 6859 9462 green
+vertex_color 4819 green
+edge_color 9462 4819 green
+vertex_color 5891 green
+edge_color 4819 5891 green
+vertex_color 7565 green
+edge_color 5891 7565 green
+vertex_color 8804 green
+edge_color 7565 8804 green
+vertex_color 4576 green
+edge_color 8804 4576 green
+vertex_color 5161 green
+edge_color 4576 5161 green
+vertex_color 8372 green
+edge_color 5161 8372 green
+vertex_color 4701 green
+edge_color 8372 4701 green
+vertex_color 7208 green
+edge_color 4701 7208 green
+vertex_color 5547 green
+edge_color 7208 5547 green
+vertex_color 6675 green
+edge_color 5547 6675 green
+vertex_color 5287 green
+edge_color 6675 5287 green
+vertex_color 7435 green
+edge_color 5287 7435 green
+vertex_color 1113 green
+edge_color 7435 1113 green
+vertex_color 6289 green
+edge_color 1113 6289 green
+vertex_color 5919 green
+edge_color 6289 5919 green
+vertex_color 5443 green
+edge_color 5919 5443 green
+vertex_color 5441 green
+edge_color 5443 5441 green
+vertex_color 1970 green
+edge_color 5441 1970 green
+vertex_color 9901 green
+edge_color 1970 9901 green
+vertex_color 8681 green
+edge_color 9901 8681 green
+vertex_color 84 green
+edge_color 8681 84 green
+vertex_color 10108 green
+edge_color 84 10108 green
+vertex_color 3750 green
+edge_color 10108 3750 green
+vertex_color 10365 green
+edge_color 3750 10365 green
+vertex_color 4403 green
+edge_color 10365 4403 green
+vertex_color 6219 green
+edge_color 4403 6219 green
+vertex_color 484 green
+edge_color 6219 484 green
+vertex_color 202 green
+edge_color 484 202 green
+vertex_color 5376 green
+edge_color 202 5376 green
+vertex_color 6002 green
+edge_color 5376 6002 green
+vertex_color 4848 green
+edge_color 6002 4848 green
+vertex_color 4103 green
+edge_color 4848 4103 green
+vertex_color 9824 green
+edge_color 4103 9824 green
+vertex_color 3810 green
+edge_color 9824 3810 green
+vertex_color 5093 green
+edge_color 3810 5093 green
+vertex_color 6582 green
+edge_color 5093 6582 green
+vertex_color 1407 green
+edge_color 6582 1407 green
+step 0.00836896896362

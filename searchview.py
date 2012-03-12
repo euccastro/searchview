@@ -452,7 +452,7 @@ class control(ui.window):
         self.find_window('play_button').callback = self.on_click_play
         total_edit = self.find_window('total_edit')
         total_edit.validate_text = self.validate_total_edit_text
-        self.play_time = 5
+        self.play_time = 4
         self.hide_while_playing = ['total_label',
                                    'total_edit', 
                                    'realtime_button']
@@ -513,7 +513,7 @@ class control(ui.window):
             else:
                 self.controllees = self.find_views()
             self.end_time = max(c.history[-1].time for c in self.controllees)
-            self.set_realtime()
+            self.find_window('total_edit').doc.text = str(self.play_time)
 
     def find_views(self):
         def rec_find(w):
@@ -523,6 +523,13 @@ class control(ui.window):
                 for v in rec_find(child):
                     yield v
         return list(rec_find(ui.desktop))
+
+    def draw(self):
+        ui.window.draw(self)
+        if not hasattr(self, 'autoplayed'):
+            self.autoplayed = True
+            pyglet.clock.schedule_once((lambda dt: self.on_click_play()),
+                                       .5)
 
 def copy_children(self, filename):
     for child in ui.window_from_dicttree(yaml.load(file(filename))).children:
@@ -731,8 +738,12 @@ def copy_buffer(dst, src):
     memmove(dst, src, sizeof(dst))
 
 def run(filename):
-    w = pyglet.window.Window(width=800, height=600, resizable=True)
+    w = pyglet.window.Window(fullscreen=True)
     ui.init(w)
+    @w.event
+    def on_key_press(k, *etc):
+        if k == key.ESCAPE:
+            pyglet.app.exit()
     glPointSize(2)
     glClearColor(.2, .2, .2, 1.)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)

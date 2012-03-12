@@ -1,6 +1,7 @@
 from __future__ import division
 
 from collections import defaultdict
+import gc
 from heapq import heappush, heappop
 from itertools import *
 import sys
@@ -29,7 +30,7 @@ class problem_2d:
         for v in self.connections[n.state.id]:
             yield node(v, 
                        n, 
-                       (v - n.state).length(), 
+                       n.cost + (v - n.state).length(), 
                        (v - self.goal).length())
     def is_goal(self, state):
         return state.id == self.goal.id
@@ -54,9 +55,8 @@ def solution(node):
 def graph_search(add_to_frontier, choose_from_frontier):
     def search(problem, log):
         visited = set()
-        start = problem.start_node()
-        frontier = [start]
-        frontier_states = set([start.state])
+        frontier = []
+        add_to_frontier(frontier, problem.start_node())
         start_time = time.time()
         try:
             while frontier:
@@ -68,17 +68,18 @@ def graph_search(add_to_frontier, choose_from_frontier):
                     for a, b in izip(ret[:-1], ret[1:]):
                         log('vertex_color', b, solution_color)
                         log('edge_color', a, b, solution_color)
+                    print "total cost is", node.cost
                     return ret
+                log('vertex_color', node.state.id, visited_color)
+                if node.parent:
+                    log('edge_color', 
+                        node.parent.state.id,
+                        node.state.id, 
+                        visited_color)
                 if node.state not in visited:
-                    log('vertex_color', node.state.id, visited_color)
-                    if node.parent:
-                        log('edge_color', 
-                            node.parent.state.id,
-                            node.state.id, 
-                            visited_color)
                     visited.add(node.state)
                     for neighbor in problem.expand(node):
-                        if neighbor not in visited:
+                        if neighbor.state not in visited:
                             log('vertex_color', 
                                 neighbor.state.id, 
                                 frontier_color)
@@ -96,14 +97,18 @@ depth_first_search = graph_search(list.append, list.pop)
 def pop_by_priority(frontier):
     priority, node = heappop(frontier)
     return node
-def greedy_push(frontier, node):
+def push_by_cost(frontier, node):
+    heappush(frontier, (node.cost, node))
+uniform_cost_search = graph_search(push_by_cost, pop_by_priority)
+def push_by_heuristic(frontier, node):
     heappush(frontier, (node.heuristic_estimate, node))
-best_first_search = graph_search(greedy_push, pop_by_priority)
+best_first_search = graph_search(push_by_heuristic, pop_by_priority)
 def astar_push(frontier, node):
     heappush(frontier, (node.cost + node.heuristic_estimate, node))
 astar_search = graph_search(astar_push, pop_by_priority)
 
 def log_search(search, graph_filename, start, goal, log_filename):
+    gc.disable()
     vertices, edges = prettygraph.load_graph(graph_filename)
     problem = problem_2d(vertices, edges, start, goal)
     with file(log_filename, 'w') as log_file:
