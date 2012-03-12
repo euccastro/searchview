@@ -33,7 +33,7 @@ class problem_2d:
                        n.cost + (v - n.state).length(), 
                        (v - self.goal).length())
     def is_start(self, state):
-        return state.id = self.start.id
+        return state.id == self.start.id
     def is_goal(self, state):
         return state.id == self.goal.id
     def heuristic_cost(self, node):
