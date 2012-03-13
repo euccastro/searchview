@@ -91,6 +91,7 @@ def graph_search(add_to_frontier, choose_from_frontier):
                             add_to_frontier(frontier, neighbor)
         finally:
             log('step', time.time() - start_time)
+            print "Visited", len(visited), "nodes."
     return search
 
 def log_solution(solution, log):
@@ -116,7 +117,6 @@ astar_search = graph_search(astar_push, pop_by_priority)
 
 class search_state:
     def __init__(self, start, goal, color):
-        self.visited = set()
         self.frontier = [(0, start)]
         self.goal = goal
         self.frontier_color = color
@@ -130,38 +130,43 @@ def bidirectional_astar_search(problem, log):
     best_path_cost = sys.maxint
     best_path = None
     start_time = time.time()
+    visited = set()
     while searches[0].frontier and searches[1].frontier:
         for search, other in searches, reversed(searches):
             log('step', time.time() - start_time)
-            blah, node = heappop(search.frontier)
-            estimate = node.cost + node.heuristic_estimate
+            estimate, node = heappop(search.frontier)
             log('vertex_color', node.state.id, search.visited_color)
             if node.parent:
                 log('edge_color', 
                     node.parent.state.id,
                     node.state.id,
                     search.visited_color)
-            if node.state.id in search.visited or estimate > best_path_cost:
+            if node.state.id in visited or estimate > best_path_cost:
                 continue
-            search.visited.add(node.state.id)
+            visited.add(node.state.id)
             for blah, other_node in other.frontier:
                 if other_node.state.id == node.state.id:
                     log('vertex_color', node.state.id, 'yellow')
                     cost = node.cost + other_node.cost
                     if cost < best_path_cost:
+                        #import pdb
+                        #pdb.set_trace()
                         best_path = node, other_node
                         best_path_cost = cost
-            for child in problem.expand(node, search.goal.state):
-                estimate = child.cost + child.heuristic_estimate
-                if (estimate < best_path_cost
-                    and child.state.id not in search.visited):
-                    log('vertex_color', child.state.id, search.frontier_color)
-                    log('edge_color',
-                        node.state.id, 
-                        child.state.id, 
-                        search.frontier_color)
-                    heappush(search.frontier, 
-                             (estimate, child))
+                        print "best path cost becomes", best_path_cost
+                    break
+            else:
+                for child in problem.expand(node, search.goal.state):
+                    estimate = child.cost + child.heuristic_estimate
+                    if (estimate < best_path_cost
+                        and child.state.id not in visited):
+                        log('vertex_color', child.state.id, search.frontier_color)
+                        log('edge_color',
+                            node.state.id, 
+                            child.state.id, 
+                            search.frontier_color)
+                        heappush(search.frontier, 
+                                 (estimate, child))
     log('step', time.time() - start_time)
     if best_path is None:
         return None
@@ -174,6 +179,7 @@ def bidirectional_astar_search(problem, log):
         log_solution(ret, log)
         print "total cost", a.cost + b.cost
         print "length is", len(ret)
+        print "visited", len(visited), "nodes."
         return ret
 
 def log_search(search, graph_filename, start, goal, log_filename):
