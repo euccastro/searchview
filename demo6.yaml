@@ -1,0 +1,25 @@
+name: root
+enabled: yes
+layout: fill
+children:
+    - name: controls
+      class: searchview.control
+      enabled: yes
+      layout: bottom height//8
+    - name: view_parent
+      enabled: yes
+      layout: fill
+      children:
+        - id: view1
+          class: searchview.view
+          enabled: yes
+          graph: prettygraph
+          history: best_first_history
+          layout: left parent.rect.width//len(parent.children)
+#        - id: view2
+#          class: searchview.view
+#          enabled: yes
+#          history: bidirectional_astar_history
+#          graph: prettygraph
+#          layout: left parent.rect.width//len(parent.children)
+

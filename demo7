@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+python searchview.py demo7.yaml
